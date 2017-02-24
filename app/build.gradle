@@ -31,6 +31,8 @@ dependencies {
     //ViewPage
     //android.support.v4.view.ViewPager
 
-    compile 'me.drakeet.multitype:multitype:2.2.2'
+    compile('me.drakeet.multitype:multitype:2.2.2', {
+        exclude group: 'com.android.support'
+    })
     testCompile 'junit:junit:4.12'
 }

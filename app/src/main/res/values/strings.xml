@@ -4,4 +4,19 @@
     <string name="workbench">工作平台</string>
     <string name="directory">通讯录</string>
     <string name="setup">系统设置</string>
+
+
+
+    <string name="video_capture">视频采集</string>
+    <string name="group_intercom">群组对讲</string>
+    <string name="video_address">录像地址</string>
+    <string name="storage_path">存储路径</string>
+    <string name="camera">摄像头</string>
+    <string name="frames_number">帧数</string>
+    <string name="stream">码流</string>
+    <string name="resolving_power">分辨率</string>
+    <string name="system_information">系统信息</string>
+
+
+
 </resources>
