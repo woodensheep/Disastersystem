@@ -44,6 +44,18 @@ public class SetupFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View  view=inflater.inflate(R.layout.fragment_setup, container, false);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getActivity(),
+                LinearLayoutManager.VERTICAL, false) {
+
+            @Override
+            public boolean canScrollVertically() {
+
+                return false;
+            }
+
+        };
+
         rvSetup= (RecyclerView) view.findViewById(R.id.rv_setup);
         items = new Items();
         adapter = new MultiTypeAdapter(items);
@@ -57,9 +69,15 @@ public class SetupFragment extends Fragment {
             //items.add(new Song("小艾大人", R.drawable.avatar_dakeet));
             //items.add(new Song("许岑", R.drawable.avatar_cen));
         }
-        rvSetup.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvSetup.setLayoutManager(linearLayoutManager);
         rvSetup.setAdapter(adapter);
 
+        setlisteners();
         return view;
     }
+
+    private void setlisteners() {
+    }
+
+
 }

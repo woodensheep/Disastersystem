@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //初始化视图
         initViews();
-        setListeners();
+       // setListeners();
 
     }
 
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void initViews() {
@@ -74,15 +75,15 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mTabLayout.setupWithViewPager(mViewPager);
 
+
         //指定Tab的位置
         one = mTabLayout.getTabAt(0);
         two = mTabLayout.getTabAt(1);
         three = mTabLayout.getTabAt(2);
-
         //设置Tab的图标，假如不需要则把下面的代码删去
-        one.setIcon(R.mipmap.workbench1);
-        two.setIcon(R.mipmap.directory);
-        three.setIcon(R.mipmap.setup);
+        one.setIcon(R.drawable.selected_tab_image_workbench);
+        two.setIcon(R.drawable.selected_tab_image_directory);
+        three.setIcon(R.drawable.selected_tab_image_setup);
 
 
     }
