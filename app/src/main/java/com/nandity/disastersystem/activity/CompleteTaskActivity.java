@@ -10,19 +10,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CompleteTaskActivity extends AppCompatActivity {
-    private Toolbar toolbar;
+
+    @BindView(R.id.com_task_toolbar)
+    Toolbar comTaskToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_task);
-        initView();
-        toolbar.setTitle("完成任务");
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+        comTaskToolbar.setTitle("完成任务");
+        setSupportActionBar(comTaskToolbar);
     }
 
-    private void initView() {
-        toolbar= (Toolbar) findViewById(R.id.com_task_toolbar);
-    }
 
 }
