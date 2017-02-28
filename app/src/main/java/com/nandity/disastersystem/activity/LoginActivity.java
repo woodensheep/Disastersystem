@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity{
     private TextView tv_forgetpwd;
     private TextView tv_settings;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
