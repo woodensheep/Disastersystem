@@ -1,13 +1,11 @@
 package com.nandity.disastersystem.activity;
 
 import android.os.Bundle;
-import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.view.AnimationButton;
