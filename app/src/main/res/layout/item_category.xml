@@ -37,11 +37,9 @@
             android:background="@mipmap/into"
             />
 
-
     </LinearLayout>
 
     <TextView
-
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/c1olorgray"
