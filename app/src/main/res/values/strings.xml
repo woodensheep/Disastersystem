@@ -11,11 +11,18 @@
     <string name="video_address">录像地址</string>
     <string name="storage_path">存储路径</string>
     <string name="camera">摄像头</string>
+    <string name="sign_out">注销登录</string>
+
     <string name="frames_number">帧数</string>
     <string name="stream">码流</string>
     <string name="resolving_power">分辨率</string>
     <string name="system_information">系统信息</string>
-    <string name="sign_out">注销登陆</string>
+    <string name="my_task">我的任务</string>
+    <string name="complete_task">完成任务</string>
+    <string name="create_task">创建任务</string>
+    <string name="title_activity_my_task">MyTaskActivity</string>
+    <string name="title_activity_complete_task">CompleteTaskActivity</string>
+    <string name="title_activity_create_task">CreateTaskActivity</string>
 
 
 </resources>

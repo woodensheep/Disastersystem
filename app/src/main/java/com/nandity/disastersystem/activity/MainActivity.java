@@ -44,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
                 three.setIcon(R.mipmap.setup);
                 switch (position){
                     case 0: tab.setIcon(R.mipmap.workbench1);
+                        mViewPager.setCurrentItem(0);
                             break;
                     case 1: tab.setIcon(R.mipmap.directory1);
+                        mViewPager.setCurrentItem(1);
                             break;
                     case 2: tab.setIcon(R.mipmap.setup1);
+                        mViewPager.setCurrentItem(2);
                 }
             }
 

@@ -1,15 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        
-        <item name="colorControlNormal">@color/c1olorblack</item>
-        <item name="colorControlActivated">@color/darkGreen</item>
-        <item name="colorControlHighlight">@color/darkGreen</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        //很重要
+        <item name="windowNoTitle">true</item>
+        //很重要
     </style>
 
 
@@ -17,4 +17,8 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/c1olorblack</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
