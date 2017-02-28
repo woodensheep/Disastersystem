@@ -10,21 +10,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CreateTaskActivity extends AppCompatActivity {
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
         initView();
+        toolbar.setTitle("创建任务");
+        setSupportActionBar(toolbar);
     }
 
     private void initView() {
-        toolbar.setTitle("创建任务");
+        toolbar= (Toolbar) findViewById(R.id.create_task_toolbar);
     }
 
 }
