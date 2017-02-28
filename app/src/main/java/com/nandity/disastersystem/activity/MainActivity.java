@@ -5,6 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
@@ -19,13 +21,12 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout.Tab one;
     private TabLayout.Tab two;
     private TabLayout.Tab three;
-
+    private Toolbar myToolBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
-
         //初始化视图
         initViews();
        // setListeners();
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager= (ViewPager) findViewById(R.id.viewPager);
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(myFragmentPagerAdapter);
-
         //将TabLayout与ViewPager绑定在一起
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -88,7 +88,5 @@ public class MainActivity extends AppCompatActivity {
         one.setIcon(R.drawable.selected_tab_image_workbench);
         two.setIcon(R.drawable.selected_tab_image_directory);
         three.setIcon(R.drawable.selected_tab_image_setup);
-
-
     }
 }
