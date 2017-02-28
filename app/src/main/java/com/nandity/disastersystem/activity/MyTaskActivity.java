@@ -14,6 +14,7 @@ import com.nandity.disastersystem.R;
 public class MyTaskActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

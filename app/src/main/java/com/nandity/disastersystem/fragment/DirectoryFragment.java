@@ -40,6 +40,9 @@ public class DirectoryFragment extends Fragment {
         initData();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.directory);
         mSearchView = (SearchView) view.findViewById(R.id.searchView);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setSubmitButtonEnabled(true);
+        mSearchView.setQueryHint("请输入搜索内容");
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
