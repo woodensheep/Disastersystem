@@ -1,5 +1,7 @@
 package com.nandity.disastersystem.adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nandity.disastersystem.R;
+import com.nandity.disastersystem.activity.SettingsActivity;
 import com.nandity.disastersystem.bean.Category;
 
 import me.drakeet.multitype.ItemViewProvider;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by lemon on 2017/2/23.
@@ -30,9 +35,18 @@ public class CategoryViewProvider
 
     @Override
     protected void onBindViewHolder(
-            @NonNull ViewHolder holder, @NonNull Category category) {
+            @NonNull final ViewHolder holder, @NonNull final Category category) {
         holder.tv_setup.setText(category.text);
         holder.iv_setup.setBackgroundResource(category.id);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(holder.itemView.getContext(), SettingsActivity.class);
+                intent.putExtra("settings",category.text);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,7 +58,8 @@ public class CategoryViewProvider
             super(itemView);
             this.iv_setup = (ImageView) itemView.findViewById(R.id.iv_setup);
             this.tv_setup = (TextView) itemView.findViewById(R.id.tv_setup);
-
         }
     }
+
+
 }

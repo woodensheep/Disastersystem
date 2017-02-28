@@ -6,7 +6,6 @@
     <string name="setup">系统设置</string>
 
 
-
     <string name="video_capture">视频采集</string>
     <string name="group_intercom">群组对讲</string>
     <string name="video_address">录像地址</string>
@@ -16,7 +15,7 @@
     <string name="stream">码流</string>
     <string name="resolving_power">分辨率</string>
     <string name="system_information">系统信息</string>
-
+    <string name="sign_out">注销登陆</string>
 
 
 </resources>

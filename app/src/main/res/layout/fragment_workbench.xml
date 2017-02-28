@@ -3,8 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment1"/>
+        android:orientation="horizontal"
+        android:layout_height="45dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:background="@color/c1olorblue"
+            android:textColor="@color/c1olorwhite"
+            android:text="@string/workbench"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

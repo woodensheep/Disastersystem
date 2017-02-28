@@ -44,9 +44,22 @@ public class SetupFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View  view=inflater.inflate(R.layout.fragment_setup, container, false);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( getActivity(),
+                LinearLayoutManager.VERTICAL, false) {
+
+            @Override
+            public boolean canScrollVertically() {
+
+                return false;
+            }
+
+        };
+
         rvSetup= (RecyclerView) view.findViewById(R.id.rv_setup);
         items = new Items();
         adapter = new MultiTypeAdapter(items);
+        /* 注册类型和 View 的对应关系 */
         adapter.register(Category.class, new CategoryViewProvider());
 
         /* 模拟加载数据，也可以稍后再加载，然后使用
@@ -56,10 +69,15 @@ public class SetupFragment extends Fragment {
             //items.add(new Song("小艾大人", R.drawable.avatar_dakeet));
             //items.add(new Song("许岑", R.drawable.avatar_cen));
         }
-        /* 注册类型和 View 的对应关系 */
-        rvSetup.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvSetup.setLayoutManager(linearLayoutManager);
         rvSetup.setAdapter(adapter);
 
+        setlisteners();
         return view;
     }
+
+    private void setlisteners() {
+    }
+
+
 }
