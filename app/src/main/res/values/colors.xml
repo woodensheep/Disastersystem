@@ -8,5 +8,12 @@
     <color name="c1olorgray">#777777</color>
     <color name="c1olorblack">#111111</color>
     <color name="c1olorblue">#1E90FF</color>
+    <color name="c1olorblue2">#337ab7</color>
     <color name="darkGreen">#006400</color>
+
+
+    <color name="tabbackground">#1E90FF</color>
+    <color name="tabIndicatorColor">#337ab7</color>
+    <color name="tabSelectedTextColor">#777777</color>
+    <color name="tabTextColor">#111111</color>
 </resources>
