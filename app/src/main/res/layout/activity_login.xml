@@ -30,6 +30,7 @@
             android:textSize="28sp"/>
 
         <!-- name label -->
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -47,6 +48,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/et_pwd"
                 android:layout_width="match_parent"
@@ -55,26 +57,21 @@
                 android:hint="密码"/>
         </android.support.design.widget.TextInputLayout>
 
-        <com.nandity.disastersystem.view.AnimationButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="50dp"
+            android:text="登录"
+            android:textSize="13sp"
+            android:textColor="@color/c1olorblue"
+            android:background="@drawable/loginbtn_selector"
+            android:layout_marginTop="40dp"
             android:padding="12dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
-
-            <TextView
-                android:id="@+id/forgetpwd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="忘记密码?"
-                android:textColor="#337ab7"
-                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/settings"
