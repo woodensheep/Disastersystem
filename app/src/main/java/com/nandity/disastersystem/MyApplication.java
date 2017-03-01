@@ -1,6 +1,7 @@
 package com.nandity.disastersystem;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient;
  */
 
 public class MyApplication extends Application{
+    private static Context context;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,5 +25,9 @@ public class MyApplication extends Application{
                 .readTimeout(10,TimeUnit.SECONDS)
                 .build();
         OkHttpUtils.initClient(okHttpClient);
+        context=getApplicationContext();
+    }
+    public static Context getContext(){
+        return context;
     }
 }
