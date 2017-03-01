@@ -65,7 +65,10 @@ public class SetupFragment extends Fragment {
         /* 模拟加载数据，也可以稍后再加载，然后使用
          * adapter.notifyDataSetChanged() 刷新列表 */
         for (int i = 0; i <9; i++) {
-            items.add(new Category(stringsname[i],getContext().getResources().getIdentifier(stringsid[i], "mipmap", getContext().getPackageName())));
+            items.add(new Category(stringsname[i],
+                    getContext().getResources().getIdentifier(stringsid[i], "mipmap", getContext().getPackageName())
+            ,i)
+            );
             //items.add(new Song("小艾大人", R.drawable.avatar_dakeet));
             //items.add(new Song("许岑", R.drawable.avatar_cen));
         }

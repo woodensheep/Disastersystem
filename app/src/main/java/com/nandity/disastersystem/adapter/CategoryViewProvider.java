@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,21 @@ public class CategoryViewProvider
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(holder.itemView.getContext(), SettingsActivity.class);
-                intent.putExtra("settings",category.text);
-                holder.itemView.getContext().startActivity(intent);
+                Intent intent1 = new Intent(holder.itemView.getContext(), SettingsActivity.class);
+                intent1.putExtra("settings", category.text);
+                //Log.d("11111",category.type+"");
+                intent1.putExtra("settings_type", category.type+"");
+                holder.itemView.getContext().startActivity(intent1);
             }
         });
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @NonNull private final ImageView iv_setup;
-        @NonNull private final TextView tv_setup;
+        @NonNull
+        private final ImageView iv_setup;
+        @NonNull
+        private final TextView tv_setup;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
