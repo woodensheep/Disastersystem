@@ -14,6 +14,6 @@
 
     <color name="tabbackground">#1E90FF</color>
     <color name="tabIndicatorColor">#337ab7</color>
-    <color name="tabSelectedTextColor">#777777</color>
-    <color name="tabTextColor">#111111</color>
+    <color name="tabSelectedTextColor">#111111</color>
+    <color name="tabTextColor">#777777</color>
 </resources>
