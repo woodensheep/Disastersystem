@@ -6,13 +6,7 @@ package com.nandity.disastersystem.bean;
 
 public class DirectoryBean {
     private String name;
-    private String number;
-
-    public DirectoryBean(String name,String number ) {
-        this.name = name;
-        this.number = number;
-
-    }
+    private String mobile;
 
     public String getName() {
         return name;
@@ -22,11 +16,19 @@ public class DirectoryBean {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    @Override
+    public String toString() {
+        return "DirectoryBean{" +
+                "name='" + name + '\'' +
+                ", mobile='" + mobile + '\'' +
+                '}';
     }
 }

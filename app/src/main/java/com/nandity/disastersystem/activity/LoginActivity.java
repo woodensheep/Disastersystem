@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.constant.ConnectUrl;
@@ -27,7 +26,6 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Random;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -52,8 +50,9 @@ public class LoginActivity extends AppCompatActivity {
     private String sessiongId;
     private SharedPreferences sp;
     private ProgressDialog progressDialog;
-    private boolean isLogin=false;
+    private boolean isLogin = false;
     private Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +60,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         sp = getSharedPreferences("config", Context.MODE_PRIVATE);
-        context=this;
+        context = this;
         initView();
         setListener();
     }
 
     private void initView() {
-        etName.setText(sp.getString("userName",""));
-        etPwd.setText(sp.getString("passWord",""));
+        etName.setText(sp.getString("userName", ""));
+        etPwd.setText(sp.getString("passWord", ""));
         progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -90,28 +89,25 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                View view= LayoutInflater.from(context).inflate(R.layout.dialog_setting,null);
-                final EditText etIp= (EditText) view.findViewById(R.id.setting_ip);
-                final EditText etPort= (EditText)view.findViewById(R.id.setting_port);
-                etIp.setText(sp.getString("IP",""));
-                etPort.setText(sp.getString("PORT",""));
+                View view = LayoutInflater.from(context).inflate(R.layout.dialog_setting, null);
+                final EditText etIp = (EditText) view.findViewById(R.id.setting_ip);
+                final EditText etPort = (EditText) view.findViewById(R.id.setting_port);
+                etIp.setText(sp.getString("IP", ""));
+                etPort.setText(sp.getString("PORT", ""));
                 new AlertDialog.Builder(context)
                         .setView(view)
                         .setTitle("设置")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String ip=etIp.getText().toString().trim();
-                                String port=etPort.getText().toString().trim();
-                                sp.edit().putString("IP",ip).apply();
-                                sp.edit().putString("PORT",port).apply();
+                                String ip = etIp.getText().toString().trim();
+                                String port = etPort.getText().toString().trim();
+                                sp.edit().putString("IP", ip).apply();
+                                sp.edit().putString("PORT", port).apply();
                                 ToastUtils.showShortToast("设置成功");
                                 dialog.dismiss();
                             }
                         }).show();
-
-
-
             }
         });
     }
@@ -119,50 +115,58 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
         sessiongId = UUID.randomUUID().toString();
-        sp.edit().putString("sessionId", sessiongId).apply();
         Log.d(TAG, "账号：" + name);
         Log.d(TAG, "密码：" + pwd);
         Log.d(TAG, "sessionId：" + sessiongId);
         Log.d(TAG, "偏好设置中的sessionId：" + sp.getString("sessionId", ""));
-        OkHttpUtils.get().url(ConnectUrl.LOGIN_URL)
-                .addParams("userName", name)
-                .addParams("passWord", pwd)
-                .addParams("sessionId", sessiongId)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        ToastUtils.showShortToast("网络故障，请检查网络！");
-                        btnLogin.setEnabled(true);
-                        progressDialog.dismiss();
-                    }
 
-                    @Override
-                    public void onResponse(String response, int id) {
-                        btnLogin.setEnabled(true);
-                        progressDialog.dismiss();
-                        sp.edit().putString("userName",name).apply();
-                        sp.edit().putString("passWord",pwd).apply();
-                        String msg, status;
-                        Log.d(TAG, "登录返回的数据："+response);
-                        try {
-                            JSONObject object = new JSONObject(response);
-                            status = object.getString("status");
-                            msg = object.getString("message");
-                            if ("200".equals(status)) {
-                                ToastUtils.showShortToast(msg);
-                                Intent intent=new Intent(context,MainActivity.class);
-                                startActivity(intent);
-                                isLogin=true;
-                                finish();
-                            }else {
-                                ToastUtils.showShortToast(msg);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        try {
+            OkHttpUtils.get().url(new ConnectUrl().getLoginUrl())
+                    .addParams("userName", name)
+                    .addParams("passWord", pwd)
+                    .addParams("sessionId", sessiongId)
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            ToastUtils.showShortToast("网络故障，请检查网络！");
+                            btnLogin.setEnabled(true);
+                            progressDialog.dismiss();
                         }
-                    }
-                });
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            btnLogin.setEnabled(true);
+                            progressDialog.dismiss();
+                            String msg, status;
+                            Log.d(TAG, "登录返回的数据：" + response);
+                            try {
+                                JSONObject object = new JSONObject(response);
+                                status = object.getString("status");
+                                msg = object.getString("message");
+                                if ("200".equals(status)) {
+                                    sp.edit().putString("userName", name).apply();
+                                    sp.edit().putString("passWord", pwd).apply();
+                                    sp.edit().putString("sessionId", sessiongId).apply();
+                                    ToastUtils.showShortToast(msg);
+                                    Intent intent = new Intent(context, MainActivity.class);
+                                    startActivity(intent);
+                                    isLogin = true;
+                                    finish();
+                                } else {
+                                    ToastUtils.showShortToast(msg);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.showShortToast("登录失败，请检查IP是否设置！");
+            progressDialog.dismiss();
+            btnLogin.setEnabled(true);
+        }
     }
 
 

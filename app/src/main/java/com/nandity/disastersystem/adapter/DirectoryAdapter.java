@@ -39,7 +39,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
         final DirectoryBean item = beanList.get(position);
 
         viewHolder.mTextView.setText(item.getName());
-        viewHolder.mTextView1.setText(item.getNumber());
+        viewHolder.mTextView1.setText(item.getMobile());
     }
 
     //获取数据的数量

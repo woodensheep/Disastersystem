@@ -40,5 +40,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     //网络请求
     compile 'com.zhy:okhttputils:2.6.2'
-
+    //下拉刷新
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
+    //gson解析
+    compile 'com.google.code.gson:gson:2.8.0'
 }

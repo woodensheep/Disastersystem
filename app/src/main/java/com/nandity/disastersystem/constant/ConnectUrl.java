@@ -10,8 +10,22 @@ import com.nandity.disastersystem.MyApplication;
  */
 
 public class ConnectUrl {
-    private static SharedPreferences sp=MyApplication.getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
-    private static final String IP=sp.getString("IP","");
-    private static final String PORT=sp.getString("PORT","");
-    public static final String LOGIN_URL="http://"+IP+":"+PORT+"/cmdapp/androidLogin.do";
+    private SharedPreferences sp;
+    private String port;
+    private String ip;
+
+    public ConnectUrl() {
+        sp = MyApplication.getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+        ip = sp.getString("IP", "");
+        port = sp.getString("PORT", "");
+    }
+
+    public String getLoginUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/androidLogin.do";
+    }
+
+    public String getDirectoryUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getAddressList.do";
+    }
+
 }

@@ -32,11 +32,12 @@
         android:iconifiedByDefault="false"
         />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/directory"
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/directory_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
+
+    </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
 
 
 </LinearLayout>
