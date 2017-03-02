@@ -3,7 +3,7 @@ package com.nandity.disastersystem.constant;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.nandity.disastersystem.MyApplication;
+import com.nandity.disastersystem.app.MyApplication;
 
 /**
  * Created by ChenPeng on 2017/3/1.

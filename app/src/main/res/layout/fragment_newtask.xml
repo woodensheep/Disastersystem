@@ -42,6 +42,7 @@
                     android:layout_weight="7"
                     android:background="@null"
                     android:textSize="15sp"
+                    android:editable="false"
                     android:paddingLeft="7dp"
                     android:text="2017-3-1" />
 

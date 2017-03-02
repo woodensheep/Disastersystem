@@ -8,12 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nandity.disastersystem.R;
-import com.nandity.disastersystem.bean.TaskBean;
-import com.zhy.http.okhttp.utils.L;
+import com.nandity.disastersystem.dataBase.TaskBean;
 
 import java.util.List;
-
-import static com.nandity.disastersystem.R.id.tv_address;
 
 /**
  * Created by lemon on 2017/3/1.
@@ -43,7 +40,7 @@ public class UnTaskAdapter extends RecyclerView.Adapter<UnTaskAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.tvTask.setText("本地未上传任务");
-        holder.tvAddress.setText("地址： "+mDatas.get(position).getAddress());
+        holder.tvAddress.setText("地址： "+mDatas.get(position).getMaddress());
     }
 
     @Override
