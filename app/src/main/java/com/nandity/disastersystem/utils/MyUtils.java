@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by lemon on 2017/3/1.
  */
 
-public class Myutils {
+public class MyUtils {
 
     public static String getSystemTime(){
         SimpleDateFormat formatter   =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

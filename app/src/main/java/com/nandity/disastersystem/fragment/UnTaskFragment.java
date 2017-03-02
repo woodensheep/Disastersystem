@@ -50,6 +50,13 @@ public class UnTaskFragment extends Fragment {
 
     private void initData() {
         mListData =new ArrayList<TaskBean>();
+
+
+        List<TaskBean> taskBeans=TaskBean.listAll(TaskBean.class);
+        for(int i=0;i<taskBeans.size();i++){
+            mListData.add(taskBeans.get(i));
+        }
+
 //        mListData.add(new TaskBean("2017-3-1","","家里","","",""));
 //        mListData.add(new TaskBean("2017-3-1","","家里","","",""));
 //        mListData.add(new TaskBean("2017-3-1","","家里","","",""));

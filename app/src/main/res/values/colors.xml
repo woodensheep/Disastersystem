@@ -16,4 +16,11 @@
     <color name="tabIndicatorColor">#337ab7</color>
     <color name="tabSelectedTextColor">#111111</color>
     <color name="tabTextColor">#777777</color>
+    <color name="status_color">#56abe4</color>
+    <color name="colorWhite">#fff</color>
+    <color name="text_gray">#7b403b37</color>
+    <color name="default_line_color">#e6e6e6</color>
+    <color name="list_item_focus">#0a000000</color>
+    <color name="white_alpha_percent_45">#73ffffff</color>
+    <color name="light_black_color">#3B3B3B</color>
 </resources>
