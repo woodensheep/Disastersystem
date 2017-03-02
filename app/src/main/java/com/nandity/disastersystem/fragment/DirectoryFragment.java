@@ -48,8 +48,9 @@ public class DirectoryFragment extends Fragment {
     private SharedPreferences sp;
     private String sessionId;
     private int pageNum = 0;
-    private static int rowsNum = 5;
+    private static int rowsNum = 10;
     private List<DirectoryBean> list = new ArrayList<>();
+    private RecyclerView mRecyclerView;
 
     @Nullable
     @Override
@@ -68,7 +69,8 @@ public class DirectoryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        directoryList.setRefreshing(true);
+        mRecyclerView = directoryList.getRecyclerView();
+        mRecyclerView.setVerticalScrollBarEnabled(true);
         directoryList.setFooterViewText("正在加载...");
         directoryList.setPullRefreshEnable(false);
         directoryList.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
@@ -78,6 +80,7 @@ public class DirectoryFragment extends Fragment {
 
             @Override
             public void onLoadMore() {
+                directoryList.setRefreshing(true);
                 loadMore();
             }
         });
@@ -104,18 +107,18 @@ public class DirectoryFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.d(TAG,"第一次返回的数据："+response);
-                        String status,msg;
+                        Log.d(TAG, "第一次返回的数据：" + response);
+                        String status, msg;
                         try {
-                            JSONObject object=new JSONObject(response);
-                            status=object.getString("status");
-                            msg=object.getString("message");
-                            Log.d(TAG,"用户数据："+msg);
-                            if("200".equals(status)){
-                                list= JsonFormat.stringToList(msg,DirectoryBean.class);
-                                Log.d(TAG,"第一次加载的数据："+list.toString());
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            msg = object.getString("message");
+                            Log.d(TAG, "用户数据：" + msg);
+                            if ("200".equals(status)) {
+                                list = JsonFormat.stringToList(msg, DirectoryBean.class);
+                                Log.d(TAG, "第一次加载的数据：" + list.toString());
                                 setAdapter();
-                            }else if ("400".equals(status)){
+                            } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                             }
                         } catch (JSONException e) {
@@ -140,20 +143,24 @@ public class DirectoryFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.d(TAG,"上拉加载返回的数据："+response);
-                        String status,msg;
+                        Log.d(TAG, "上拉加载返回的数据：" + response);
+                        String status, msg;
                         try {
-                            JSONObject object=new JSONObject(response);
-                            status=object.getString("status");
-                            msg=object.getString("message");
-                            if("200".equals(status)){
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            msg = object.getString("message");
+                            if ("200".equals(status)) {
                                 List<DirectoryBean> morelist = JsonFormat.stringToList(msg, DirectoryBean.class);
-                                Log.d(TAG,"上拉加载的数据："+morelist.toString());
+                                Log.d(TAG, "上拉加载的数据：" + morelist.toString());
                                 list.addAll(morelist);
                                 adapter.notifyDataSetChanged();
                                 directoryList.setPullLoadMoreCompleted();
-                            }else if ("400".equals(status)){
+                            } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
+                                directoryList.setPullLoadMoreCompleted();
+                            } else if ("500".equals(status)) {
+                                ToastUtils.showShortToast(msg);
+                                directoryList.setPullLoadMoreCompleted();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

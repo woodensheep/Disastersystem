@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nandity.disastersystem.R;
-import com.nandity.disastersystem.dataBase.TaskBean;
+import com.nandity.disastersystem.database.TaskBean;
 
 import java.util.List;
 

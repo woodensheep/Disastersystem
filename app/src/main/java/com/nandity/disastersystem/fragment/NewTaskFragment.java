@@ -14,8 +14,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
-import com.nandity.disastersystem.dataBase.TaskBean;
-import com.nandity.disastersystem.utils.MyUtils;
+import com.nandity.disastersystem.database.TaskBean;
+import com.nandity.disastersystem.utils.Myutils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class NewTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 TaskBean taskBean=new TaskBean();
-                taskBean.setMtime(MyUtils.getSystemTime());
+                taskBean.setMtime(Myutils.getSystemTime());
                 taskBean.setMdisaster(spDisaster.getSelectedItem().toString().trim());
                 taskBean.setMaddress(etNewtaskDisaster.getText().toString().trim());
                 taskBean.setMtownship(spTownship.getSelectedItem().toString().trim());
@@ -99,7 +99,7 @@ public class NewTaskFragment extends Fragment {
     }
 
     private void cleanAll() {
-        etNewtaskTime.setText(MyUtils.getSystemTime());
+        etNewtaskTime.setText(Myutils.getSystemTime());
         spDisaster.setSelection(0,true);
         etNewtaskDisaster.setText("");
         spTownship.setSelection(0,true);
@@ -121,7 +121,7 @@ public class NewTaskFragment extends Fragment {
 
     private void initData() {
 
-        etNewtaskTime.setText(MyUtils.getSystemTime());
+        etNewtaskTime.setText(Myutils.getSystemTime());
         //灾害点
         //数据
         mDisasterList = new ArrayList<String>();

@@ -1,4 +1,4 @@
-package com.nandity.disastersystem.dataBase;
+package com.nandity.disastersystem.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;

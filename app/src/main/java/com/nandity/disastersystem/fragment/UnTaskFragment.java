@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.adapter.UnTaskAdapter;
-import com.nandity.disastersystem.dataBase.TaskBean;
+import com.nandity.disastersystem.database.TaskBean;
 
 import java.util.ArrayList;
 import java.util.List;
