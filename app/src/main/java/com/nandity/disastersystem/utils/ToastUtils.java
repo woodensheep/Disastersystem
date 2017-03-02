@@ -5,9 +5,7 @@ import android.os.Looper;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
-import com.nandity.disastersystem.MyApplication;
-
-import butterknife.internal.Utils;
+import com.nandity.disastersystem.app.MyApplication;
 
 /**
  * Created by ChenPeng on 2017/3/1.

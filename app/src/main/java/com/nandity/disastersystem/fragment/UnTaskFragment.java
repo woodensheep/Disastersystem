@@ -6,16 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nandity.disastersystem.R;
-import com.nandity.disastersystem.adapter.DirectoryAdapter;
 import com.nandity.disastersystem.adapter.UnTaskAdapter;
-import com.nandity.disastersystem.bean.DirectoryBean;
-import com.nandity.disastersystem.bean.TaskBean;
+import com.nandity.disastersystem.dataBase.TaskBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +46,13 @@ public class UnTaskFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         return view;
 
-
     }
 
     private void initData() {
         mListData =new ArrayList<TaskBean>();
-        mListData.add(new TaskBean("1","家里"));
-        mListData.add(new TaskBean("1","家里"));
-        mListData.add(new TaskBean("1","家里"));
-
+//        mListData.add(new TaskBean("2017-3-1","","家里","","",""));
+//        mListData.add(new TaskBean("2017-3-1","","家里","","",""));
+//        mListData.add(new TaskBean("2017-3-1","","家里","","",""));
     }
+
 }

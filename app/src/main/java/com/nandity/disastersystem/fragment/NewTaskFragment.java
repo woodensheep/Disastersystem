@@ -4,23 +4,18 @@ package com.nandity.disastersystem.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.ButtonBarLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
-import com.nandity.disastersystem.adapter.DirectoryAdapter;
-import com.nandity.disastersystem.bean.DirectoryBean;
+import com.nandity.disastersystem.dataBase.TaskBean;
+import com.nandity.disastersystem.utils.MyUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +72,39 @@ public class NewTaskFragment extends Fragment {
 
 
     private void setLinsteners() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TaskBean taskBean=new TaskBean();
+                taskBean.setMtime(MyUtils.getSystemTime());
+                taskBean.setMdisaster(spDisaster.getSelectedItem().toString().trim());
+                taskBean.setMaddress(etNewtaskDisaster.getText().toString().trim());
+                taskBean.setMtownship(spTownship.getSelectedItem().toString().trim());
+                taskBean.setMdepartment(spDepartment.getSelectedItem().toString().trim());
+                taskBean.setMworkers(spWorkers.getSelectedItem().toString().trim());
+                taskBean.save();
+                Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_SHORT).show();
+                cleanAll();
+            }
+        });
 
+        btnCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleanAll();
+            }
+
+
+        });
+    }
+
+    private void cleanAll() {
+        etNewtaskTime.setText(MyUtils.getSystemTime());
+        spDisaster.setSelection(0,true);
+        etNewtaskDisaster.setText("");
+        spTownship.setSelection(0,true);
+        spDepartment.setSelection(0,true);
+        spWorkers.setSelection(0,true);
     }
 
     private void initViews() {
@@ -93,6 +120,8 @@ public class NewTaskFragment extends Fragment {
     }
 
     private void initData() {
+
+        etNewtaskTime.setText(MyUtils.getSystemTime());
         //灾害点
         //数据
         mDisasterList = new ArrayList<String>();
