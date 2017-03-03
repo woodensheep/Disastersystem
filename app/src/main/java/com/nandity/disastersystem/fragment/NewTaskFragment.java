@@ -11,14 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.database.TaskBean;
+import com.nandity.disastersystem.utils.DateTimePickUtil;
 import com.nandity.disastersystem.utils.MyUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +46,7 @@ public class NewTaskFragment extends Fragment {
     private ArrayAdapter<String> mWorkersAdapter;
 
     /*调查时间*/
-    private EditText etNewtaskTime;
+    private TextView etNewtaskTime;
     /*灾害点*/
     private Spinner spDisaster;
     /*调查时间*/
@@ -97,8 +101,16 @@ public class NewTaskFragment extends Fragment {
 
 
         });
+        etNewtaskTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickUtil dateTimePicKDialog = new DateTimePickUtil(
+                        getActivity(),new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
+                dateTimePicKDialog.dateTimePicKDialog(etNewtaskTime);
+            }
+        });
     }
-
+    private String initStartDateTime = "2013年9月3日 14:44"; // 初始化开始时间
     private void cleanAll() {
         etNewtaskTime.setText(MyUtils.getSystemTime());
         spDisaster.setSelection(0,true);
@@ -109,7 +121,7 @@ public class NewTaskFragment extends Fragment {
     }
 
     private void initViews() {
-        etNewtaskTime = (EditText) view.findViewById(R.id.et_newtask_time);
+        etNewtaskTime = (TextView) view.findViewById(R.id.et_newtask_time);
         spDisaster = (Spinner) view.findViewById(R.id.sp_disaster);
         spTownship = (Spinner) view.findViewById(R.id.sp_township);
         spDepartment = (Spinner) view.findViewById(R.id.sp_department);

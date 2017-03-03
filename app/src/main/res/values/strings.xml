@@ -29,5 +29,6 @@
     <string name="str_search_hint">搜索</string>
     <string name="str_searchHistory">搜索历史</string>
     <string name="str_clearSearchHistory">清除历史</string>
+    <string name="title_activity_fill_info">FillInfoActivity</string>
 
 </resources>
