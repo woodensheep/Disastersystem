@@ -1,6 +1,7 @@
 package com.nandity.disastersystem.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.adapter.MyFragmentPagerAdapter;
+import com.nandity.disastersystem.app.MyApplication;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,7 +97,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            signOut();
+            return true;
+        }
+        return false;
 
+    }
+    public  void signOut(){
             new AlertDialog.Builder(this)
                     .setTitle("退出程序")
                     .setMessage("确定退出程序吗？")
@@ -111,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     }).show();
-            return true;
-        }
-        return false;
 
     }
 }
