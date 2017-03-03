@@ -54,13 +54,14 @@ public class MyTaskActivity extends AppCompatActivity {
     private TabLayout.Tab mTab1;
     private TabLayout.Tab mTab2;
     private TabLayout.Tab mTab3;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_task);
         sp = getSharedPreferences("config", Context.MODE_PRIVATE);
-        page=1+"";
+        page=0+"";
         rows=6+"";
         sessionId=sp.getString("sessionId", "");
         toolbar = (Toolbar) findViewById(R.id.my_task_toolbar);
@@ -81,15 +82,13 @@ public class MyTaskActivity extends AppCompatActivity {
 
     private void initDatas() {
 
-//        for (int i=0;i<7;i++) {
-//            TaskInfoBean taskInfoBean = new TaskInfoBean();
-//            taskInfoBean.setmRowNumber("2016第XX号"+i);
-//            taskInfoBean.setmDisaster("XXX滑坡");
-//            taskInfoBean.setmAddress("XX村XX组");
-//            mListData.add(taskInfoBean);
-//        }
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("正在加载...");
+        progressDialog.show();
         setOkHttp();
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
     }
 
     private void setListener() {
@@ -98,7 +97,8 @@ public class MyTaskActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
                     case 0:
-                        setOkHttp();
+                        initDatas();
+                        //setOkHttp();
                         break;
                 }
             }
@@ -148,11 +148,13 @@ public class MyTaskActivity extends AppCompatActivity {
                     .execute(new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
+                            progressDialog.dismiss();
                             ToastUtils.showShortToast("网络故障，请检查网络！");
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
+                            progressDialog.dismiss();
                             String msg, status;
                             Log.d(TAG, "返回的数据：" + response);
                             try {
@@ -173,6 +175,7 @@ public class MyTaskActivity extends AppCompatActivity {
                                         mListData.add(taskInfoBean);
                                     }
                                     mTab1.setText("未处理("+mListData.size()+")");
+                                    mAdapter.notifyDataSetChanged();
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -186,7 +189,10 @@ public class MyTaskActivity extends AppCompatActivity {
                     });
         } catch (Exception e) {
             e.printStackTrace();
-            //ToastUtils.showShortToast("登录失败，请检查IP是否设置！");
+            progressDialog.dismiss();
+            ToastUtils.showShortToast("加载失败！");
         }
     }
+
+
 }

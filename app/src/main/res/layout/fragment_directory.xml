@@ -53,11 +53,12 @@
             android:layout_alignRight="@+id/et_search_content"
             android:layout_alignEnd="@+id/et_search_content" />
 
+        <!--app:srcCompat="@android:drawable/ic_menu_search"-->
         <ImageView
             android:id="@+id/btn_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@mipmap/search1"
             android:layout_margin="5dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

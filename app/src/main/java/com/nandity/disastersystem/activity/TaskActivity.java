@@ -1,5 +1,6 @@
 package com.nandity.disastersystem.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,6 +58,7 @@ public class TaskActivity extends AppCompatActivity {
     private String mId;
     private SharedPreferences sp;
     private String sessionId;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,19 @@ public class TaskActivity extends AppCompatActivity {
         tvTaskId.setText(mId);
         sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId=sp.getString("sessionId", "");
+
+        initData();
+
     }
 
+    private void initData() {
+        progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("正在加载...");
+        progressDialog.show();
+        setOkHttp();
+    }
 
 
     private void setOkHttp() {
@@ -82,11 +95,13 @@ public class TaskActivity extends AppCompatActivity {
                     .execute(new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int id) {
+                            progressDialog.dismiss();
                             ToastUtils.showShortToast("网络故障，请检查网络！");
                         }
 
                         @Override
                         public void onResponse(String response, int id) {
+                            progressDialog.dismiss();
                             String msg, status;
                             Log.d(TAG, "登录返回的数据：" + response);
                             try {
@@ -120,9 +135,12 @@ public class TaskActivity extends AppCompatActivity {
                         }
                     });
         } catch (Exception e) {
+            progressDialog.dismiss();
             e.printStackTrace();
-            //ToastUtils.showShortToast("登录失败，请检查IP是否设置！");
+            ToastUtils.showShortToast("加载失败！");
         }
     }
+
+    
 
 }
