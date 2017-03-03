@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nandity.disastersystem.R;
+import com.nandity.disastersystem.bean.TaskInfoBean;
 import com.nandity.disastersystem.database.TaskBean;
 
 import java.util.List;
@@ -16,15 +17,15 @@ import java.util.List;
  * Created by lemon on 2017/3/1.
  */
 
-public class UnTaskAdapter extends RecyclerView.Adapter<UnTaskAdapter.MyViewHolder> implements View.OnClickListener {
+public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHolder> implements View.OnClickListener {
 
-    private List<TaskBean> mDatas;
+    private List<TaskInfoBean> mDatas;
     private Context context;
     private LayoutInflater inflater;
 
-    public UnTaskAdapter(Context context, List<TaskBean> mDatas) {
+    public MyTaskAdapter(Context context, List<TaskInfoBean> mDatas) {
         this.context = context;
-        this.mDatas = mDatas;
+        this.mDatas=mDatas;
         inflater = LayoutInflater.from(context);
     }
 
@@ -43,11 +44,11 @@ public class UnTaskAdapter extends RecyclerView.Adapter<UnTaskAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.tvTask.setText("本地未上传任务");
-        if (mDatas.get(position).getMAddress().equals("")){
+        holder.tvTask.setText(mDatas.get(position).getmRowNumber()+"-"+mDatas.get(position).getmDisaster());
+        if (mDatas.get(position).getmAddress().equals("")){
             holder.tvAddress.setText("地址： " +" 地址未填写");
         }else{
-            holder.tvAddress.setText("地址： " + mDatas.get(position).getMAddress());
+            holder.tvAddress.setText("地址： " + mDatas.get(position).getmAddress());
         }
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(mDatas.get(position));
@@ -57,7 +58,7 @@ public class UnTaskAdapter extends RecyclerView.Adapter<UnTaskAdapter.MyViewHold
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v,(TaskBean)v.getTag());
+            mOnItemClickListener.onItemClick(v,(TaskInfoBean)v.getTag());
         }
     }
 
@@ -83,7 +84,7 @@ public class UnTaskAdapter extends RecyclerView.Adapter<UnTaskAdapter.MyViewHold
      * 设置item点击监听
      */
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, TaskBean taskBean);
+        void onItemClick(View view, TaskInfoBean taskInfoBean);
     }
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;

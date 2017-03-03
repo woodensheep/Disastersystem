@@ -19,8 +19,8 @@ public class CompleteTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_task);
         ButterKnife.bind(this);
-        comTaskToolbar.setTitle("完成任务");
-        setSupportActionBar(comTaskToolbar);
+//        comTaskToolbar.setTitle("完成任务");
+//        setSupportActionBar(comTaskToolbar);
     }
 
 

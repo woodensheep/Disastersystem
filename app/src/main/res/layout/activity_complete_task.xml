@@ -15,10 +15,20 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/com_task_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="@dimen/my_toolbar_height"
+            android:background="@color/c1olorblue"
+             >
 
+
+        <TextView
+            android:id="@+id/title_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/complete_task"
+            android:textColor="@color/c1olorwhite"
+            android:textSize="18sp" />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <LinearLayout
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

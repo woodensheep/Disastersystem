@@ -62,7 +62,7 @@ public class DirectoryFragment extends Fragment {
         context = getActivity();
         sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId = sp.getString("sessionId", "");
-        initData();
+        //initData();
         return view;
     }
 

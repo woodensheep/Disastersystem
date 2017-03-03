@@ -9,7 +9,9 @@
     <color name="c1olorblack">#111111</color>
     <color name="c1olorblue">#1E90FF</color>
     <color name="c1olorblue2">#337ab7</color>
+    <color name="c1olorblue3">#3F51B5</color>
     <color name="darkGreen">#006400</color>
+    <color name="c1olorred">#EE6A50</color>
 
 
     <color name="tabbackground">#1E90FF</color>

@@ -1,12 +1,10 @@
-package com.nandity.disastersystem.fragment;
+package com.nandity.disastersystem.activity;
 
-
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,19 +14,17 @@ import android.widget.Toast;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.database.TaskBean;
+import com.nandity.disastersystem.database.TaskBeanDao;
 import com.nandity.disastersystem.utils.MyUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by lemon on 2017/2/22.
- *
- * 创建新任务
- */
+import static com.nandity.disastersystem.app.MyApplication.getDaoSession;
 
-public class NewTaskFragment extends Fragment {
-    private View view;
+public class UnCompleteActivity extends AppCompatActivity {
+
+    private Toolbar comTaskToolbar;
     private List<String> mDisasterList;
     private ArrayAdapter<String> mDisasterAdapter;
 
@@ -45,7 +41,7 @@ public class NewTaskFragment extends Fragment {
     private EditText etNewtaskTime;
     /*灾害点*/
     private Spinner spDisaster;
-    /*调查时间*/
+    /*调查地点*/
     private EditText etNewtaskDisaster;
     /*乡镇*/
     private Spinner spTownship;
@@ -58,18 +54,18 @@ public class NewTaskFragment extends Fragment {
     private Button btnSubmit;
     private Button btnCancle;
 
-    @Nullable
+    private Long mTaskBeanId;
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_newtask, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_newtask);
+        mTaskBeanId=getIntent().getLongExtra("taskbean_id",-1);
+        Log.d("UnCompleteActivity",""+mTaskBeanId);
         initViews();
         setLinsteners();
         initData();
-        return view;
+        setViewDataAll();
     }
-
 
 
     private void setLinsteners() {
@@ -77,14 +73,15 @@ public class NewTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 TaskBean taskBean=new TaskBean();
+                taskBean.setId((long)mTaskBeanId);
                 taskBean.setMTime(MyUtils.getSystemTime());
                 taskBean.setMDisaster(spDisaster.getSelectedItem().toString().trim());
                 taskBean.setMAddress(etNewtaskDisaster.getText().toString().trim());
                 taskBean.setMTownship(spTownship.getSelectedItem().toString().trim());
                 taskBean.setMDepartment(spDepartment.getSelectedItem().toString().trim());
                 taskBean.setMWorkers(spWorkers.getSelectedItem().toString().trim());
-                MyApplication.getDaoSession().getTaskBeanDao().insert(taskBean);
-                Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_SHORT).show();
+                getDaoSession().getTaskBeanDao().update(taskBean);
+                Toast.makeText(UnCompleteActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
                 cleanAll();
             }
         });
@@ -92,11 +89,62 @@ public class NewTaskFragment extends Fragment {
         btnCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cleanAll();
+                getDaoSession().getTaskBeanDao().deleteByKey((long)mTaskBeanId);
+                Toast.makeText(UnCompleteActivity.this,"刪除成功",Toast.LENGTH_SHORT).show();
+                finish();
             }
 
 
         });
+    }
+
+
+    /**
+     * 设置数据库存的数据
+     */
+    private void setViewDataAll() {
+         TaskBean taskBean=MyApplication.getDaoSession().getTaskBeanDao().queryBuilder()
+                .where(TaskBeanDao.Properties.Id.eq(mTaskBeanId)).build().list().get(0);
+        etNewtaskTime.setText(MyUtils.getSystemTime());
+
+        // 设置灾害点选中
+        for(int i=0;i<mDisasterAdapter.getCount();i++){
+            String string=mDisasterAdapter.getItem(i).toString();
+            if(string.equals(taskBean.getMDisaster())){
+                spDisaster.setSelection(i,true);
+                break;
+            }
+        }
+
+        // 设置调查地点选中
+        etNewtaskDisaster.setText(taskBean.getMAddress());
+
+
+        // 设置乡镇选中
+        for(int i=0;i<mTownshipAdapter.getCount();i++){
+            String string=mTownshipAdapter.getItem(i).toString();
+            if(string.equals(taskBean.getMDisaster())){
+                spTownship.setSelection(i,true);
+                break;
+            }
+        }
+        // 设置部门选中
+        for(int i=0;i<mDepartmentAdapter.getCount();i++){
+            String string=mDepartmentAdapter.getItem(i).toString();
+            if(string.equals(taskBean.getMDisaster())){
+                spDepartment.setSelection(i,true);
+                break;
+            }
+        }
+        // 设置人员选中
+        for(int i=0;i<mWorkersAdapter.getCount();i++){
+            String string=mWorkersAdapter.getItem(i).toString();
+            if(string.equals(taskBean.getMDisaster())){
+                spWorkers.setSelection(i,true);
+                break;
+            }
+        }
+
     }
 
     private void cleanAll() {
@@ -109,17 +157,23 @@ public class NewTaskFragment extends Fragment {
     }
 
     private void initViews() {
-        etNewtaskTime = (EditText) view.findViewById(R.id.et_newtask_time);
-        spDisaster = (Spinner) view.findViewById(R.id.sp_disaster);
-        spTownship = (Spinner) view.findViewById(R.id.sp_township);
-        spDepartment = (Spinner) view.findViewById(R.id.sp_department);
-        spWorkers = (Spinner) view.findViewById(R.id.sp_workers);
-        etNewtaskDisaster = (EditText) view.findViewById(R.id.et_newtask_disaster);
-        btnSave = (Button) view.findViewById(R.id.btn_newtask_save);
-        btnSubmit = (Button) view.findViewById(R.id.btn_newtask_submit);
-        btnCancle = (Button) view.findViewById(R.id.btn_newtask_cancle);
+        comTaskToolbar= (Toolbar) findViewById(R.id.my_toolbar);
+        comTaskToolbar.setVisibility(View.VISIBLE);
+        etNewtaskTime = (EditText) findViewById(R.id.et_newtask_time);
+        spDisaster = (Spinner) findViewById(R.id.sp_disaster);
+        spTownship = (Spinner) findViewById(R.id.sp_township);
+        spDepartment = (Spinner) findViewById(R.id.sp_department);
+        spWorkers = (Spinner) findViewById(R.id.sp_workers);
+        etNewtaskDisaster = (EditText) findViewById(R.id.et_newtask_disaster);
+        btnSave = (Button) findViewById(R.id.btn_newtask_save);
+        btnSubmit = (Button) findViewById(R.id.btn_newtask_submit);
+        btnCancle = (Button) findViewById(R.id.btn_newtask_cancle);
     }
 
+
+    /**
+     * 设置spinner等从网络获取的选项有哪些
+     */
     private void initData() {
 
         etNewtaskTime.setText(MyUtils.getSystemTime());
@@ -130,7 +184,7 @@ public class NewTaskFragment extends Fragment {
         mDisasterList.add("四季坝");
         mDisasterList.add("四季坝滑坡");
         //适配器
-        mDisasterAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mDisasterList);
+        mDisasterAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mDisasterList);
         //设置样式
         mDisasterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //加载适配器
@@ -141,7 +195,7 @@ public class NewTaskFragment extends Fragment {
         mTownshipList.add("请选择乡镇");
         mTownshipList.add("XX镇");
         mTownshipList.add("YY镇");
-        mTownshipAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mTownshipList);
+        mTownshipAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTownshipList);
         mTownshipAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTownship.setAdapter(mTownshipAdapter);
 
@@ -151,7 +205,7 @@ public class NewTaskFragment extends Fragment {
         mDepartmentList.add("请选择部门");
         mDepartmentList.add("XX部");
         mDepartmentList.add("YY部");
-        mDepartmentAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mDepartmentList);
+        mDepartmentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mDepartmentList);
         mDepartmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDepartment.setAdapter(mDepartmentAdapter);
 
@@ -160,7 +214,7 @@ public class NewTaskFragment extends Fragment {
         mWorkersList.add("请选择人员");
         mWorkersList.add("XX");
         mWorkersList.add("YY");
-        mWorkersAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mWorkersList);
+        mWorkersAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mWorkersList);
         mWorkersAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWorkers.setAdapter(mWorkersAdapter);
 

@@ -30,7 +30,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_create_task);
         ButterKnife.bind(this);
-        createTaskToolbar.setTitle("创建任务");
+        createTaskToolbar.setTitle("");
         setSupportActionBar(createTaskToolbar);
         initView();
     }

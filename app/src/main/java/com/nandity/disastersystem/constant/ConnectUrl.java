@@ -28,4 +28,9 @@ public class ConnectUrl {
         return "http://" + ip + ":" + port + "/cmdapp/getAddressList.do";
     }
 
+    public String getStartTaskUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getStartTask.do";
+    }
+
+
 }

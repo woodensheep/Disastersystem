@@ -3,29 +3,101 @@ package com.nandity.disastersystem.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.orm.SugarRecord;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+
 
 /**
  * Created by qingsong on 2017/2/23.
  */
 
-public class TaskBean extends SugarRecord {
-    /** 调查时间**/
-    private String mtime;
-    /** 灾害点**/
-    private String mdisaster;
-    /** 调查地点**/
-    private String maddress;
-    /** 乡镇**/
-    private String mtownship;
-    /** 部门**/
-    private String mdepartment;
-    /** 人员**/
-    private String mworkers;
-
+@Entity
+public class TaskBean {
+    @Id(autoincrement =true)
+    private Long id;
+    /**
+     * 调查时间
+     **/
+    private String mTime;
+    /**
+     * 灾害点
+     **/
+    private String mDisaster;
+    /**
+     * 调查地点
+     **/
+    private String mAddress;
+    /**
+     * 乡镇
+     **/
+    private String mTownship;
+    /**
+     * 部门
+     **/
+    private String mDepartment;
+    /**
+     * 人员
+     **/
+    private String mWorkers;
+    public String getMWorkers() {
+        return this.mWorkers;
+    }
+    public void setMWorkers(String mWorkers) {
+        this.mWorkers = mWorkers;
+    }
+    public String getMDepartment() {
+        return this.mDepartment;
+    }
+    public void setMDepartment(String mDepartment) {
+        this.mDepartment = mDepartment;
+    }
+    public String getMTownship() {
+        return this.mTownship;
+    }
+    public void setMTownship(String mTownship) {
+        this.mTownship = mTownship;
+    }
+    public String getMAddress() {
+        return this.mAddress;
+    }
+    public void setMAddress(String mAddress) {
+        this.mAddress = mAddress;
+    }
+    public String getMDisaster() {
+        return this.mDisaster;
+    }
+    public void setMDisaster(String mDisaster) {
+        this.mDisaster = mDisaster;
+    }
+    public String getMTime() {
+        return this.mTime;
+    }
+    public void setMTime(String mTime) {
+        this.mTime = mTime;
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    @Generated(hash = 875566835)
+    public TaskBean(Long id, String mTime, String mDisaster, String mAddress, String mTownship, String mDepartment, String mWorkers) {
+        this.id = id;
+        this.mTime = mTime;
+        this.mDisaster = mDisaster;
+        this.mAddress = mAddress;
+        this.mTownship = mTownship;
+        this.mDepartment = mDepartment;
+        this.mWorkers = mWorkers;
+    }
+    @Generated(hash = 1443476586)
     public TaskBean() {
     }
 
+
+}
 //    public TaskBean(String mTime, String mDisaster, String mAddress, String mTownship, String mDepartment, String mWorkers) {
 //        this.mTime = mTime;
 //        this.mDisaster = mDisaster;
@@ -36,54 +108,6 @@ public class TaskBean extends SugarRecord {
 //    }
 
 
-    public String getMtime() {
-        return mtime;
-    }
-
-    public void setMtime(String mtime) {
-        this.mtime = mtime;
-    }
-
-    public String getMdisaster() {
-        return mdisaster;
-    }
-
-    public void setMdisaster(String mdisaster) {
-        this.mdisaster = mdisaster;
-    }
-
-    public String getMaddress() {
-        return maddress;
-    }
-
-    public void setMaddress(String maddress) {
-        this.maddress = maddress;
-    }
-
-    public String getMtownship() {
-        return mtownship;
-    }
-
-    public void setMtownship(String mtownship) {
-        this.mtownship = mtownship;
-    }
-
-    public String getMdepartment() {
-        return mdepartment;
-    }
-
-    public void setMdepartment(String mdepartment) {
-        this.mdepartment = mdepartment;
-    }
-
-    public String getMworkers() {
-        return mworkers;
-    }
-
-    public void setMworkers(String mworkers) {
-        this.mworkers = mworkers;
-    }
-}
 
 //        //增加一条数据
 //        Book book=new Book();

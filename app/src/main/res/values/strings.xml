@@ -18,8 +18,8 @@
     <string name="resolving_power">分辨率</string>
     <string name="system_information">系统信息</string>
     <string name="my_task">我的任务</string>
-    <string name="complete_task">完成任务</string>
-    <string name="create_task">创建任务</string>
+    <string name="complete_task">调查信息</string>
+    <string name="create_task">发起任务</string>
     <string name="title_activity_my_task">MyTaskActivity</string>
     <string name="title_activity_complete_task">CompleteTaskActivity</string>
     <string name="title_activity_create_task">CreateTaskActivity</string>
