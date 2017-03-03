@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by lemon on 2017/3/1.
+ *  我的任务
  */
 
 public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHolder> implements View.OnClickListener {
@@ -44,7 +45,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.tvTask.setText(mDatas.get(position).getmRowNumber()+"-"+mDatas.get(position).getmDisaster());
+        holder.tvTask.setText(mDatas.get(position).getmTaskName());
         if (mDatas.get(position).getmAddress().equals("")){
             holder.tvAddress.setText("地址： " +" 地址未填写");
         }else{

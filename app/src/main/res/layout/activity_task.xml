@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/my_toolbar_height"
         android:background="@color/c1olorblue"
-        android:visibility="gone">
+        >
 
         <TextView
             android:id="@+id/title_bar"
@@ -47,7 +47,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_task"
+                    android:id="@+id/tv_task_id"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:gravity="left|center"
@@ -58,7 +58,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv_workers_time"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:gravity="left|center"
@@ -91,7 +91,8 @@
                         android:paddingLeft="5dp"
                         android:text="灾害点："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_disaster" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -124,7 +125,8 @@
                         android:paddingLeft="5dp"
                         android:text="调查地点："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_address" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -156,7 +158,8 @@
                         android:paddingLeft="5dp"
                         android:text="调查时间："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_survey_time" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -188,7 +191,8 @@
                         android:paddingLeft="5dp"
                         android:text="任务分类："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_kind" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -220,7 +224,8 @@
                         android:paddingLeft="5dp"
                         android:text="所属乡镇："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_township" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -254,7 +259,8 @@
                         android:paddingLeft="5dp"
                         android:text="调查人："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_reporter" />
 
                     <TextView
                         android:layout_width="0.1dp"

@@ -32,5 +32,9 @@ public class ConnectUrl {
         return "http://" + ip + ":" + port + "/cmdapp/getStartTask.do";
     }
 
+    public String getOneTaskUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getOneTask.do";
+    }
+
 
 }
