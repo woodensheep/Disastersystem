@@ -34,9 +34,6 @@ import java.util.UUID;
 
 import okhttp3.Call;
 
-import static android.R.attr.name;
-import static android.R.attr.start;
-import static android.R.id.message;
 import static com.nandity.disastersystem.app.MyApplication.getContext;
 
 public class MyTaskActivity extends AppCompatActivity {
