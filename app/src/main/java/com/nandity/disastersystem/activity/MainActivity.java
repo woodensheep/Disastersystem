@@ -1,13 +1,14 @@
 package com.nandity.disastersystem.activity;
 
-import android.os.SystemClock;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.adapter.MyFragmentPagerAdapter;
@@ -17,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
-
     private TabLayout.Tab one;
     private TabLayout.Tab two;
     private TabLayout.Tab three;
     private Toolbar myToolBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,28 +30,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //初始化视图
         initViews();
-       // setListeners();
-
+        // setListeners();
     }
-
 
     private void setListeners() {
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int position=tab.getPosition();
+                int position = tab.getPosition();
                 //Toast.makeText(MainActivity.this,position+"",Toast.LENGTH_SHORT).show();
                 one.setIcon(R.mipmap.workbench);
                 two.setIcon(R.mipmap.directory);
                 three.setIcon(R.mipmap.setup);
-                switch (position){
-                    case 0: tab.setIcon(R.mipmap.workbench1);
+                switch (position) {
+                    case 0:
+                        tab.setIcon(R.mipmap.workbench1);
                         mViewPager.setCurrentItem(0);
-                            break;
-                    case 1: tab.setIcon(R.mipmap.directory1);
+                        break;
+                    case 1:
+                        tab.setIcon(R.mipmap.directory1);
                         mViewPager.setCurrentItem(1);
-                            break;
-                    case 2: tab.setIcon(R.mipmap.setup1);
+                        break;
+                    case 2:
+                        tab.setIcon(R.mipmap.setup1);
                         mViewPager.setCurrentItem(2);
                 }
             }
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
 
         //使用适配器将ViewPager与Fragment绑定在一起
-        mViewPager= (ViewPager) findViewById(R.id.viewPager);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(myFragmentPagerAdapter);
         //将TabLayout与ViewPager绑定在一起
@@ -88,5 +90,30 @@ public class MainActivity extends AppCompatActivity {
         one.setIcon(R.drawable.selected_tab_image_workbench);
         two.setIcon(R.drawable.selected_tab_image_directory);
         three.setIcon(R.drawable.selected_tab_image_setup);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("退出程序")
+                    .setMessage("确定退出程序吗？")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+            return true;
+        }
+        return false;
+
     }
 }

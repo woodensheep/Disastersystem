@@ -19,6 +19,7 @@ import java.util.List;
 public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.ViewHolder> {
     private Context context;
     private List<DirectoryBean> beanList;
+    public OnItemClickListener mOnItemClickListener=null;
 
     public DirectoryAdapter(Context context, List<DirectoryBean> beanList) {
         this.context = context;
@@ -49,13 +50,27 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
     }
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView mTextView, mTextView1;
 
         public ViewHolder(View view) {
             super(view);
             mTextView = (TextView) view.findViewById(R.id.directoryName);
             mTextView1 = (TextView) view.findViewById(R.id.directoryNumber);
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if(mOnItemClickListener!=null){
+                mOnItemClickListener.onItemClick(v);
+            }
+        }
+    }
+    public interface OnItemClickListener{
+        void onItemClick(View view);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 }

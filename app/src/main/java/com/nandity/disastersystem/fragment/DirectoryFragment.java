@@ -4,6 +4,7 @@ package com.nandity.disastersystem.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.LoginActivity;
@@ -64,7 +66,10 @@ public class DirectoryFragment extends Fragment {
     RecyclerView searchRecyclerview;
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
-    private DirectoryAdapter adapter;
+    @BindView(R.id.search_progress)
+    RelativeLayout directoryProgress;
+    private DirectoryAdapter normalAdapter;
+    private DirectoryAdapter searchAdapter;
     private Context context;
     private SharedPreferences sp;
     private String sessionId;
@@ -84,22 +89,24 @@ public class DirectoryFragment extends Fragment {
         context = getActivity();
         sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId = sp.getString("sessionId", "");
+        directoryProgress.setVisibility(View.VISIBLE);
         initData();
         initAutoComplete("history", etSearchContent, searchClear);
         setListener();
         return view;
     }
 
+
     private void setListener() {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String param = etSearchContent.getText().toString().trim();
-                if (TextUtils.isEmpty(param)){
+                if (TextUtils.isEmpty(param)) {
                     return;
                 }
                 String paramName = getParamName(param);
-
+                directoryProgress.setVisibility(View.VISIBLE);
                 OkHttpUtils.get().url(new ConnectUrl().getDirectoryUrl())
                         .addParams(paramName, param)
                         .addParams("sessionId", sessionId)
@@ -108,6 +115,7 @@ public class DirectoryFragment extends Fragment {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                                 ToastUtils.showShortToast("网络故障，请检查网路！");
+                                directoryProgress.setVisibility(View.GONE);
                             }
 
                             @Override
@@ -118,20 +126,23 @@ public class DirectoryFragment extends Fragment {
                                     JSONObject object = new JSONObject(response);
                                     status = object.getString("status");
                                     msg = object.getString("message");
+                                    directoryProgress.setVisibility(View.GONE);
                                     Log.d(TAG, "用户数据：" + msg);
                                     if ("200".equals(status)) {
                                         saveHistory("history", etSearchContent);
                                         llSearch.setVisibility(View.VISIBLE);
                                         llNormal.setVisibility(View.INVISIBLE);
-                                        List<DirectoryBean> searchList = JsonFormat.stringToList(msg, DirectoryBean.class);
+                                        searchList = JsonFormat.stringToList(msg, DirectoryBean.class);
                                         searchRecyclerview.setLayoutManager(new LinearLayoutManager(context));
-                                        searchRecyclerview.setAdapter(new DirectoryAdapter(context,searchList));
+                                        searchAdapter = new DirectoryAdapter(context, searchList);
+                                        searchRecyclerview.setAdapter(searchAdapter);
+                                        itemClickListener(searchAdapter, searchList, searchRecyclerview);
                                     } else if ("400".equals(status)) {
                                         ToastUtils.showShortToast(msg);
                                         Intent intent = new Intent(context, LoginActivity.class);
                                         context.startActivity(intent);
                                         getActivity().finish();
-                                    }else if ("500".equals(status)){
+                                    } else if ("500".equals(status)) {
                                         ToastUtils.showShortToast("搜索条件不匹配！");
                                     }
                                 } catch (JSONException e) {
@@ -163,12 +174,14 @@ public class DirectoryFragment extends Fragment {
                     searchClear.setVisibility(View.VISIBLE);
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
 
     }
+
 
     /**
      * 判断输入的是字符还是数字
@@ -208,8 +221,8 @@ public class DirectoryFragment extends Fragment {
 
     private void setAdapter() {
         directoryList.setLinearLayout();
-        adapter = new DirectoryAdapter(context, list);
-        directoryList.setAdapter(adapter);
+        normalAdapter = new DirectoryAdapter(context, list);
+        directoryList.setAdapter(normalAdapter);
     }
 
     private void initData() {
@@ -222,7 +235,7 @@ public class DirectoryFragment extends Fragment {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ToastUtils.showShortToast("网络错误，请检查网络！");
-
+                        directoryProgress.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -233,11 +246,13 @@ public class DirectoryFragment extends Fragment {
                             JSONObject object = new JSONObject(response);
                             status = object.getString("status");
                             msg = object.getString("message");
+                            directoryProgress.setVisibility(View.GONE);
                             Log.d(TAG, "用户数据：" + msg);
                             if ("200".equals(status)) {
                                 list = JsonFormat.stringToList(msg, DirectoryBean.class);
                                 Log.d(TAG, "第一次加载的数据：" + list.toString());
                                 setAdapter();
+                                itemClickListener(normalAdapter, list, mRecyclerView);
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 Intent intent = new Intent(context, LoginActivity.class);
@@ -249,6 +264,27 @@ public class DirectoryFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void itemClickListener(DirectoryAdapter adapter, final List<DirectoryBean> directoryBeanList, final RecyclerView recyclerView) {
+        adapter.setOnItemClickListener(new DirectoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view) {
+                int position = recyclerView.getChildAdapterPosition(view);
+                DirectoryBean bean = directoryBeanList.get(position);
+                String number = bean.getMobile();
+                call(number);
+            }
+        });
+    }
+
+
+    private void call(String number) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel://" + number));
+        context.startActivity(intent);
+
     }
 
     private void loadMore() {
@@ -277,7 +313,7 @@ public class DirectoryFragment extends Fragment {
                                 List<DirectoryBean> morelist = JsonFormat.stringToList(msg, DirectoryBean.class);
                                 Log.d(TAG, "上拉加载的数据：" + morelist.toString());
                                 list.addAll(morelist);
-                                adapter.notifyDataSetChanged();
+                                normalAdapter.notifyDataSetChanged();
                                 directoryList.setPullLoadMoreCompleted();
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
@@ -346,4 +382,6 @@ public class DirectoryFragment extends Fragment {
         }
 
     }
+
+
 }
