@@ -116,6 +116,7 @@ public class TaskActivity extends AppCompatActivity {
                                     JSONArray message = object.getJSONArray("message");
                                     JSONObject oj = message.getJSONObject(0);
                                     taskInfoBean = new TaskInfoBean();
+                                    taskInfoBean.setmRowNumber(mId);
                                     taskInfoBean.setmHappenTime(oj.getString("happen_time"));
                                     taskInfoBean.setmTaskName(oj.getString("task_name"));
                                     taskInfoBean.setmSendName(oj.getString("send_name"));

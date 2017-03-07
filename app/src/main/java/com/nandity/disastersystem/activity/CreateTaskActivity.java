@@ -46,7 +46,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         cTViewpager.setAdapter(cTFragmentPagerAdapter);
         //将TabLayout与ViewPager绑定在一起
         cTTablayout.setupWithViewPager(cTViewpager);
-
+        cTTablayout.getTabAt(1).select();
 //        //指定Tab的位置
 //        one = mTabLayout.getTabAt(0);
 //        two = mTabLayout.getTabAt(1);
@@ -59,10 +59,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
 
     public  void setTab(int mTabID){
-        if (mTabID==1){
-        }else{
-
-        }
+            cTTablayout.getTabAt(mTabID).select();
     }
 
 }

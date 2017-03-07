@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
+import com.nandity.disastersystem.activity.CreateTaskActivity;
 import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.activity.QueryDisasterActivity;
 import com.nandity.disastersystem.app.MyApplication;
@@ -152,6 +153,7 @@ public class NewTaskFragment extends Fragment {
                 MyApplication.getDaoSession().getTaskBeanDao().insert(taskBean);
                 Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_SHORT).show();
                 cleanAll();
+                ((CreateTaskActivity)getActivity()).setTab(1);
             }
         });
 
@@ -196,7 +198,7 @@ public class NewTaskFragment extends Fragment {
         });
     }
 
-    private String initStartDateTime = "2013年9月3日 14:44"; // 初始化开始时间
+    private String initStartDateTime = "2013年9月3日 14:44:00"; // 初始化开始时间
 
     private void getTaskBean(){
         if("".equals(etNewtaskTime.getText().toString().trim())){
@@ -209,15 +211,21 @@ public class NewTaskFragment extends Fragment {
         }
 
         if("".equals(etNewtaskDisaster.getText().toString().trim())){
+        }else{
             taskBean.setMAddress(etNewtaskDisaster.getText().toString().trim());
         }
 
+        Log.d(TAG,spTownship.getSelectedItemPosition()+"-"+CITownship.get(spTownship.getSelectedItemPosition()).GetID());
+
         if("-1".equals(CITownship.get(spTownship.getSelectedItemPosition()).GetID())){
+        }else{
             taskBean.setMTownshipID(CITownship.get(spTownship.getSelectedItemPosition()).GetID());
             taskBean.setMTownship(CITownship.get(spTownship.getSelectedItemPosition()).GetValue());
+            Log.d(TAG,taskBean.getMTownshipID()+taskBean.getMTownship());
         }
 
         if("-1".equals(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetID())){
+        }else{
             taskBean.setMWorkersID(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetID());
             taskBean.setMWorkers(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetValue());
         }

@@ -44,7 +44,7 @@ public class UnTaskAdapter extends RecyclerView.Adapter<UnTaskAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.tvTask.setText("本地未上传任务");
-        if (mDatas.get(position).getMAddress().equals("")){
+        if ("".equals(mDatas.get(position).getMAddress())|null==mDatas.get(position).getMAddress()){
             holder.tvAddress.setText("地址： " +" 地址未填写");
         }else{
             holder.tvAddress.setText("地址： " + mDatas.get(position).getMAddress());

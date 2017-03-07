@@ -4,12 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:visibility="gone"
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_toolbar_height"
+        android:background="@color/c1olorblue">
+
+        <TextView
+            android:id="@+id/title_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="未提交任务"
+            android:textColor="@color/c1olorwhite"
+            android:textSize="18sp" />
+    </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         >
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,22 +36,7 @@
             android:background="@drawable/shape_btn_search"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:visibility="gone"
-                android:id="@+id/my_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/my_toolbar_height"
-                android:background="@color/c1olorblue">
 
-                <TextView
-                    android:id="@+id/title_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="未提交任务"
-                    android:textColor="@color/c1olorwhite"
-                    android:textSize="18sp" />
-            </android.support.v7.widget.Toolbar>
 
             <LinearLayout
                 android:layout_width="match_parent"

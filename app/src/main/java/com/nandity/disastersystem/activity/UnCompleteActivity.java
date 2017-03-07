@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.app.MyApplication;
+import com.nandity.disastersystem.bean.CItem;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.TaskBean;
 import com.nandity.disastersystem.database.TaskBeanDao;
@@ -43,21 +45,23 @@ import static com.nandity.disastersystem.app.MyApplication.getDaoSession;
 
 public class UnCompleteActivity extends AppCompatActivity {
     private String TAG="UnCompleteActivity";
-    private Toolbar comTaskToolbar;
-    private List<String> mDisasterList;
-    private ArrayAdapter<String> mDisasterAdapter;
-
     private List<String> mTownshipList;
+    List<CItem> CITownship = new ArrayList<CItem>();
     private ArrayAdapter<String> mTownshipAdapter;
 
+    private List<String> mDepartmentList;
+    private ArrayAdapter<String> mDepartmentAdapter;
+
     private List<String> mWorkersList;
+    List<CItem> CIWorkers = new ArrayList<CItem>();
     private ArrayAdapter<String> mWorkersAdapter;
+
     /*灾害发生时间*/
     private TextView tvHanppenTime;
+    /*调查时间*/
+    private TextView etNewtaskTime;
     /* 任务发起人*/
     private TextView tvName;
-    /*调查时间*/
-    private TextView tvNewtaskTime;
     /*灾害点*/
     private TextView tvDisaster;
     /*调查地点*/
@@ -69,34 +73,39 @@ public class UnCompleteActivity extends AppCompatActivity {
     /*人员*/
     private Spinner spWorkers;
 
+    private Toolbar tbTitle;
+
     private Button btnSave;
     private Button btnSubmit;
     private Button btnCancle;
     private ProgressDialog progressDialog;
     private SharedPreferences sp;
     private String sessionId;
-    private Long mTaskBeanId;
-    private TaskBean taskBean;
     private String userName;
+    private TaskBean taskBean;
+    private long mTaskBeanId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.fragment_newtask);
         mTaskBeanId=getIntent().getLongExtra("taskbean_id",-1);
-        Log.d("UnCompleteActivity",""+mTaskBeanId);
+        Log.d(TAG,"----------"+mTaskBeanId);
         sp = getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId=sp.getString("sessionId", "");
         userName=sp.getString("userName","");
-        progressDialog = new ProgressDialog(getApplicationContext(), ProgressDialog.STYLE_SPINNER);
+        progressDialog = new ProgressDialog(UnCompleteActivity.this, ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("正在加载...");
-        progressDialog.show();
+        //progressDialog.show();
         initViews();
         setLinsteners();
         initData();
         setViewDataAll();
+        Log.d(TAG,taskBean.toString());
+        //setOkHttp();
     }
 
 
@@ -117,6 +126,7 @@ public class UnCompleteActivity extends AppCompatActivity {
     }
 
     private void setLinsteners() {
+
         tvDisaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,37 +138,41 @@ public class UnCompleteActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TaskBean taskBean=new TaskBean();
-                taskBean.setId((long)mTaskBeanId);
-                taskBean.setMTime(MyUtils.getSystemTime());
-                taskBean.setMDisaster(tvDisaster.getText().toString().trim());
-                taskBean.setMAddress(etNewtaskDisaster.getText().toString().trim());
-                taskBean.setMTownship(spTownship.getSelectedItem().toString().trim());
-                taskBean.setMWorkers(spWorkers.getSelectedItem().toString().trim());
-                getDaoSession().getTaskBeanDao().update(taskBean);
-                Toast.makeText(UnCompleteActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+                getTaskBean();
+                MyApplication.getDaoSession().getTaskBeanDao().update(taskBean);
+                Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
                 cleanAll();
+                finish();
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getTaskBean();
+                Log.d(TAG,taskBean.toString());
+                if (isNotDataEmpty()) {
+                    setOkHttpCommit();
+                }else{
+                    ToastUtils.showShortToast("请填写完整信息！");
+                }
             }
         });
 
         btnCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDaoSession().getTaskBeanDao().deleteByKey((long)mTaskBeanId);
-                Toast.makeText(UnCompleteActivity.this,"刪除成功",Toast.LENGTH_SHORT).show();
-                finish();
+                cleanAll();
             }
 
-
         });
-
-        tvNewtaskTime.setOnClickListener(new View.OnClickListener() {
+        etNewtaskTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DateTimePickUtil dateTimePicKDialog = new DateTimePickUtil(
-                        UnCompleteActivity.this,new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
-                dateTimePicKDialog.dateTimePicKDialog(tvNewtaskTime);
-                taskBean.setMTime(tvNewtaskTime.getText().toString().trim());
+                        UnCompleteActivity.this,new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
+                dateTimePicKDialog.dateTimePicKDialog(etNewtaskTime);
+
             }
         });
 
@@ -166,35 +180,45 @@ public class UnCompleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DateTimePickUtil dateTimePicKDialog = new DateTimePickUtil(
-                        UnCompleteActivity.this,new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+                        UnCompleteActivity.this,new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
                 dateTimePicKDialog.dateTimePicKDialog(tvHanppenTime);
-                taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim());
+
             }
         });
-
-
     }
 
+
+    private boolean isNotDataEmpty() {
+        if ("".equals(tvHanppenTime.getText().toString().trim())){return false;}
+        if ("".equals(etNewtaskTime.getText().toString().trim())){return false;}
+        if ("请选择灾害点".equals(tvDisaster.getText().toString().trim())){return false;}
+        if ("".equals(etNewtaskDisaster.getText().toString().trim())){return false;}
+        if ("-1".equals(CITownship.get(spTownship.getSelectedItemPosition()).GetID())){return false;}
+        if ("-1".equals(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetID())){return false;}
+        return true;
+    }
 
     /**
      * 设置数据库存的数据
      */
     private void setViewDataAll() {
-        TaskBean taskBean=MyApplication.getDaoSession().getTaskBeanDao().queryBuilder()
+        taskBean=MyApplication.getDaoSession().getTaskBeanDao().queryBuilder()
                 .where(TaskBeanDao.Properties.Id.eq(mTaskBeanId)).build().list().get(0);
-        tvNewtaskTime.setText(taskBean.getMTime());
         tvHanppenTime.setText(taskBean.getMHappenTime());
+        etNewtaskTime.setText(taskBean.getMTime());
         // 设置灾害点选中
-        tvDisaster.setText(taskBean.getMDisaster());
-
+        if(taskBean.getMDisaster()==null) {
+            tvDisaster.setText("请选择灾害点");
+        }else{
+            tvDisaster.setText(taskBean.getMDisaster());
+        }
         // 设置调查地点选中
         etNewtaskDisaster.setText(taskBean.getMAddress());
-
 
         // 设置乡镇选中
         for(int i=0;i<mTownshipAdapter.getCount();i++){
             String string=mTownshipAdapter.getItem(i).toString();
-            if(string.equals(taskBean.getMDisaster())){
+            if(string.equals(taskBean.getMTownship())){
                 spTownship.setSelection(i,true);
                 break;
             }
@@ -203,64 +227,149 @@ public class UnCompleteActivity extends AppCompatActivity {
         // 设置人员选中
         for(int i=0;i<mWorkersAdapter.getCount();i++){
             String string=mWorkersAdapter.getItem(i).toString();
-            if(string.equals(taskBean.getMDisaster())){
+            if(string.equals(taskBean.getMWorkers())){
                 spWorkers.setSelection(i,true);
                 break;
             }
         }
 
     }
+    private void getTaskBean(){
+        if("".equals(etNewtaskTime.getText().toString().trim())){
+        }else{
+            taskBean.setMTime(etNewtaskTime.getText().toString().trim()+":00");
+        }
+        if("".equals(tvHanppenTime.getText().toString().trim())){
+        }else{
+            taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim()+":00");
+        }
+
+        if("".equals(etNewtaskDisaster.getText().toString().trim())){
+        }else{
+            taskBean.setMAddress(etNewtaskDisaster.getText().toString().trim());
+        }
+
+        if("-1".equals(CITownship.get(spTownship.getSelectedItemPosition()).GetID())){
+        }else{
+            taskBean.setMTownshipID(CITownship.get(spTownship.getSelectedItemPosition()).GetID());
+            taskBean.setMTownship(CITownship.get(spTownship.getSelectedItemPosition()).GetValue());
+
+        }
+
+        if("-1".equals(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetID())){
+        }else{
+            taskBean.setMWorkersID(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetID());
+            taskBean.setMWorkers(CIWorkers.get(spWorkers.getSelectedItemPosition()).GetValue());
+
+        }
+
+    }
 
     private void cleanAll() {
-        tvNewtaskTime.setText(MyUtils.getSystemTime());
-        tvDisaster.setText("");
+        taskBean=new TaskBean();
+        tvDisaster.setText("请选择灾害点");
+        tvHanppenTime.setText("");
+        etNewtaskTime.setText("");
         etNewtaskDisaster.setText("");
         spTownship.setSelection(0,true);
+        //spDepartment.setSelection(0,true);
         spWorkers.setSelection(0,true);
     }
 
     private void initViews() {
-        comTaskToolbar= (Toolbar) findViewById(R.id.my_toolbar);
-        comTaskToolbar.setVisibility(View.VISIBLE);
-        tvNewtaskTime = (TextView) findViewById(R.id.et_newtask_time);
-        tvDisaster = (TextView) findViewById(R.id.tv_disaster);
-        spTownship = (Spinner) findViewById(R.id.sp_township);
+        tbTitle= (Toolbar) findViewById(R.id.my_toolbar);
+        tbTitle.setVisibility(View.VISIBLE);
+        tvHanppenTime= (TextView)findViewById(R.id.tv_newtask_hanppen_time);
+        tvName= (TextView) findViewById(R.id.tv_newtask_name);
+        etNewtaskTime = (TextView)findViewById(R.id.et_newtask_time);
+        tvDisaster = (TextView)findViewById(R.id.tv_disaster);
+        spTownship = (Spinner)findViewById(R.id.sp_township);
+        //spDepartment = (Spinner) view.findViewById(R.id.sp_department);
         spWorkers = (Spinner) findViewById(R.id.sp_workers);
-        etNewtaskDisaster = (EditText) findViewById(R.id.et_newtask_disaster);
-        btnSave = (Button) findViewById(R.id.btn_newtask_save);
-        btnSubmit = (Button) findViewById(R.id.btn_newtask_submit);
-        btnCancle = (Button) findViewById(R.id.btn_newtask_cancle);
+        etNewtaskDisaster = (EditText)findViewById(R.id.et_newtask_disaster);
+        btnSave = (Button)findViewById(R.id.btn_newtask_save);
+        btnSubmit = (Button)findViewById(R.id.btn_newtask_submit);
+        btnCancle = (Button)findViewById(R.id.btn_newtask_cancle);
     }
-
 
     /**
      * 设置spinner等从网络获取的选项有哪些
      */
     private void initData() {
-
-        tvNewtaskTime.setText(MyUtils.getSystemTime());
+        tvHanppenTime.setText("");
+        etNewtaskTime.setText("");
         tvName.setText(userName);
         //灾害点
-        //数据
+        tvDisaster.setText("请选择灾害点");
 
         //乡镇
         mTownshipList = new ArrayList<String>();
+        CITownship=new ArrayList<CItem>();
         mTownshipList.add("请选择乡镇");
-        mTownshipAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTownshipList);
+        mTownshipAdapter = new ArrayAdapter<String>(UnCompleteActivity.this, android.R.layout.simple_spinner_item, mTownshipList);
         mTownshipAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTownship.setAdapter(mTownshipAdapter);
 
 
-
         //人员
         mWorkersList = new ArrayList<String>();
+        CITownship=new ArrayList<CItem>();
         mWorkersList.add("请选择人员");
-        mWorkersAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mWorkersList);
+        mWorkersAdapter = new ArrayAdapter<String>(UnCompleteActivity.this, android.R.layout.simple_spinner_item, mWorkersList);
         mWorkersAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWorkers.setAdapter(mWorkersAdapter);
 
     }
 
+
+    private void setOkHttpCommit() {
+        progressDialog.show();
+        try {
+            OkHttpUtils.get().url(new ConnectUrl().saveSuveyTaskUrl())
+                    .addParams("sessionId", sessionId)
+                    .addParams("happen_time", taskBean.getMHappenTime())
+                    .addParams("survey_time", taskBean.getMTime())
+                    .addParams("dis_id", taskBean.getMDisasterID())
+                    .addParams("dis_name", taskBean.getMDisaster())
+                    .addParams("survey_site", taskBean.getMAddress())
+                    .addParams("area_id", taskBean.getMTownshipID())
+                    .addParams("survey_id", taskBean.getMWorkersID())
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            progressDialog.dismiss();
+                            //getActivity().finish();
+                            ToastUtils.showShortToast("网络故障，请检查网络！");
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            progressDialog.dismiss();
+                            String msg, status;
+                            Log.d(TAG, "返回的数据：" + response);
+                            try {
+                                JSONObject object = new JSONObject(response);
+                                status = object.getString("status");
+                                msg = object.getString("message");
+                                if ("200".equals(status)) {
+                                    finish();
+                                    ToastUtils.showShortToast(msg);
+                                } else if ("400".equals(status)) {
+                                    ToastUtils.showShortToast(msg);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+            progressDialog.dismiss();
+            ToastUtils.showShortToast("加载失败！");
+        }
+
+    }
 
     private void setOkHttp() {
 
@@ -272,6 +381,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             progressDialog.dismiss();
+                           // finish();
                             ToastUtils.showShortToast("网络故障，请检查网络！");
                         }
 
@@ -286,14 +396,17 @@ public class UnCompleteActivity extends AppCompatActivity {
                                 msg = object.getString("message");
                                 if ("200".equals(status)) {
                                     mTownshipList.clear();
+                                    CITownship.clear();
                                     mTownshipList.add("请选择乡镇");
+                                    CITownship.add(new CItem("-1","请选择乡镇"));
                                     JSONArray message=object.getJSONArray("message");
                                     for(int i = 0; i < message.length(); i++){//遍历JSONArray
                                         JSONObject oj = message.getJSONObject(i);
                                         mTownshipList.add(oj.getString("area_name"));
+                                        CITownship.add(new CItem(oj.getString("id"),oj.getString("area_name")));
                                     }
                                     mTownshipAdapter.notifyDataSetChanged();
-
+                                    setViewDataAll();
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
                                 }
@@ -316,6 +429,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             progressDialog.dismiss();
+                           // finish();
                             ToastUtils.showShortToast("网络故障，请检查网络！");
                         }
 
@@ -330,14 +444,17 @@ public class UnCompleteActivity extends AppCompatActivity {
                                 msg = object.getString("message");
                                 if ("200".equals(status)) {
                                     mWorkersList.clear();
+                                    CIWorkers.clear();
                                     mWorkersList.add("请选择人员");
+                                    CIWorkers.add(new CItem("-1","请选择人员"));
                                     JSONArray message=object.getJSONArray("message");
                                     for(int i = 0; i < message.length(); i++){//遍历JSONArray
                                         JSONObject oj = message.getJSONObject(i);
                                         mWorkersList.add(oj.getString("name"));
+                                        CIWorkers.add(new CItem(oj.getString("id"),oj.getString("name")));
                                     }
                                     mWorkersAdapter.notifyDataSetChanged();
-
+                                    setViewDataAll();
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
                                 }
@@ -353,4 +470,7 @@ public class UnCompleteActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }
