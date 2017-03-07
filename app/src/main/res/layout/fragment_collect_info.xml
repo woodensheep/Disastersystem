@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="发生时间"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <TextView
+                    android:id="@+id/tv_collectinfo_happen_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="left|center"
+                    android:layout_margin="5dp"
+                    android:text="2017-3-6 10:14"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="发生地点"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <EditText
+                    android:id="@+id/et_collectinfo_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="灾闲情类型"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <Spinner
+                    android:id="@+id/sp_collectinfo_type"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="40dp">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="灾情还是险情"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <Spinner
+                    android:id="@+id/sp_collectinfo_isdisaster"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="40dp">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="灾险情规模"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <Spinner
+                    android:id="@+id/sp_collectinfo_disaster_level"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="40dp">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="灾害成因"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <Spinner
+                    android:id="@+id/sp_collectinfo_disaster_reason"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="40dp">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="是否调查过"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <Spinner
+                    android:id="@+id/sp_collectinfo_isresearch"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="40dp">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="灾害情况"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="威胁人员"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+
+                <EditText
+                    android:id="@+id/et_collectinfo_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入威胁户数(单位：户)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+
+                <EditText
+                    android:id="@+id/et_collectinfo_people"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:hint="请输入威胁人数(单位：人)"
+                    android:textSize="@dimen/fill_Info_textSize" />
+
+                <EditText
+                    android:id="@+id/et_collectinfo_athome_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:hint="请输入威胁在家户数(单位：户)"
+                    android:textSize="@dimen/fill_Info_textSize" />
+
+                <EditText
+                    android:id="@+id/et_collectinfo_athome_people"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入威胁在家人数(单位：人)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="威胁房屋"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_house"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="威胁房屋间数(单位：间)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+
+                <EditText
+                    android:id="@+id/et_collectinfo_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="威胁房屋面积(单位：平方米)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="其他威胁"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_another_disaster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="请输入其他威胁情况"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="灾险情规模及特征"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="30sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="滑坡长度(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_landslide_length"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入滑坡长度"
+                    android:layout_margin="5dp"
+                    android:inputType="number|numberDecimal"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="滑坡横宽(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_landslide_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入滑坡宽度"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="滑坡面积(单位：平方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_landslide_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入滑坡面积"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="滑坡体积(单位：立方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_landslide_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入滑坡体积"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="变形区域长(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_distortion_length"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入变形区域长度"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="变形区域宽(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_distortion_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入变形区域宽度"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="变形面积(单位：平方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_distortion_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:hint="请输入变形面积"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="变形体积(单位：立方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_distortion_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入变形体积"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="滑动距离(单位：米)"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_slide_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number|numberDecimal"
+                    android:hint="请输入滑动距离"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="地裂条数(单位：条)"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_crack_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入地裂条数"
+                    android:layout_margin="5dp"
+                    android:inputType="number|numberDecimal"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="最小地裂长(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_crack_minlength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入最小地裂长度"
+                    android:layout_margin="5dp"
+                    android:inputType="number|numberDecimal"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="最大地裂长(单位：米)"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_crack_maxlength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="number|numberDecimal"
+                    android:hint="请输入最大地裂长度"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="最小地裂宽(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_crack_minwidth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入最小地裂宽度"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="最大地裂宽(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_crack_maxwidth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入最大地裂宽度"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="最大下错(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_maxdislocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入最大下错长度"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="危岩带长(单位：米)"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_rock_length"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入危岩带长"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="危岩带宽(单位：米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_rock_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入危岩带宽"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="危岩体积(单位：立方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_rock_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入危岩体积"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="崩塌体积(单位：立方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_collapse_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入崩塌体积"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="残留体积(单位：立方米)"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_residual_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入残留体积"
+                    android:inputType="number|numberDecimal"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="其他情况"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_another_things"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入其他情况信息"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="已采取措施"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <TextView
+                    android:id="@+id/tv_collectinfo_measure"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:text="点击选择"
+                    android:textSize="20sp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <EditText
+                    android:id="@+id/et_collectinfo_measure_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入备注信息"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="现场要求责任单位下一步处置意见"
+                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <TextView
+                    android:id="@+id/tv_collectinfo_disposition"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:text="点击选择"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <EditText
+                    android:id="@+id/et_collectinfo_disposition_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入备注信息"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/c1olorgray"
+                    android:gravity="center"
+                    android:text="出发时间"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <TextView
+                    android:id="@+id/tv_collectinfo_go_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="left|center"
+                    android:text="2017-3-6 10:14"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_collect_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_margin="5dp"
+                android:textColor="@color/colorWhite"
+                android:background="@color/c1olorblue"
+                android:text="保存"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="c1olorAAA">#ADFF2F</color>
     <color name="c1olorwhite">#ffffff</color>
-    <color name="c1olorgray">#777777</color>
+    <color name="c1olorgray">#337ab7</color>
     <color name="c1olorblack">#111111</color>
     <color name="c1olorblue">#1E90FF</color>
     <color name="c1olorblue2">#337ab7</color>
@@ -25,4 +25,6 @@
     <color name="list_item_focus">#0a000000</color>
     <color name="white_alpha_percent_45">#73ffffff</color>
     <color name="light_black_color">#3B3B3B</color>
+    <color name="color_weak_blue">#22b4ff</color>
+    <color name="color_weak_yellow">#c0d9d9</color>
 </resources>

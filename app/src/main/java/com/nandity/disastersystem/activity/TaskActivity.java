@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +64,7 @@ public class TaskActivity extends AppCompatActivity {
     private String sessionId;
     private ProgressDialog progressDialog;
     private TaskInfoBean taskInfoBean;
-    private String[] mStates=new String[]{"未发送","已发送","已反馈","已完成","废弃"};
+    private String[] mStates = new String[]{"未发送", "已发送", "已反馈", "已完成", "废弃"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,18 @@ public class TaskActivity extends AppCompatActivity {
         sessionId = sp.getString("sessionId", "");
 
         initData();
+        setListener();
+    }
+
+    private void setListener() {
+        btnTaskCom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TaskActivity.this, FillInfoActivity.class);
+                intent.putExtra("taskBean", (Serializable) taskInfoBean);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData() {
@@ -117,6 +132,7 @@ public class TaskActivity extends AppCompatActivity {
                                     JSONObject oj = message.getJSONObject(0);
                                     taskInfoBean = new TaskInfoBean();
                                     taskInfoBean.setmRowNumber(mId);
+                                    taskInfoBean.setmDisasterType(oj.getString("xinorjiu"));
                                     taskInfoBean.setmHappenTime(oj.getString("happen_time"));
                                     taskInfoBean.setmTaskName(oj.getString("task_name"));
                                     taskInfoBean.setmSendName(oj.getString("send_name"));
@@ -128,15 +144,15 @@ public class TaskActivity extends AppCompatActivity {
                                     taskInfoBean.setmName(oj.getString("survey_name"));
                                     taskInfoBean.setmTaskState(oj.getString("task_state"));
                                     Log.d(TAG, "message：id-" + taskInfoBean.getmAddress());
-                                    tvTaskId.setText("调查任务-"+taskInfoBean.getmDisaster());
-                                    tvWorkersTime.setText("发起人："+taskInfoBean.getmSendName() + " 时间：" + taskInfoBean.getmStartTime());
-                                    tvTaskDisaster.setText("灾害点："+taskInfoBean.getmDisaster());
-                                    tvTaskAddress.setText("调查地点："+taskInfoBean.getmAddress());
-                                    tvTaskSurveyTime.setText("调查时间："+taskInfoBean.getmSurveyTime());
-                                    tvTaskTownship.setText("所属乡镇："+taskInfoBean.getmAreaName());
-                                    tvTaskKind.setText("发生时间："+taskInfoBean.getmHappenTime());
-                                    tvTaskReporter.setText("调查人："+taskInfoBean.getmName());
-                                    tvTaskState.setText("任务状态："+mStates[Integer.parseInt(taskInfoBean.getmTaskState())]);
+                                    tvTaskId.setText("调查任务-" + taskInfoBean.getmDisaster());
+                                    tvWorkersTime.setText("发起人：" + taskInfoBean.getmSendName() + " 时间：" + taskInfoBean.getmStartTime());
+                                    tvTaskDisaster.setText("灾害点：" + taskInfoBean.getmDisaster());
+                                    tvTaskAddress.setText("调查地点：" + taskInfoBean.getmAddress());
+                                    tvTaskSurveyTime.setText("调查时间：" + taskInfoBean.getmSurveyTime());
+                                    tvTaskTownship.setText("所属乡镇：" + taskInfoBean.getmAreaName());
+                                    tvTaskKind.setText("发生时间：" + taskInfoBean.getmHappenTime());
+                                    tvTaskReporter.setText("调查人：" + taskInfoBean.getmName());
+                                    tvTaskState.setText("任务状态：" + mStates[Integer.parseInt(taskInfoBean.getmTaskState()) -1]);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(getContext(), LoginActivity.class);

@@ -1,13 +1,15 @@
 package com.nandity.disastersystem.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by qingsong on 2017/2/23.
  */
 
-public class TaskInfoBean {
+public class TaskInfoBean implements Serializable{
 
 
-
+    private String mDisasterType;
     /*灾害发生时间*/
     private String mHappenTime;
     /* 任务排号*/
@@ -132,5 +134,33 @@ public class TaskInfoBean {
 
     public void setmHappenTime(String mHappenTime) {
         this.mHappenTime = mHappenTime;
+    }
+
+    public String getmDisasterType() {
+        return mDisasterType;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskInfoBean{" +
+                "mDisasterType='" + mDisasterType + '\'' +
+                ", mHappenTime='" + mHappenTime + '\'' +
+                ", mRowNumber='" + mRowNumber + '\'' +
+                ", mDisaster='" + mDisaster + '\'' +
+                ", mAddress='" + mAddress + '\'' +
+                ", mTaskId='" + mTaskId + '\'' +
+                ", mStartTime='" + mStartTime + '\'' +
+                ", mAreaName='" + mAreaName + '\'' +
+                ", mSendName='" + mSendName + '\'' +
+                ", mSurveyTime='" + mSurveyTime + '\'' +
+                ", mTaskState='" + mTaskState + '\'' +
+                ", mName='" + mName + '\'' +
+                ", mTaskName='" + mTaskName + '\'' +
+                '}';
+    }
+
+    public void setmDisasterType(String mDisasterType) {
+
+        this.mDisasterType = mDisasterType;
     }
 }

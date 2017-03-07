@@ -61,4 +61,9 @@ public class ConnectUrl {
     }
 
 
+    public String getMeaDisListUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getNextList.do";
+    }
+
+
 }
