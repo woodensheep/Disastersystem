@@ -8,9 +8,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.alibaba.sdk.android.push.notification.BasicCustomPushNotification;
+import com.alibaba.sdk.android.push.notification.CustomNotificationBuilder;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.adapter.MyFragmentPagerAdapter;
 import com.nandity.disastersystem.app.MyApplication;
@@ -103,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
 
     }
+
     public  void signOut(){
             new AlertDialog.Builder(this)
                     .setTitle("退出程序")
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            initPushOut();
                             finish();
                         }
                     })
@@ -120,5 +128,21 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).show();
 
+    }
+
+
+    private void initPushOut(){
+        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService.unbindAccount(new CommonCallback() {
+           @Override
+           public void onSuccess(String s) {
+               Log.e("onSuccess",""+s);
+           }
+
+           @Override
+           public void onFailed(String s, String s1) {
+               Log.e("onFailed",""+s+s1);
+           }
+       });
     }
 }

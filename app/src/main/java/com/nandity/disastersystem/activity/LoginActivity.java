@@ -1,5 +1,6 @@
 package com.nandity.disastersystem.activity;
 
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.alibaba.sdk.android.push.notification.BasicCustomPushNotification;
+import com.alibaba.sdk.android.push.notification.CustomNotificationBuilder;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.utils.ToastUtils;
@@ -32,6 +38,8 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
+
+import static android.R.string.no;
 
 /**
  * 登录界面
@@ -65,6 +73,27 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         setListener();
     }
+
+    private void initPush(){
+        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService.bindAccount(sp.getString("userName", ""), new CommonCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.d(TAG,"userName:"+s);
+            }
+
+            @Override
+            public void onFailed(String s, String s1) {
+                Log.d(TAG,"userName:"+"--s:"+s+"--s1:"+s1);
+            }
+        });
+//        BasicCustomPushNotification notification = new BasicCustomPushNotification();
+//        notification.setRemindType(BasicCustomPushNotification.REMIND_TYPE_SOUND);
+//        notification.setStatusBarDrawable(R.mipmap.di);
+//        notification.setRemindType(BasicCustomPushNotification.REMIND_TYPE_VIBRATE_AND_SOUND);
+//        boolean res = CustomNotificationBuilder.getInstance().setCustomNotification(1, notification);
+    }
+
 
     private void initView() {
         etName.setText(sp.getString("userName", ""));
@@ -153,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                                     sp.edit().putString("sessionId", sessiongId).apply();
                                     sp.edit().putString("myTaskNum", info.getJSONObject(0).getString("myTask")).apply();
                                     sp.edit().putString("allTaskNum",info.getJSONObject(1).getString("allTask")).apply();
+                                    initPush();
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(context, MainActivity.class);
                                     startActivity(intent);

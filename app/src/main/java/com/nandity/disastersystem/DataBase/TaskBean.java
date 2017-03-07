@@ -17,9 +17,17 @@ public class TaskBean {
     @Id(autoincrement =true)
     private Long id;
     /**
+     * 灾害发生时间
+     **/
+    private String mHappenTime;
+    /**
      * 调查时间
      **/
     private String mTime;
+    /**
+     * 灾害点id
+     **/
+    private String mDisasterID;
     /**
      * 灾害点
      **/
@@ -29,6 +37,10 @@ public class TaskBean {
      **/
     private String mAddress;
     /**
+     * 乡镇ID
+     **/
+    private String mTownshipID;
+    /**
      * 乡镇
      **/
     private String mTownship;
@@ -36,6 +48,28 @@ public class TaskBean {
      * 部门
      **/
     private String mDepartment;
+    /**
+     * 人员ID
+     **/
+    private String mWorkersID;
+
+    @Override
+    public String toString() {
+        return "TaskBean{" +
+                "id=" + id +
+                ", mHappenTime='" + mHappenTime + '\'' +
+                ", mTime='" + mTime + '\'' +
+                ", mDisasterID='" + mDisasterID + '\'' +
+                ", mDisaster='" + mDisaster + '\'' +
+                ", mAddress='" + mAddress + '\'' +
+                ", mTownshipID='" + mTownshipID + '\'' +
+                ", mTownship='" + mTownship + '\'' +
+                ", mDepartment='" + mDepartment + '\'' +
+                ", mWorkersID='" + mWorkersID + '\'' +
+                ", mWorkers='" + mWorkers + '\'' +
+                '}';
+    }
+
     /**
      * 人员
      **/
@@ -82,14 +116,43 @@ public class TaskBean {
     public void setId(Long id) {
         this.id = id;
     }
-    @Generated(hash = 875566835)
-    public TaskBean(Long id, String mTime, String mDisaster, String mAddress, String mTownship, String mDepartment, String mWorkers) {
+    public String getMWorkersID() {
+        return this.mWorkersID;
+    }
+    public void setMWorkersID(String mWorkersID) {
+        this.mWorkersID = mWorkersID;
+    }
+    public String getMTownshipID() {
+        return this.mTownshipID;
+    }
+    public void setMTownshipID(String mTownshipID) {
+        this.mTownshipID = mTownshipID;
+    }
+    public String getMDisasterID() {
+        return this.mDisasterID;
+    }
+    public void setMDisasterID(String mDisasterID) {
+        this.mDisasterID = mDisasterID;
+    }
+    public String getMHappenTime() {
+        return this.mHappenTime;
+    }
+    public void setMHappenTime(String mHappenTime) {
+        this.mHappenTime = mHappenTime;
+    }
+    @Generated(hash = 1356342499)
+    public TaskBean(Long id, String mHappenTime, String mTime, String mDisasterID, String mDisaster, String mAddress,
+            String mTownshipID, String mTownship, String mDepartment, String mWorkersID, String mWorkers) {
         this.id = id;
+        this.mHappenTime = mHappenTime;
         this.mTime = mTime;
+        this.mDisasterID = mDisasterID;
         this.mDisaster = mDisaster;
         this.mAddress = mAddress;
+        this.mTownshipID = mTownshipID;
         this.mTownship = mTownship;
         this.mDepartment = mDepartment;
+        this.mWorkersID = mWorkersID;
         this.mWorkers = mWorkers;
     }
     @Generated(hash = 1443476586)

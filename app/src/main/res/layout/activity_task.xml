@@ -111,6 +111,39 @@
                     android:background="@color/c1olorgray" />
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:gravity="center|left"
+                        android:paddingLeft="5dp"
+                        android:text="发生时间："
+                        android:textColor="@color/c1olorblack"
+                        android:textSize="16sp"
+                        android:id="@+id/tv_task_kind" />
+
+                    <TextView
+                        android:layout_width="0.1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:background="@color/c1olorgray" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/c1olorgray" />
+
+                <LinearLayout
                     android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -176,38 +209,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@color/c1olorgray" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"
-                        android:gravity="center|left"
-                        android:paddingLeft="5dp"
-                        android:text="任务分类："
-                        android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_kind" />
-
-                    <TextView
-                        android:layout_width="0.1dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:background="@color/c1olorgray" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/c1olorgray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -280,6 +282,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_task_state"
                     android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

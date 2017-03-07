@@ -7,6 +7,10 @@ import com.nandity.disastersystem.app.MyApplication;
 
 /**
  * Created by ChenPeng on 2017/3/1.
+ *
+ * wzadmin
+ * 192.168.1.137
+ * 8080
  */
 
 public class ConnectUrl {
@@ -34,6 +38,26 @@ public class ConnectUrl {
 
     public String getOneTaskUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getOneTask.do";
+    }
+
+    /*获取灾害点 */
+    public String getDisInfoListUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getDisInfoList.do";
+    }
+
+    /*获取乡镇 */
+    public String getAreaListUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getAreaList.do";
+    }
+
+    /*获取调查人的 */
+    public String getPersonListUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getPersonList.do";
+    }
+
+    /*发起任务提交 */
+    public String saveSuveyTaskUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/saveSuveyTask.do";
     }
 
 

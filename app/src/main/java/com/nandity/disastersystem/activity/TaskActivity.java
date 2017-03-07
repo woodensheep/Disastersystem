@@ -17,7 +17,6 @@ import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.greenrobot.greendao.annotation.Id;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +31,9 @@ import static com.nandity.disastersystem.app.MyApplication.getContext;
  * 填报反馈信息
  */
 public class TaskActivity extends AppCompatActivity {
-    private String TAG="TaskActivity";
+    @BindView(R.id.tv_task_state)
+    TextView tvTaskState;
+    private String TAG = "TaskActivity";
 
     @BindView(R.id.tv_task_id)
     TextView tvTaskId;
@@ -59,20 +60,21 @@ public class TaskActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private String sessionId;
     private ProgressDialog progressDialog;
+    private TaskInfoBean taskInfoBean;
+    private String[] mStates=new String[]{"未发送","已发送","已反馈","已完成","废弃"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         ButterKnife.bind(this);
-        intent=getIntent();
-        mId=intent.getStringExtra("TaskID");
+        intent = getIntent();
+        mId = intent.getStringExtra("TaskID");
         tvTaskId.setText(mId);
         sp = getSharedPreferences("config", Context.MODE_PRIVATE);
-        sessionId=sp.getString("sessionId", "");
+        sessionId = sp.getString("sessionId", "");
 
         initData();
-
     }
 
     private void initData() {
@@ -82,6 +84,7 @@ public class TaskActivity extends AppCompatActivity {
         progressDialog.setMessage("正在加载...");
         progressDialog.show();
         setOkHttp();
+
     }
 
 
@@ -90,7 +93,7 @@ public class TaskActivity extends AppCompatActivity {
         try {
             OkHttpUtils.get().url(new ConnectUrl().getOneTaskUrl())
                     .addParams("id", mId)
-                    .addParams("sessionId",sessionId)
+                    .addParams("sessionId", sessionId)
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -110,19 +113,29 @@ public class TaskActivity extends AppCompatActivity {
                                 msg = object.getString("message");
                                 if ("200".equals(status)) {
                                     //mListData.clear();
-                                    JSONArray message=object.getJSONArray("message");
-//                                    for(int i = 0; i < message.length(); i++){//遍历JSONArray
-//                                        JSONObject oj = message.getJSONObject(i);
-//                                        Log.d(TAG, "message：id-" + oj.getString("id"));
-//                                        TaskInfoBean taskInfoBean=new TaskInfoBean();
-//                                        taskInfoBean.setmRowNumber(oj.getString("id"));
-//                                        taskInfoBean.setmTaskName(oj.getString("task_name"));
-//                                        taskInfoBean.setmAddress(oj.getString("survey_site"));
-//                                        taskInfoBean.setmDisaster(oj.getString("dis_name"));
-//                                       // mListData.add(taskInfoBean);
-//                                    }
-                                    //ToastUtils.showShortToast(msg);
-                                   // Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    JSONArray message = object.getJSONArray("message");
+                                    JSONObject oj = message.getJSONObject(0);
+                                    taskInfoBean = new TaskInfoBean();
+                                    taskInfoBean.setmHappenTime(oj.getString("happen_time"));
+                                    taskInfoBean.setmTaskName(oj.getString("task_name"));
+                                    taskInfoBean.setmSendName(oj.getString("send_name"));
+                                    taskInfoBean.setmStartTime(oj.getString("start_time"));
+                                    taskInfoBean.setmDisaster(oj.getString("dis_name"));
+                                    taskInfoBean.setmAddress(oj.getString("survey_site"));
+                                    taskInfoBean.setmSurveyTime(oj.getString("survey_time"));
+                                    taskInfoBean.setmAreaName(oj.getString("area_name"));
+                                    taskInfoBean.setmName(oj.getString("survey_name"));
+                                    taskInfoBean.setmTaskState(oj.getString("task_state"));
+                                    Log.d(TAG, "message：id-" + taskInfoBean.getmAddress());
+                                    tvTaskId.setText("调查任务-"+taskInfoBean.getmDisaster());
+                                    tvWorkersTime.setText("发起人："+taskInfoBean.getmSendName() + " 时间：" + taskInfoBean.getmStartTime());
+                                    tvTaskDisaster.setText("灾害点："+taskInfoBean.getmDisaster());
+                                    tvTaskAddress.setText("调查地点："+taskInfoBean.getmAddress());
+                                    tvTaskSurveyTime.setText("调查时间："+taskInfoBean.getmSurveyTime());
+                                    tvTaskTownship.setText("所属乡镇："+taskInfoBean.getmAreaName());
+                                    tvTaskKind.setText("发生时间："+taskInfoBean.getmHappenTime());
+                                    tvTaskReporter.setText("调查人："+taskInfoBean.getmName());
+                                    tvTaskState.setText("任务状态："+mStates[Integer.parseInt(taskInfoBean.getmTaskState())]);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -141,6 +154,5 @@ public class TaskActivity extends AppCompatActivity {
         }
     }
 
-    
 
 }

@@ -18,13 +18,13 @@ import java.util.List;
  *  我的任务
  */
 
-public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHolder> implements View.OnClickListener {
+public class QueryDisasterAdapter extends RecyclerView.Adapter<QueryDisasterAdapter.MyViewHolder> implements View.OnClickListener {
 
-    private List<TaskInfoBean> mDatas;
+    private List<TaskBean> mDatas;
     private Context context;
     private LayoutInflater inflater;
 
-    public MyTaskAdapter(Context context, List<TaskInfoBean> mDatas) {
+    public QueryDisasterAdapter(Context context, List<TaskBean> mDatas) {
         this.context = context;
         this.mDatas=mDatas;
         inflater = LayoutInflater.from(context);
@@ -33,7 +33,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_task, parent, false);
+        View view = inflater.inflate(R.layout.item_query, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
 
         //将创建的View注册点击事件
@@ -45,12 +45,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        holder.tvTask.setText("调查任务-"+mDatas.get(position).getmDisaster());
-        if (mDatas.get(position).getmAddress().equals("")){
-            holder.tvAddress.setText("地址： " +" 地址未填写");
-        }else{
-            holder.tvAddress.setText("地址： " + mDatas.get(position).getmAddress());
-        }
+        holder.tvDisaster.setText(mDatas.get(position).getMDisaster());
         //将数据保存在itemView的Tag中，以便点击时进行获取
         holder.itemView.setTag(mDatas.get(position));
     }
@@ -59,7 +54,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v,(TaskInfoBean)v.getTag());
+            mOnItemClickListener.onItemClick(v,(TaskBean) v.getTag());
         }
     }
 
@@ -70,13 +65,11 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvAddress;
-        TextView tvTask;
+        TextView tvDisaster;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            tvTask = (TextView) itemView.findViewById(R.id.tv_task);
-            tvAddress = (TextView) itemView.findViewById(R.id.tv_address);
+            tvDisaster = (TextView) itemView.findViewById(R.id.tv_query_disaster);
         }
     }
 
@@ -85,7 +78,7 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyViewHold
      * 设置item点击监听
      */
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view, TaskInfoBean taskInfoBean);
+        void onItemClick(View view, TaskBean taskBean);
     }
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;

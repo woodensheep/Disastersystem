@@ -11,6 +11,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'x86'
+        }
         multiDexEnabled true
     }
     buildTypes {
@@ -35,7 +39,6 @@ dependencies {
     })
     //数据库
     compile 'org.greenrobot:greendao:3.0.1'
-
     compile 'com.android.support:appcompat-v7:23.4.0'
     //TabLayout
     compile 'com.android.support:support-v4:23.4.0'
@@ -54,4 +57,8 @@ dependencies {
     //下拉刷新
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
     compile 'com.google.code.gson:gson:2.8.0'
+    //阿里云推送
+    compile 'com.aliyun.ams:alicloud-android-push:3.0.0@aar'
+    compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
+    compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_query_disaster"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/c1olorblue"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/et_search_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toStartOf="@+id/btn_search"
+            android:layout_toLeftOf="@+id/btn_search"
+            android:background="@drawable/round_white_btn_bg"
+            android:gravity="start|center_vertical"
+            android:hint="@string/str_search_hint"
+            android:maxLength="10"
+            android:paddingLeft="10dp"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/search_clear"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="invisible"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            android:layout_alignBottom="@+id/et_search_content"
+            android:layout_alignRight="@+id/et_search_content"
+            android:layout_alignEnd="@+id/et_search_content" />
+
+        <!--app:srcCompat="@android:drawable/ic_menu_search"-->
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@mipmap/search1"
+            android:layout_margin="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rc_query_disaster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

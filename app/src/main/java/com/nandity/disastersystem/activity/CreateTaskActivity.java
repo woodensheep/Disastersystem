@@ -1,5 +1,7 @@
 package com.nandity.disastersystem.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -28,10 +30,10 @@ public class CreateTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         setContentView(R.layout.activity_create_task);
         ButterKnife.bind(this);
-        createTaskToolbar.setTitle("");
-        setSupportActionBar(createTaskToolbar);
         initView();
     }
 
@@ -45,7 +47,6 @@ public class CreateTaskActivity extends AppCompatActivity {
         //将TabLayout与ViewPager绑定在一起
         cTTablayout.setupWithViewPager(cTViewpager);
 
-
 //        //指定Tab的位置
 //        one = mTabLayout.getTabAt(0);
 //        two = mTabLayout.getTabAt(1);
@@ -57,5 +58,11 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
 
+    public  void setTab(int mTabID){
+        if (mTabID==1){
+        }else{
+
+        }
+    }
 
 }
