@@ -113,26 +113,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_margin="5dp"
-                    android:textSize="@dimen/fill_Info_titleSize"
-                    android:background="@color/c1olorgray"
-                    android:textColor="@color/c1olorwhite"
-                    android:text="所在乡镇"/>
-                <Spinner
-                    android:id="@+id/sp_baseinfo_village"
-                    android:layout_width="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_height="40dp">
-                </Spinner>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:textSize="@dimen/fill_Info_titleSize"
                     android:layout_margin="5dp"
                     android:background="@color/c1olorgray"
@@ -225,7 +205,7 @@
                 android:textSize="25sp"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/c1olorblue"
+                android:background="@drawable/save_selecter"
                 android:textColor="@color/colorWhite"
                 android:text="保存"/>
         </LinearLayout>

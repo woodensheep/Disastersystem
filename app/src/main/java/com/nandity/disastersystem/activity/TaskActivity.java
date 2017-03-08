@@ -87,6 +87,7 @@ public class TaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TaskActivity.this, FillInfoActivity.class);
                 intent.putExtra("taskBean", (Serializable) taskInfoBean);
+                Log.e(TAG,"未提交任务页面任务ID:"+taskInfoBean.getmTaskId());
                 startActivity(intent);
             }
         });
@@ -131,7 +132,13 @@ public class TaskActivity extends AppCompatActivity {
                                     JSONArray message = object.getJSONArray("message");
                                     JSONObject oj = message.getJSONObject(0);
                                     taskInfoBean = new TaskInfoBean();
-                                    taskInfoBean.setmRowNumber(mId);
+                                    taskInfoBean.setmTaskId(mId);
+                                    taskInfoBean.setmDisasterName(oj.getString("dis_name"));
+                                    taskInfoBean.setmDisasterLng(oj.getString("dis_lon"));
+                                    taskInfoBean.setmDisasterLat(oj.getString("dis_lat"));
+                                    taskInfoBean.setmDisasterLocation(oj.getString("dis_location"));
+                                    taskInfoBean.setmDisasterContact(oj.getString("dis_person"));
+                                    taskInfoBean.setmDisasterMobile(oj.getString("dis_person_phone"));
                                     taskInfoBean.setmDisasterType(oj.getString("xinorjiu"));
                                     taskInfoBean.setmHappenTime(oj.getString("happen_time"));
                                     taskInfoBean.setmTaskName(oj.getString("task_name"));

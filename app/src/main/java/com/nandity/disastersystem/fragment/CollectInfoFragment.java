@@ -46,8 +46,6 @@ import okhttp3.Call;
  */
 
 public class CollectInfoFragment extends Fragment {
-    @BindView(R.id.tv_collectinfo_happen_time)
-    TextView tvCollectinfoHappenTime;
     @BindView(R.id.et_collectinfo_place)
     EditText etCollectinfoPlace;
     @BindView(R.id.sp_collectinfo_type)
@@ -249,12 +247,6 @@ public class CollectInfoFragment extends Fragment {
 
 
     private void setListener() {
-        tvCollectinfoHappenTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DateTimePickUtil(getActivity(), currentTime).dateTimePicKDialog(tvCollectinfoHappenTime);
-            }
-        });
         tvCollectinfoGoTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,11 +269,20 @@ public class CollectInfoFragment extends Fragment {
                 }
             }
         });
+        btnCollectSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveData();
+            }
+        });
+    }
+
+    private void saveData() {
+
     }
 
     private void initView() {
         currentTime = new SimpleDateFormat("yyyy年MM月dd日 hh:mm").format(new Date());
-        tvCollectinfoHappenTime.setText(currentTime);
         tvCollectinfoGoTime.setText(currentTime);
         String[] disasterType = {"滑坡", "泥石流", "危岩", "不稳定斜坡", "地面塌陷", "地裂缝", "塌岸"};
         String[] disasterReason = {"降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚"};

@@ -65,5 +65,8 @@ public class ConnectUrl {
         return "http://" + ip + ":" + port + "/cmdapp/getNextList.do";
     }
 
+    public String getDisasterPictureUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getDisPic.do";
+    }
 
 }

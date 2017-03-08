@@ -7,8 +7,19 @@ import java.io.Serializable;
  */
 
 public class TaskInfoBean implements Serializable{
-
-
+    /*灾害点名称*/
+    private String mDisasterName;
+    /*经度*/
+    private String mDisasterLng;
+    /*纬度*/
+    private String mDisasterLat;
+    /*地址*/
+    private String mDisasterLocation;
+    /*联系人*/
+    private String mDisasterContact;
+    /*号码*/
+    private String mDisasterMobile;
+    /*新旧灾害点*/
     private String mDisasterType;
     /*灾害发生时间*/
     private String mHappenTime;
@@ -28,6 +39,54 @@ public class TaskInfoBean implements Serializable{
     private String mAreaName;
     /*发起人 */
     private String mSendName;
+
+    public String getmDisasterName() {
+        return mDisasterName;
+    }
+
+    public void setmDisasterName(String mDisasterName) {
+        this.mDisasterName = mDisasterName;
+    }
+
+    public String getmDisasterLng() {
+        return mDisasterLng;
+    }
+
+    public void setmDisasterLng(String mDisasterLng) {
+        this.mDisasterLng = mDisasterLng;
+    }
+
+    public String getmDisasterLat() {
+        return mDisasterLat;
+    }
+
+    public void setmDisasterLat(String mDisasterLat) {
+        this.mDisasterLat = mDisasterLat;
+    }
+
+    public String getmDisasterLocation() {
+        return mDisasterLocation;
+    }
+
+    public void setmDisasterLocation(String mDisasterLocation) {
+        this.mDisasterLocation = mDisasterLocation;
+    }
+
+    public String getmDisasterContact() {
+        return mDisasterContact;
+    }
+
+    public void setmDisasterContact(String mDisasterContact) {
+        this.mDisasterContact = mDisasterContact;
+    }
+
+    public String getmDisasterMobile() {
+        return mDisasterMobile;
+    }
+
+    public void setmDisasterMobile(String mDisasterMobile) {
+        this.mDisasterMobile = mDisasterMobile;
+    }
 
     public String getmSurveyTime() {
         return mSurveyTime;
@@ -140,10 +199,22 @@ public class TaskInfoBean implements Serializable{
         return mDisasterType;
     }
 
+
+    public void setmDisasterType(String mDisasterType) {
+
+        this.mDisasterType = mDisasterType;
+    }
+
     @Override
     public String toString() {
         return "TaskInfoBean{" +
-                "mDisasterType='" + mDisasterType + '\'' +
+                "mDisasterName='" + mDisasterName + '\'' +
+                ", mDisasterLng='" + mDisasterLng + '\'' +
+                ", mDisasterLat='" + mDisasterLat + '\'' +
+                ", mDisasterLocation='" + mDisasterLocation + '\'' +
+                ", mDisasterContact='" + mDisasterContact + '\'' +
+                ", mDisasterMobile='" + mDisasterMobile + '\'' +
+                ", mDisasterType='" + mDisasterType + '\'' +
                 ", mHappenTime='" + mHappenTime + '\'' +
                 ", mRowNumber='" + mRowNumber + '\'' +
                 ", mDisaster='" + mDisaster + '\'' +
@@ -157,10 +228,5 @@ public class TaskInfoBean implements Serializable{
                 ", mName='" + mName + '\'' +
                 ", mTaskName='" + mTaskName + '\'' +
                 '}';
-    }
-
-    public void setmDisasterType(String mDisasterType) {
-
-        this.mDisasterType = mDisasterType;
     }
 }
