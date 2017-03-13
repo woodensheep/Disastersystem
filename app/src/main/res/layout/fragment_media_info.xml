@@ -6,7 +6,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,66 +59,125 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/c1olorblue"
+                    android:gravity="center"
                     android:text="图片列表"
                     android:textColor="@color/c1olorwhite"
-                    android:background="@color/c1olorblue"
-                    android:gravity="center"
-                    android:layout_margin="5dp"
                     android:textSize="@dimen/fill_Info_titleSize" />
-                <GridLayout
-                    android:id="@+id/gl_mediainfo_photo"
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_mediainfo_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:columnCount="3">
+                    android:layout_margin="10dp">
 
-                </GridLayout>
+                </android.support.v7.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/btn_baseinfo_photo_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/loginbtn_selector"
+                    android:text="上传图片" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="视频列表"
-                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
                     android:background="@color/c1olorblue"
                     android:gravity="center"
-                    android:layout_margin="5dp"
+                    android:text="视频"
+                    android:textColor="@color/c1olorwhite"
                     android:textSize="@dimen/fill_Info_titleSize" />
-                <GridLayout
-                    android:id="@+id/gl_mediainfo_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:columnCount="3">
 
-                </GridLayout>
+                <VideoView
+                    android:id="@+id/vv_mediainfo_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="10dp"
+                    android:visibility="gone">
+
+                </VideoView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_baseinfo_video_upload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/loginbtn_selector"
+                        android:text="上传视频" />
+
+                    <Button
+                        android:id="@+id/btn_baseinfo_video_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/btn_baseinfo_video_upload"
+                        android:background="@drawable/loginbtn_selector"
+                        android:text="删除视频" />
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="音频列表"
-                    android:textColor="@color/c1olorwhite"
+                    android:layout_margin="5dp"
                     android:background="@color/c1olorblue"
                     android:gravity="center"
-                    android:layout_margin="5dp"
+                    android:text="录音"
+                    android:textColor="@color/c1olorwhite"
                     android:textSize="@dimen/fill_Info_titleSize" />
-                <GridLayout
-                    android:id="@+id/gl_mediainfo_audio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:columnCount="3">
 
-                </GridLayout>
+                <TextView
+                    android:id="@+id/tv_mediainfo_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_margin="10dp"
+                     />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_baseinfo_audio_upload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/loginbtn_selector"
+                        android:text="上传录音" />
+
+                    <Button
+                        android:id="@+id/btn_baseinfo_audio_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/btn_baseinfo_audio_upload"
+                        android:background="@drawable/loginbtn_selector"
+                        android:text="删除录音" />
+                </RelativeLayout>
             </LinearLayout>
-            <Button
-                android:id="@+id/btn_mediainfo_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="保存"
-                android:layout_margin="5dp"
-                android:textColor="@color/c1olorwhite"
-                android:background="@color/c1olorblue"
-                android:textSize="25sp"
-                />
 
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/btn_mediainfo_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/save_selecter"
+        android:text="保存"
+        android:textColor="@color/c1olorwhite"
+        android:textSize="25sp" />
 </LinearLayout>

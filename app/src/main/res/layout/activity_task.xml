@@ -9,8 +9,7 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/my_toolbar_height"
-        android:background="@color/c1olorblue"
-        >
+        android:background="@color/c1olorblue">
 
         <TextView
             android:id="@+id/title_bar"
@@ -38,10 +37,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:id="@+id/ll_setup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -79,11 +78,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_task_disaster"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -91,8 +91,7 @@
                         android:paddingLeft="5dp"
                         android:text="灾害点："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_disaster" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -113,11 +112,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_task_kind"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -125,8 +125,7 @@
                         android:paddingLeft="5dp"
                         android:text="发生时间："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_kind" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -144,13 +143,14 @@
                     android:background="@color/c1olorgray" />
 
                 <LinearLayout
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_task_address"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -158,8 +158,7 @@
                         android:paddingLeft="5dp"
                         android:text="调查地点："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_address" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -179,11 +178,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_task_survey_time"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -191,8 +191,7 @@
                         android:paddingLeft="5dp"
                         android:text="调查时间："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_survey_time" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -210,15 +209,15 @@
                     android:background="@color/c1olorgray" />
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_task_township"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -226,8 +225,7 @@
                         android:paddingLeft="5dp"
                         android:text="所属乡镇："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_township" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -248,12 +246,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_task_reporter"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -261,8 +260,7 @@
                         android:paddingLeft="5dp"
                         android:text="调查人："
                         android:textColor="@color/c1olorblack"
-                        android:textSize="16sp"
-                        android:id="@+id/tv_task_reporter" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="0.1dp"
@@ -283,10 +281,10 @@
 
                 <TextView
                     android:id="@+id/tv_task_state"
-                    android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|left"
+                    android:padding="10dp"
                     android:paddingLeft="5dp"
                     android:text="任务状态："
                     android:textColor="@color/c1olorblack"
@@ -300,22 +298,17 @@
 
     </ScrollView>
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/btn_task_com"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="6dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@drawable/com_btn"
+        android:text="反馈信息填报"
+        android:textColor="@color/c1olorwhite"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="32sp" />
 
-        <Button
-            android:id="@+id/btn_task_com"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/com_btn"
-            android:text="反馈信息填报"
-            android:textColor="@color/c1olorwhite"
-            android:textSize="32sp" />
-
-    </LinearLayout>
 
 </LinearLayout>

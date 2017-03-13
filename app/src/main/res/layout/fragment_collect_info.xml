@@ -6,7 +6,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,7 +174,105 @@
                     android:layout_margin="5dp"
                     android:textColor="@color/c1olorwhite"
                     android:textSize="30sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="人员伤亡"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_dead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入死亡人数(单位：人)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_miss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入失踪人数(单位：人)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
 
+                <EditText
+                    android:id="@+id/et_collectinfo_heavy_injured"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入轻伤人数(单位：人)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_soft_injured"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入重伤人数(单位：人)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_weak_blue"
+                    android:gravity="center"
+                    android:text="财产损失"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_economic_loss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入直接经济损失(单位：万元)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_house_collapse_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入房屋坍塌间数(单位：间)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_house_collapse_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入房屋坍塌面积(单位：平米)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_house_damage_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入房屋受损间数(单位：间)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_house_damage_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入房屋受损面积(单位：平米)"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_another_damage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入其它损失"
+                    android:inputType="number"
+                    android:layout_margin="5dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -725,6 +824,8 @@
                     android:layout_margin="5dp"
                     android:textSize="@dimen/fill_Info_textSize" />
             </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
             <Button
                 android:id="@+id/btn_collect_save"
@@ -735,6 +836,4 @@
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/save_selecter"
                 android:text="保存"/>
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

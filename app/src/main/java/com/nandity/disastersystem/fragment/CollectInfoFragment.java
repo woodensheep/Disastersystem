@@ -1,6 +1,5 @@
 package com.nandity.disastersystem.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +21,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.FillInfoActivity;
 import com.nandity.disastersystem.activity.LoginActivity;
+import com.nandity.disastersystem.app.MyApplication;
+import com.nandity.disastersystem.bean.TaskInfoBean;
 import com.nandity.disastersystem.constant.ConnectUrl;
+import com.nandity.disastersystem.database.CollectInfoBean;
+import com.nandity.disastersystem.database.CollectInfoBeanDao;
 import com.nandity.disastersystem.utils.DateTimePickUtil;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -126,6 +129,26 @@ public class CollectInfoFragment extends Fragment {
     Button btnCollectSave;
     @BindView(R.id.tv_collectinfo_disposition)
     TextView tvCollectinfoDisposition;
+    @BindView(R.id.et_collectinfo_dead)
+    EditText etCollectinfoDead;
+    @BindView(R.id.et_collectinfo_miss)
+    EditText etCollectinfoMiss;
+    @BindView(R.id.et_collectinfo_heavy_injured)
+    EditText etCollectinfoHeavyInjured;
+    @BindView(R.id.et_collectinfo_soft_injured)
+    EditText etCollectinfoSoftInjured;
+    @BindView(R.id.et_collectinfo_economic_loss)
+    EditText etCollectinfoEconomicLoss;
+    @BindView(R.id.et_collectinfo_house_collapse_number)
+    EditText etCollectinfoHouseCollapseNumber;
+    @BindView(R.id.et_collectinfo_house_collapse_area)
+    EditText etCollectinfoHouseCollapseArea;
+    @BindView(R.id.et_collectinfo_house_damage_number)
+    EditText etCollectinfoHouseDamageNumber;
+    @BindView(R.id.et_collectinfo_house_damage_area)
+    EditText etCollectinfoHouseDamageArea;
+    @BindView(R.id.et_collectinfo_another_damage)
+    EditText etCollectinfoAnotherDamage;
     private static final String TAG = "CollectInfoFragment";
     private Context context;
     private SharedPreferences sp;
@@ -133,6 +156,7 @@ public class CollectInfoFragment extends Fragment {
     private String currentTime;
     private ArrayAdapter spinnerAdapter;
     private List<String> measureList, dispositionList;
+    private TaskInfoBean taskInfoBean;
 
     @Nullable
     @Override
@@ -141,6 +165,7 @@ public class CollectInfoFragment extends Fragment {
         ButterKnife.bind(this, view);
         context = getActivity();
         sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        taskInfoBean = ((FillInfoActivity) getActivity()).taskInfoBean;
         initView();
         initData();
         setListener();
@@ -159,12 +184,12 @@ public class CollectInfoFragment extends Fragment {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ToastUtils.showShortToast("网络故障，请检查网络！");
-                        ((FillInfoActivity)getActivity()).progressDialog.dismiss();
+                        ((FillInfoActivity) getActivity()).progressDialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        ((FillInfoActivity)getActivity()).progressDialog.dismiss();
+                        ((FillInfoActivity) getActivity()).progressDialog.dismiss();
                         String status, msg;
                         try {
                             JSONObject object = new JSONObject(response);
@@ -194,12 +219,12 @@ public class CollectInfoFragment extends Fragment {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ToastUtils.showShortToast("网络故障，请检查网络！");
-                        ((FillInfoActivity)getActivity()).progressDialog.dismiss();
+                        ((FillInfoActivity) getActivity()).progressDialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        ((FillInfoActivity)getActivity()).progressDialog.dismiss();
+                        ((FillInfoActivity) getActivity()).progressDialog.dismiss();
                         String status, msg;
                         try {
                             JSONObject object = new JSONObject(response);
@@ -256,16 +281,16 @@ public class CollectInfoFragment extends Fragment {
         tvCollectinfoMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (measureList!=null&&measureList.size()>0){
-                initDialog(measureList,tvCollectinfoMeasure).show();
+                if (measureList != null && measureList.size() > 0) {
+                    initDialog(measureList, tvCollectinfoMeasure).show();
                 }
             }
         });
         tvCollectinfoDisposition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dispositionList!=null&&dispositionList.size()>0){
-                initDialog(dispositionList,tvCollectinfoDisposition).show();
+                if (dispositionList != null && dispositionList.size() > 0) {
+                    initDialog(dispositionList, tvCollectinfoDisposition).show();
                 }
             }
         });
@@ -279,6 +304,163 @@ public class CollectInfoFragment extends Fragment {
 
     private void saveData() {
 
+        String place = etCollectinfoPlace.getText().toString().trim();
+        String type = spCollectinfoType.getSelectedItemPosition() + "";
+        String disOrDan = spCollectinfoIsdisaster.getSelectedItemPosition() + "";
+        String level = spCollectinfoDisasterLevel.getSelectedItemPosition() + "";
+        String reason = spCollectinfoDisasterReason.getSelectedItemPosition() + "";
+        String isResearch = spCollectinfoIsresearch.getSelectedItemPosition() + "";
+        String dead=etCollectinfoDead.getText().toString().trim();
+        String miss=etCollectinfoMiss.getText().toString().trim();
+        String heavyInjured = etCollectinfoHeavyInjured.getText().toString().trim();
+        String softInjured=etCollectinfoSoftInjured.getText().toString().trim();
+        String economicLoss = etCollectinfoEconomicLoss.getText().toString().trim();
+        String houseCollapseNum = etCollectinfoHouseCollapseNumber.getText().toString().trim();
+        String houseCollapseArea=etCollectinfoHouseCollapseArea.getText().toString().trim();
+        String houseDamageNum=etCollectinfoHouseDamageNumber.getText().toString().trim();
+        String houseDamageArea=etCollectinfoHouseDamageArea.getText().toString().trim();
+        String anotherDamage=etCollectinfoAnotherDamage.getText().toString().trim();
+        String family = etCollectinfoFamily.getText().toString().trim();
+        String people = etCollectinfoPeople.getText().toString().trim();
+        String atHomeFamily = etCollectinfoAthomeFamily.getText().toString().trim();
+        String atHomePeople = etCollectinfoAthomePeople.getText().toString().trim();
+        String house = etCollectinfoHouse.getText().toString().trim();
+        String houseArea = etCollectinfoArea.getText().toString().trim();
+        String anotherDis = etCollectinfoAnotherDisaster.getText().toString().trim();
+        String landSlideLen = etCollectinfoLandslideLength.getText().toString().trim();
+        String landSlideWid = etCollectinfoLandslideWidth.getText().toString().trim();
+        String landSlideArea = etCollectinfoLandslideArea.getText().toString().trim();
+        String landSlideVolume = etCollectinfoLandslideVolume.getText().toString().trim();
+        String distortionLen = etCollectinfoDistortionLength.getText().toString().trim();
+        String distortionWid = etCollectinfoDistortionWidth.getText().toString().trim();
+        String distortionArea = etCollectinfoDistortionArea.getText().toString().trim();
+        String distortionVolume = etCollectinfoDistortionVolume.getText().toString().trim();
+        String slideDistance = etCollectinfoSlideDistance.getText().toString().trim();
+        String crackNum = etCollectinfoCrackNumber.getText().toString().trim();
+        String minCrackLen = etCollectinfoCrackMinlength.getText().toString().trim();
+        String maxCrackLen = etCollectinfoCrackMaxlength.getText().toString().trim();
+        String minCrackWid = etCollectinfoCrackMinwidth.getText().toString().trim();
+        String maxCrackWid = etCollectinfoCrackMaxwidth.getText().toString().trim();
+        String maxDislocation = etCollectinfoMaxdislocation.getText().toString().trim();
+        String rockLen = etCollectinfoRockLength.getText().toString().trim();
+        String rockWid = etCollectinfoRockWidth.getText().toString().trim();
+        String rockVolume = etCollectinfoRockVolume.getText().toString().trim();
+        String collapseVolume = etCollectinfoCollapseVolume.getText().toString().trim();
+        String residualVolume = etCollectinfoResidualVolume.getText().toString().trim();
+        String anotherThings = etCollectinfoAnotherThings.getText().toString().trim();
+        String measure = tvCollectinfoMeasure.getText().toString().trim();
+        String measureMark = etCollectinfoMeasureRemark.getText().toString().trim();
+        String disposition = tvCollectinfoDisposition.getText().toString().trim();
+        String dispositionMark = etCollectinfoDispositionRemark.getText().toString().trim();
+        String goTime = tvCollectinfoGoTime.getText().toString().trim();
+        CollectInfoBean collectInfoBean = MyApplication.getDaoSession().getCollectInfoBeanDao().queryBuilder().where(CollectInfoBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+        if (collectInfoBean == null) {
+            CollectInfoBean bean = new CollectInfoBean();
+            bean.setTaskId(taskInfoBean.getmTaskId());
+            bean.setCollectInfoPlace(place);
+            bean.setCollectInfoType(type);
+            bean.setCollectInfoDisOrDan(disOrDan);
+            bean.setCollectInfoDisasterLevel(level);
+            bean.setCollectInfoDisasterReason(reason);
+            bean.setCollectInfoIsResearch(isResearch);
+            bean.setCollectInfoDead(dead);
+            bean.setCollectInfoMiss(miss);
+            bean.setCollectInfoHeavyInjured(heavyInjured);
+            bean.setCollectInfoSoftInjured(softInjured);
+            bean.setCollectInfoEconomicLoss(economicLoss);
+            bean.setCollectInfoHouseCollapseNum(houseCollapseNum);
+            bean.setCollectInfoHouseCollapseArea(houseCollapseArea);
+            bean.setCollectInfoHouseDamageNum(houseDamageNum);
+            bean.setCollectInfoHouseDamageArea(houseDamageArea);
+            bean.setCollectInfoAnotherDamage(anotherDamage);
+            bean.setCollectInfoPeople(people);
+            bean.setCollectInfoFamily(family);
+            bean.setCollectInfoAtHomeFamily(atHomeFamily);
+            bean.setCollectInfoAtHomePeople(atHomePeople);
+            bean.setCollectInfoHouse(house);
+            bean.setCollectInfoHouseArea(houseArea);
+            bean.setCollectInfoAnotherDisaster(anotherDis);
+            bean.setCollectInfoLandslideLength(landSlideLen);
+            bean.setCollectInfoLandslideWidth(landSlideWid);
+            bean.setCollectInfoLandslideArea(landSlideArea);
+            bean.setCollectInfoLandslideVolume(landSlideVolume);
+            bean.setCollectInfoDistortionLength(distortionLen);
+            bean.setCollectInfoDistortionWidth(distortionWid);
+            bean.setCollectInfoDistortionArea(distortionArea);
+            bean.setCollectInfoDistortionVolume(distortionVolume);
+            bean.setCollectInfoSlideDistance(slideDistance);
+            bean.setCollectInfoCrackNumber(crackNum);
+            bean.setCollectInfoCrackMinLength(minCrackLen);
+            bean.setCollectInfoCrackMinWidth(minCrackWid);
+            bean.setCollectInfoCrackMaxLength(maxCrackLen);
+            bean.setCollectInfoCrackMaxWidth(maxCrackWid);
+            bean.setCollectInfoMaxDislocation(maxDislocation);
+            bean.setCollectInfoRockLength(rockLen);
+            bean.setCollectInfoRockWidth(rockWid);
+            bean.setCollectInfoRockVolume(rockVolume);
+            bean.setCollectInfoCollapseVolume(collapseVolume);
+            bean.setCollectInfoResidualVolume(residualVolume);
+            bean.setCollectInfoAnotherThings(anotherThings);
+            bean.setCollectInfoMeasure(measure);
+            bean.setCollectInfoMeasureRemark(measureMark);
+            bean.setCollectInfoDisposition(disposition);
+            bean.setCollectInfoDispositionRemark(dispositionMark);
+            bean.setCollectInfoGoTime(goTime);
+            MyApplication.getDaoSession().getCollectInfoBeanDao().insertOrReplace(bean);
+            ToastUtils.showShortToast("保存成功");
+        } else {
+            collectInfoBean.setCollectInfoPlace(place);
+            collectInfoBean.setCollectInfoType(type);
+            collectInfoBean.setCollectInfoDisOrDan(disOrDan);
+            collectInfoBean.setCollectInfoDisasterLevel(level);
+            collectInfoBean.setCollectInfoDisasterReason(reason);
+            collectInfoBean.setCollectInfoIsResearch(isResearch);
+            collectInfoBean.setCollectInfoDead(dead);
+            collectInfoBean.setCollectInfoMiss(miss);
+            collectInfoBean.setCollectInfoHeavyInjured(heavyInjured);
+            collectInfoBean.setCollectInfoSoftInjured(softInjured);
+            collectInfoBean.setCollectInfoEconomicLoss(economicLoss);
+            collectInfoBean.setCollectInfoHouseCollapseNum(houseCollapseNum);
+            collectInfoBean.setCollectInfoHouseCollapseArea(houseCollapseArea);
+            collectInfoBean.setCollectInfoHouseDamageNum(houseDamageNum);
+            collectInfoBean.setCollectInfoHouseDamageArea(houseDamageArea);
+            collectInfoBean.setCollectInfoAnotherDamage(anotherDamage);
+            collectInfoBean.setCollectInfoPeople(people);
+            collectInfoBean.setCollectInfoFamily(family);
+            collectInfoBean.setCollectInfoAtHomeFamily(atHomeFamily);
+            collectInfoBean.setCollectInfoAtHomePeople(atHomePeople);
+            collectInfoBean.setCollectInfoHouse(house);
+            collectInfoBean.setCollectInfoHouseArea(houseArea);
+            collectInfoBean.setCollectInfoAnotherDisaster(anotherDis);
+            collectInfoBean.setCollectInfoLandslideLength(landSlideLen);
+            collectInfoBean.setCollectInfoLandslideWidth(landSlideWid);
+            collectInfoBean.setCollectInfoLandslideArea(landSlideArea);
+            collectInfoBean.setCollectInfoLandslideVolume(landSlideVolume);
+            collectInfoBean.setCollectInfoDistortionLength(distortionLen);
+            collectInfoBean.setCollectInfoDistortionWidth(distortionWid);
+            collectInfoBean.setCollectInfoDistortionArea(distortionArea);
+            collectInfoBean.setCollectInfoDistortionVolume(distortionVolume);
+            collectInfoBean.setCollectInfoSlideDistance(slideDistance);
+            collectInfoBean.setCollectInfoCrackNumber(crackNum);
+            collectInfoBean.setCollectInfoCrackMinLength(minCrackLen);
+            collectInfoBean.setCollectInfoCrackMinWidth(minCrackWid);
+            collectInfoBean.setCollectInfoCrackMaxLength(maxCrackLen);
+            collectInfoBean.setCollectInfoCrackMaxWidth(maxCrackWid);
+            collectInfoBean.setCollectInfoMaxDislocation(maxDislocation);
+            collectInfoBean.setCollectInfoRockLength(rockLen);
+            collectInfoBean.setCollectInfoRockWidth(rockWid);
+            collectInfoBean.setCollectInfoRockVolume(rockVolume);
+            collectInfoBean.setCollectInfoCollapseVolume(collapseVolume);
+            collectInfoBean.setCollectInfoResidualVolume(residualVolume);
+            collectInfoBean.setCollectInfoAnotherThings(anotherThings);
+            collectInfoBean.setCollectInfoMeasure(measure);
+            collectInfoBean.setCollectInfoMeasureRemark(measureMark);
+            collectInfoBean.setCollectInfoDisposition(disposition);
+            collectInfoBean.setCollectInfoDispositionRemark(dispositionMark);
+            collectInfoBean.setCollectInfoGoTime(goTime);
+            MyApplication.getDaoSession().getCollectInfoBeanDao().update(collectInfoBean);
+            ToastUtils.showShortToast("更新成功");
+        }
     }
 
     private void initView() {
@@ -304,5 +486,57 @@ public class CollectInfoFragment extends Fragment {
         spinnerAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, isFind);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCollectinfoIsresearch.setAdapter(spinnerAdapter);
+        CollectInfoBean collectInfoBean = MyApplication.getDaoSession().getCollectInfoBeanDao().queryBuilder().where(CollectInfoBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+        if (collectInfoBean != null) {
+            etCollectinfoPlace.setText(collectInfoBean.getCollectInfoPlace());
+            spCollectinfoType.setSelection(Integer.valueOf(collectInfoBean.getCollectInfoType()));
+            spCollectinfoIsdisaster.setSelection(Integer.valueOf(collectInfoBean.getCollectInfoDisOrDan()));
+            spCollectinfoDisasterLevel.setSelection(Integer.valueOf(collectInfoBean.getCollectInfoDisasterLevel()));
+            spCollectinfoDisasterReason.setSelection(Integer.valueOf(collectInfoBean.getCollectInfoDisasterReason()));
+            spCollectinfoIsresearch.setSelection(Integer.valueOf(collectInfoBean.getCollectInfoIsResearch()));
+            etCollectinfoDead.setText(collectInfoBean.getCollectInfoDead());
+            etCollectinfoMiss.setText(collectInfoBean.getCollectInfoMiss());
+            etCollectinfoHeavyInjured.setText(collectInfoBean.getCollectInfoHeavyInjured());
+            etCollectinfoSoftInjured.setText(collectInfoBean.getCollectInfoSoftInjured());
+            etCollectinfoEconomicLoss.setText(collectInfoBean.getCollectInfoEconomicLoss());
+            etCollectinfoHouseCollapseNumber.setText(collectInfoBean.getCollectInfoHouseCollapseNum());
+            etCollectinfoHouseCollapseArea.setText(collectInfoBean.getCollectInfoHouseCollapseArea());
+            etCollectinfoHouseDamageNumber.setText(collectInfoBean.getCollectInfoHouseDamageNum());
+            etCollectinfoHouseDamageArea.setText(collectInfoBean.getCollectInfoHouseDamageArea());
+            etCollectinfoAnotherDamage.setText(collectInfoBean.getCollectInfoAnotherDamage());
+            etCollectinfoFamily.setText(collectInfoBean.getCollectInfoFamily());
+            etCollectinfoPeople.setText(collectInfoBean.getCollectInfoPeople());
+            etCollectinfoAthomeFamily.setText(collectInfoBean.getCollectInfoAtHomeFamily());
+            etCollectinfoAthomePeople.setText(collectInfoBean.getCollectInfoAtHomePeople());
+            etCollectinfoHouse.setText(collectInfoBean.getCollectInfoHouse());
+            etCollectinfoArea.setText(collectInfoBean.getCollectInfoHouseArea());
+            etCollectinfoAnotherDisaster.setText(collectInfoBean.getCollectInfoAnotherDisaster());
+            etCollectinfoLandslideLength.setText(collectInfoBean.getCollectInfoLandslideLength());
+            etCollectinfoLandslideWidth.setText(collectInfoBean.getCollectInfoLandslideWidth());
+            etCollectinfoLandslideArea.setText(collectInfoBean.getCollectInfoLandslideArea());
+            etCollectinfoLandslideVolume.setText(collectInfoBean.getCollectInfoLandslideVolume());
+            etCollectinfoDistortionLength.setText(collectInfoBean.getCollectInfoDistortionLength());
+            etCollectinfoDistortionWidth.setText(collectInfoBean.getCollectInfoDistortionWidth());
+            etCollectinfoDistortionArea.setText(collectInfoBean.getCollectInfoDistortionArea());
+            etCollectinfoDistortionVolume.setText(collectInfoBean.getCollectInfoDistortionVolume());
+            etCollectinfoSlideDistance.setText(collectInfoBean.getCollectInfoSlideDistance());
+            etCollectinfoCrackNumber.setText(collectInfoBean.getCollectInfoCrackNumber());
+            etCollectinfoCrackMinlength.setText(collectInfoBean.getCollectInfoCrackMinLength());
+            etCollectinfoCrackMaxlength.setText(collectInfoBean.getCollectInfoCrackMaxLength());
+            etCollectinfoCrackMinwidth.setText(collectInfoBean.getCollectInfoCrackMinWidth());
+            etCollectinfoCrackMaxwidth.setText(collectInfoBean.getCollectInfoCrackMaxWidth());
+            etCollectinfoMaxdislocation.setText(collectInfoBean.getCollectInfoMaxDislocation());
+            etCollectinfoRockLength.setText(collectInfoBean.getCollectInfoRockLength());
+            etCollectinfoRockWidth.setText(collectInfoBean.getCollectInfoRockWidth());
+            etCollectinfoRockVolume.setText(collectInfoBean.getCollectInfoRockVolume());
+            etCollectinfoCollapseVolume.setText(collectInfoBean.getCollectInfoCollapseVolume());
+            etCollectinfoResidualVolume.setText(collectInfoBean.getCollectInfoResidualVolume());
+            etCollectinfoAnotherThings.setText(collectInfoBean.getCollectInfoAnotherThings());
+            tvCollectinfoMeasure.setText(collectInfoBean.getCollectInfoMeasure());
+            etCollectinfoMeasureRemark.setText(collectInfoBean.getCollectInfoMeasureRemark());
+            tvCollectinfoDisposition.setText(collectInfoBean.getCollectInfoDisposition());
+            etCollectinfoDispositionRemark.setText(collectInfoBean.getCollectInfoDispositionRemark());
+            tvCollectinfoGoTime.setText(collectInfoBean.getCollectInfoGoTime());
+        }
     }
 }

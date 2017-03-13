@@ -1,10 +1,9 @@
 package com.nandity.disastersystem.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,9 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.FillInfoActivity;
-import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.TaskInfoBean;
 import com.nandity.disastersystem.constant.ConnectUrl;
@@ -30,14 +29,6 @@ import com.nandity.disastersystem.database.BaseInfoBeanDao;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
-import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +70,7 @@ public class BaseInfoFragment extends Fragment {
     private String[] isdisasters;
     private TaskInfoBean taskInfoBean;
     private boolean isSave = false;
-
+    private Bitmap baseInfoBitmap;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,7 +99,11 @@ public class BaseInfoFragment extends Fragment {
                     @Override
                     public void onResponse(Bitmap response, int id) {
                         Log.e(TAG,"加载的图片："+response);
-                        ivBaseinfoImage.setImageBitmap(response);
+                        baseInfoBitmap=response;
+                        Matrix matrix=new Matrix();
+                        matrix.setScale(0.5f,0.5f);
+                        Bitmap bmp = Bitmap.createBitmap(response, 0, 0, response.getWidth(), response.getHeight(), matrix, true);
+                        ivBaseinfoImage.setImageBitmap(bmp);
                     }
                 });
     }
@@ -118,6 +113,18 @@ public class BaseInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveBaseInfo();
+            }
+        });
+        ivBaseinfoImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view=LayoutInflater.from(context).inflate(R.layout.dialog_show_photo,null);
+                ImageView imageView= (ImageView) view.findViewById(R.id.iv_dialog_picture);
+                imageView.setImageBitmap(baseInfoBitmap);
+                new MaterialDialog.Builder(getActivity())
+                        .cancelable(true)
+                        .customView(view,false)
+                        .show();
             }
         });
     }
@@ -214,8 +221,10 @@ public class BaseInfoFragment extends Fragment {
         spBaseinfoType.setAdapter(neworoldAdapter);
         if ("1".equals(taskInfoBean.getmDisasterType())) {
             spBaseinfoType.setSelection(0, true);
+            spBaseinfoType.setEnabled(false);
         } else {
             spBaseinfoType.setSelection(1, false);
+            spBaseinfoType.setEnabled(false);
         }
         ArrayAdapter isdisasterAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, isdisasters);
         isdisasterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -247,11 +256,11 @@ public class BaseInfoFragment extends Fragment {
             spBaseinfoType.setSelection(Integer.valueOf(bean.getBaseInfoType()));
             spBaseinfoIsdisaster.setSelection(Integer.valueOf(bean.getBaseInfoIsDisaster()));
         } else {
-            etBaseinfoLng.setText(taskInfoBean.getmDisasterLng()==null?"":taskInfoBean.getmDisasterLng());
-            etBaseinfoLat.setText(taskInfoBean.getmDisasterLat()==null?"":taskInfoBean.getmDisasterLat());
-            etBaseinfoAddress.setText(taskInfoBean.getmDisasterLocation()==null?"":taskInfoBean.getmDisasterLocation());
-            etBaseinfoContact.setText(taskInfoBean.getmDisasterContact()==null?"":taskInfoBean.getmDisasterContact());
-            etBaseinfoMobile.setText(taskInfoBean.getmDisasterMobile()==null?"":taskInfoBean.getmDisasterMobile());
+            etBaseinfoLng.setText("null".equals(taskInfoBean.getmDisasterLng())?"":taskInfoBean.getmDisasterLng());
+            etBaseinfoLat.setText("null".equals(taskInfoBean.getmDisasterLat())?"":taskInfoBean.getmDisasterLat());
+            etBaseinfoAddress.setText("null".equals(taskInfoBean.getmDisasterLocation())?"":taskInfoBean.getmDisasterLocation());
+            etBaseinfoContact.setText("null".equals(taskInfoBean.getmDisasterContact())?"":taskInfoBean.getmDisasterContact());
+            etBaseinfoMobile.setText("null".equals(taskInfoBean.getmDisasterMobile())?"":taskInfoBean.getmDisasterMobile());
         }
 
     }

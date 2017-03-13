@@ -10,8 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="50dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        >
 
         <ImageView
             android:layout_width="120dp"
@@ -21,19 +20,21 @@
             android:layout_marginBottom="10dp"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:layout_marginBottom="36dp"
             android:text="地质灾害应急指挥系统"
             android:textColor="#337ab7"
-            android:textSize="28sp"/>
+            android:textSize="25sp"/>
 
         <!-- name label -->
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <EditText
                 android:id="@+id/et_name"
@@ -47,7 +48,9 @@
         <!-- password label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <EditText
                 android:id="@+id/et_pwd"
@@ -56,6 +59,11 @@
                 android:inputType="textPassword"
                 android:hint="密码"/>
         </android.support.design.widget.TextInputLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            >
 
         <Button
             android:id="@+id/btn_login"
@@ -66,22 +74,18 @@
             android:gravity="center"
             android:textColor="@color/c1olorblue"
             android:background="@drawable/loginbtn_selector"
-            android:layout_marginTop="30dp"
-            android:padding="12dp"/>
+            />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
 
             <TextView
                 android:id="@+id/settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:gravity="right"
                 android:text="设置"
+                android:layout_marginTop="10dp"
                 android:textColor="#337ab7"
+                android:layout_below="@+id/btn_login"
                 android:textSize="16sp"/>
         </RelativeLayout>
 

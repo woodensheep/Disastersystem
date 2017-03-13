@@ -69,4 +69,8 @@ public class ConnectUrl {
         return "http://" + ip + ":" + port + "/cmdapp/getDisPic.do";
     }
 
+    public String getBaseInfoUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/saveDisInfo.do";
+    }
+
 }
