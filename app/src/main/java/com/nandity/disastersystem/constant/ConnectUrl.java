@@ -73,4 +73,8 @@ public class ConnectUrl {
         return "http://" + ip + ":" + port + "/cmdapp/saveDisInfo.do";
     }
 
+    public String getConnectInfoUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/saveTaskExtends.do";
+    }
+
 }

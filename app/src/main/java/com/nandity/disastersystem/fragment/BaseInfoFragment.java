@@ -210,7 +210,7 @@ public class BaseInfoFragment extends Fragment {
     }
 
     private void initView() {
-        levels = new String[]{"小", "中", "大", "特大"};
+        levels = new String[]{"一级", "二级", "三级", "四级","五级","六级"};
         neworold = new String[]{"新灾害点", "旧灾害点"};
         isdisasters = new String[]{"是", "否"};
         ArrayAdapter levelsAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, levels);
