@@ -24,7 +24,6 @@ import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.TaskBean;
 import com.nandity.disastersystem.database.TaskBeanDao;
 import com.nandity.disastersystem.utils.DateTimePickUtil;
-import com.nandity.disastersystem.utils.MyUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -41,7 +40,6 @@ import java.util.List;
 import okhttp3.Call;
 
 import static com.nandity.disastersystem.app.MyApplication.getContext;
-import static com.nandity.disastersystem.app.MyApplication.getDaoSession;
 
 public class UnCompleteActivity extends AppCompatActivity {
     private String TAG="UnCompleteActivity";
@@ -103,9 +101,7 @@ public class UnCompleteActivity extends AppCompatActivity {
         initViews();
         setLinsteners();
         initData();
-        setViewDataAll();
-        Log.d(TAG,taskBean.toString());
-        //setOkHttp();
+        setOkHttp();
     }
 
 
@@ -119,6 +115,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                 String str2=b.getString("str2","");//disaster
                 tvDisaster.setText(str2);
                 taskBean.setMDisasterID(str1);
+                taskBean.setMDisaster(str2);
                 break;
             default:
                 break;
@@ -141,7 +138,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                 getTaskBean();
                 MyApplication.getDaoSession().getTaskBeanDao().update(taskBean);
                 Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
-                cleanAll();
+                //cleanAll();
                 finish();
             }
         });
@@ -162,7 +159,8 @@ public class UnCompleteActivity extends AppCompatActivity {
         btnCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cleanAll();
+                MyApplication.getDaoSession().getTaskBeanDao().delete(taskBean);
+                finish();
             }
 
         });
@@ -353,10 +351,14 @@ public class UnCompleteActivity extends AppCompatActivity {
                                 status = object.getString("status");
                                 msg = object.getString("message");
                                 if ("200".equals(status)) {
+                                    MyApplication.getDaoSession().getTaskBeanDao().update(taskBean);
                                     finish();
                                     ToastUtils.showShortToast(msg);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    Intent intent = new Intent(UnCompleteActivity.this, LoginActivity.class);
+                                    UnCompleteActivity.this.startActivity(intent);
+                                    finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -372,7 +374,7 @@ public class UnCompleteActivity extends AppCompatActivity {
     }
 
     private void setOkHttp() {
-
+        progressDialog.show();
         try {
             OkHttpUtils.get().url(new ConnectUrl().getAreaListUrl())
                     .addParams("sessionId",sessionId)
@@ -407,8 +409,12 @@ public class UnCompleteActivity extends AppCompatActivity {
                                     }
                                     mTownshipAdapter.notifyDataSetChanged();
                                     setViewDataAll();
+                                    Log.d(TAG,taskBean.toString());
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    Intent intent = new Intent(UnCompleteActivity.this, LoginActivity.class);
+                                    UnCompleteActivity.this.startActivity(intent);
+                                    finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -455,8 +461,12 @@ public class UnCompleteActivity extends AppCompatActivity {
                                     }
                                     mWorkersAdapter.notifyDataSetChanged();
                                     setViewDataAll();
+                                    Log.d(TAG,2+taskBean.toString());
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    Intent intent = new Intent(UnCompleteActivity.this, LoginActivity.class);
+                                    UnCompleteActivity.this.startActivity(intent);
+                                    finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
