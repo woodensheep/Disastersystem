@@ -23,6 +23,7 @@ import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.TaskInfoBean;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.BaseInfoBean;
+import com.nandity.disastersystem.database.BaseInfoBeanDao;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;

@@ -17,6 +17,7 @@ import com.nandity.disastersystem.activity.UnCompleteActivity;
 import com.nandity.disastersystem.adapter.UnTaskAdapter;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.database.TaskBean;
+import com.nandity.disastersystem.database.TaskBeanDao;
 
 
 import org.greenrobot.greendao.query.QueryBuilder;

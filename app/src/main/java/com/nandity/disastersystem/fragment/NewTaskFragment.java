@@ -150,6 +150,7 @@ public class NewTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getTaskBean();
+                Log.d(TAG,"---"+taskBean.toString());
                 MyApplication.getDaoSession().getTaskBeanDao().insert(taskBean);
                 Toast.makeText(getActivity(),"保存成功",Toast.LENGTH_SHORT).show();
                 cleanAll();
@@ -330,6 +331,9 @@ public class NewTaskFragment extends Fragment {
                                     ToastUtils.showShortToast(msg);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                    getActivity().startActivity(intent);
+                                    getActivity().finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
