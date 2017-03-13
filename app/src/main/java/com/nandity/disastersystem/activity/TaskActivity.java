@@ -133,6 +133,7 @@ public class TaskActivity extends AppCompatActivity {
                                     JSONObject oj = message.getJSONObject(0);
                                     taskInfoBean = new TaskInfoBean();
                                     taskInfoBean.setmTaskId(mId);
+                                    taskInfoBean.setmRowNumber(oj.getString("dis_id"));
                                     taskInfoBean.setmDisasterName(oj.getString("dis_name"));
                                     taskInfoBean.setmDisasterLng(oj.getString("dis_lon"));
                                     taskInfoBean.setmDisasterLat(oj.getString("dis_lat"));

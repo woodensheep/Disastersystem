@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/c1olorgray"
                     android:gravity="center"
-                    android:text="灾闲情类型"
+                    android:text="灾险情类型"
                     android:layout_margin="5dp"
                     android:textColor="@color/c1olorwhite"
                     android:textSize="@dimen/fill_Info_titleSize" />

@@ -464,7 +464,7 @@ public class CollectInfoFragment extends Fragment {
     }
 
     private void initView() {
-        currentTime = new SimpleDateFormat("yyyy年MM月dd日 hh:mm").format(new Date());
+        currentTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         tvCollectinfoGoTime.setText(currentTime);
         String[] disasterType = {"滑坡", "泥石流", "危岩", "不稳定斜坡", "地面塌陷", "地裂缝", "塌岸"};
         String[] disasterReason = {"降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚"};
