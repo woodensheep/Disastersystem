@@ -1,8 +1,6 @@
 package com.nandity.disastersystem.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,23 +19,13 @@ import android.widget.Spinner;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.FillInfoActivity;
-import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.TaskInfoBean;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.BaseInfoBean;
-import com.nandity.disastersystem.database.BaseInfoBeanDao;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
-import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

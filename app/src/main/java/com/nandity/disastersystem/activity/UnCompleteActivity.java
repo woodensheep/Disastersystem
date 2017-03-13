@@ -22,9 +22,7 @@ import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.CItem;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.TaskBean;
-import com.nandity.disastersystem.database.TaskBeanDao;
 import com.nandity.disastersystem.utils.DateTimePickUtil;
-import com.nandity.disastersystem.utils.MyUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -41,7 +39,6 @@ import java.util.List;
 import okhttp3.Call;
 
 import static com.nandity.disastersystem.app.MyApplication.getContext;
-import static com.nandity.disastersystem.app.MyApplication.getDaoSession;
 
 public class UnCompleteActivity extends AppCompatActivity {
     private String TAG="UnCompleteActivity";
