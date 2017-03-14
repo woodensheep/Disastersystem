@@ -7,7 +7,7 @@ import com.nandity.disastersystem.app.MyApplication;
 
 /**
  * Created by ChenPeng on 2017/3/1.
- *  何志武
+ * 何志武
  * wzadmin
  * 192.168.1.137
  * 8080
@@ -33,6 +33,16 @@ public class ConnectUrl {
 
     public String getDirectoryUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getAddressList.do";
+    }
+
+    //更新app
+    public String getUpdateServiceUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/downloadApk.do";
+    }
+
+    //    获取版本号
+    public String getUpdateVerCodeUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/haveNewVersion.do";
     }
 
     public String getStartTaskUrl() {
