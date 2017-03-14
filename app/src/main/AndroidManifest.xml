@@ -31,6 +31,9 @@
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity android:name=".activity.MySplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
