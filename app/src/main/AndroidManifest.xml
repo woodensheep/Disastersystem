@@ -58,7 +58,7 @@
             />
         <activity android:name=".activity.UnCompleteActivity" />
         <activity android:name=".activity.FillInfoActivity"/>
-
+        <activity android:name=".activity.TaskInfoActivity"/>
         <meta-data android:name="com.alibaba.app.appkey" android:value="23666592"/> <!-- 请填写你自己的- appKey -->
         <meta-data android:name="com.alibaba.app.appsecret" android:value="e1fcb36d6a46dac5683dea93f2ea95a4"/> <!-- 请填写你自己的appSecret -->
 

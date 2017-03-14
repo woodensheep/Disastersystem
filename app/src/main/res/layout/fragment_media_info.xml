@@ -103,8 +103,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/btn_baseinfo_video_upload"
@@ -139,14 +139,13 @@
                     android:id="@+id/tv_mediainfo_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_margin="10dp"
-                     />
+                    android:textSize="18sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/btn_baseinfo_audio_upload"
@@ -166,6 +165,29 @@
                         android:background="@drawable/loginbtn_selector"
                         android:text="删除录音" />
                 </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/c1olorblue"
+                    android:gravity="center"
+                    android:text="文件"
+                    android:textColor="@color/c1olorwhite"
+                    android:textSize="@dimen/fill_Info_titleSize" />
+                <TextView
+                    android:id="@+id/tv_mediainfo_folder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp" />
+                <Button
+                    android:id="@+id/btn_baseinfo_folder_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/loginbtn_selector"
+                    android:text="上传文件" />
             </LinearLayout>
 
         </LinearLayout>

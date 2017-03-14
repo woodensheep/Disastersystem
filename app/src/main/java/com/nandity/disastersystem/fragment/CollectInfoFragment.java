@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -249,9 +250,9 @@ public class CollectInfoFragment extends Fragment {
                 });
     }
 
-    private MaterialDialog initDialog(final List<String> list, final TextView textView) {
+    private MaterialDialog initDialog(String title,final List<String> list, final TextView textView) {
         return new MaterialDialog.Builder(getActivity())
-                .title("请选择措施")
+                .title(title)
                 .titleColor(Color.BLUE)
                 .items(list)
                 .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
@@ -261,7 +262,9 @@ public class CollectInfoFragment extends Fragment {
                         for (int i = 0; i < which.length; i++) {
                             Str += list.get(which[i]) + ",";
                         }
-                        textView.setText(Str.substring(0, Str.length() - 1));
+                        if (!TextUtils.isEmpty(Str)) {
+                            textView.setText(Str.substring(0, Str.length() - 1));
+                        }
                         return true;
                     }
                 })
@@ -282,7 +285,7 @@ public class CollectInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (measureList != null && measureList.size() > 0) {
-                    initDialog(measureList, tvCollectinfoMeasure).show();
+                    initDialog("请选择采取措施",measureList, tvCollectinfoMeasure).show();
                 }
             }
         });
@@ -290,7 +293,7 @@ public class CollectInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (dispositionList != null && dispositionList.size() > 0) {
-                    initDialog(dispositionList, tvCollectinfoDisposition).show();
+                    initDialog("请选择处置意见",dispositionList, tvCollectinfoDisposition).show();
                 }
             }
         });
@@ -310,16 +313,16 @@ public class CollectInfoFragment extends Fragment {
         String level = spCollectinfoDisasterLevel.getSelectedItemPosition() + "";
         String reason = spCollectinfoDisasterReason.getSelectedItemPosition() + "";
         String isResearch = spCollectinfoIsresearch.getSelectedItemPosition() + "";
-        String dead=etCollectinfoDead.getText().toString().trim();
-        String miss=etCollectinfoMiss.getText().toString().trim();
+        String dead = etCollectinfoDead.getText().toString().trim();
+        String miss = etCollectinfoMiss.getText().toString().trim();
         String heavyInjured = etCollectinfoHeavyInjured.getText().toString().trim();
-        String softInjured=etCollectinfoSoftInjured.getText().toString().trim();
+        String softInjured = etCollectinfoSoftInjured.getText().toString().trim();
         String economicLoss = etCollectinfoEconomicLoss.getText().toString().trim();
         String houseCollapseNum = etCollectinfoHouseCollapseNumber.getText().toString().trim();
-        String houseCollapseArea=etCollectinfoHouseCollapseArea.getText().toString().trim();
-        String houseDamageNum=etCollectinfoHouseDamageNumber.getText().toString().trim();
-        String houseDamageArea=etCollectinfoHouseDamageArea.getText().toString().trim();
-        String anotherDamage=etCollectinfoAnotherDamage.getText().toString().trim();
+        String houseCollapseArea = etCollectinfoHouseCollapseArea.getText().toString().trim();
+        String houseDamageNum = etCollectinfoHouseDamageNumber.getText().toString().trim();
+        String houseDamageArea = etCollectinfoHouseDamageArea.getText().toString().trim();
+        String anotherDamage = etCollectinfoAnotherDamage.getText().toString().trim();
         String family = etCollectinfoFamily.getText().toString().trim();
         String people = etCollectinfoPeople.getText().toString().trim();
         String atHomeFamily = etCollectinfoAthomeFamily.getText().toString().trim();
@@ -464,8 +467,7 @@ public class CollectInfoFragment extends Fragment {
     }
 
     private void initView() {
-        currentTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
-        tvCollectinfoGoTime.setText(currentTime);
+        currentTime = new SimpleDateFormat("yyyy年MM月dd日hh:mm").format(new Date());
         String[] disasterType = {"滑坡", "泥石流", "危岩", "不稳定斜坡", "地面塌陷", "地裂缝", "塌岸"};
         String[] disasterReason = {"降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚"};
         String[] disasterOrDanger = {"灾情", "险情"};

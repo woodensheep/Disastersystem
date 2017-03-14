@@ -26,7 +26,7 @@
     <string name="search">搜索</string>
     <string name="searchHistory">搜索历史</string>
     <string name="clearSearchHistory">清除历史记录</string>
-    <string name="str_search_hint">搜索</string>
+    <string name="str_search_hint">请输入姓名或者电话搜索</string>
     <string name="str_searchHistory">搜索历史</string>
     <string name="str_clearSearchHistory">清除历史</string>
     <string name="title_activity_fill_info">FillInfoActivity</string>

@@ -51,7 +51,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="50dp"
                 android:layout_toRightOf="@+id/img_my_task"
-                android:text="任务数量：1个" />
+                android:text="任务数量：0个" />
 
             <ImageView
                 android:id="@+id/img_my_task"
@@ -108,7 +108,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="50dp"
                 android:layout_toRightOf="@+id/img_com_task"
-                android:text="任务数量：1个" />
+                android:text="任务数量：0个" />
 
             <ImageView
                 android:id="@+id/img_com_task"

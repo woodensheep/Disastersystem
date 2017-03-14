@@ -174,14 +174,10 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject object = new JSONObject(response);
                                 status = object.getString("status");
                                 msg = object.getString("message");
-                                JSONArray info = object.getJSONArray("info");
-                                Log.d("onResponse",info.toString()+"\n"+info.getJSONObject(0).getString("myTask"));
                                 if ("200".equals(status)) {
                                     sp.edit().putString("userName", name).apply();
                                     sp.edit().putString("passWord", pwd).apply();
                                     sp.edit().putString("sessionId", sessiongId).apply();
-                                    sp.edit().putString("myTaskNum", info.getJSONObject(0).getString("myTask")).apply();
-                                    sp.edit().putString("allTaskNum",info.getJSONObject(1).getString("allTask")).apply();
                                     initPush();
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(context, MainActivity.class);

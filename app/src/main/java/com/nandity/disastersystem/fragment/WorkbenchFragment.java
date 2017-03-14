@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,18 @@ import android.widget.TextView;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.CompleteTaskActivity;
 import com.nandity.disastersystem.activity.CreateTaskActivity;
+import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.activity.MyTaskActivity;
+import com.nandity.disastersystem.constant.ConnectUrl;
+import com.nandity.disastersystem.utils.ToastUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.Call;
 
 /**
  * Created by lemon on 2017/2/22.
@@ -35,11 +47,8 @@ public class WorkbenchFragment extends Fragment implements View.OnClickListener{
     private TextView tvMyTaskNum;
     private TextView tvCompleteTaskNum;
     /*我的任务数量*/
-    private String mNUM1=0+"";
-    /*调查信息任务数量*/
-    private String mNUM2=0+"";
     private SharedPreferences sp;
-
+    private String sessionId;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -48,6 +57,7 @@ public class WorkbenchFragment extends Fragment implements View.OnClickListener{
         activity=getActivity();
         View view=inflater.inflate(R.layout.fragment_workbench, container, false);
         sp = getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+        sessionId=sp.getString("sessionId","");
         initView(view);
         setData();
         setListener();
@@ -62,14 +72,46 @@ public class WorkbenchFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setData() {
+        Log.d("WorkbenchFragment","sessionId:"+sessionId);
+        OkHttpUtils.get().url(new ConnectUrl().getTaskNumUrl())
+                .addParams("sessionId",sessionId)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShortToast("连接服务器失败！");
+                    }
 
-        mNUM1=sp.getString("myTaskNum", "*");
-        mNUM2=sp.getString("allTaskNum", "*");
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String status,msg;
+                        try {
+                            JSONObject object=new JSONObject(response);
+                            status=object.getString("status");
+                            msg=object.getString("message");
+                            Log.d("WorkbenchFragment","获取任务数量的status:"+status);
+                            Log.d("WorkbenchFragment","获取任务数量的msg:"+status);
+                            if("200".equals(status)){
+                                JSONArray array=object.getJSONArray("message");
+                                String myTask = array.getJSONObject(0).getString("myTask");
+                                String allTask = array.getJSONObject(1).getString("allTask");
+                                Log.d("WorkbenchFragment","我的任务数量："+myTask);
+                                Log.d("WorkbenchFragment","完成任务数量："+allTask);
+                                tvMyTask.setText("任务数量：" + myTask + "个");
+                                tvMyTaskNum.setText(myTask);
+                                tvCompleteTask.setText("任务数量：" + allTask + "个");
+                                tvCompleteTaskNum.setText(allTask);
+                            }else if ("400".equals(status)) {
+                                ToastUtils.showShortToast(msg);
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                getActivity().finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
         myToolBar.setTitle("");
-        tvMyTask.setText("任务数量："+mNUM1+"个");
-        tvMyTaskNum.setText(mNUM1);
-        tvCompleteTask.setText("任务数量："+mNUM2+"个");
-        tvCompleteTaskNum.setText(mNUM2);
     }
 
     private void initView(View view) {

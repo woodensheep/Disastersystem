@@ -17,7 +17,7 @@ import java.util.Calendar;
  * Created by ChenPeng on 2017/3/3.
  */
 
-public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePicker.OnTimeChangedListener{
+public class DateTimePickUtil implements DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
     private DatePicker datePicker;
     private TimePicker timePicker;
     private AlertDialog ad;
@@ -28,10 +28,8 @@ public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePi
     /**
      * 日期时间弹出选择框构造函数
      *
-     * @param activity
-     *            ：调用的父activity
-     * @param initDateTime
-     *            初始日期时间值，作为弹出窗口的标题和日期时间初始值
+     * @param activity     ：调用的父activity
+     * @param initDateTime 初始日期时间值，作为弹出窗口的标题和日期时间初始值
      */
     public DateTimePickUtil(Activity activity, String initDateTime) {
         this.activity = activity;
@@ -48,7 +46,8 @@ public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePi
                     + calendar.get(Calendar.MONTH) + "月"
                     + calendar.get(Calendar.DAY_OF_MONTH) + "日 "
                     + calendar.get(Calendar.HOUR_OF_DAY) + ":"
-                    + calendar.get(Calendar.MINUTE);
+                    + calendar.get(Calendar.MINUTE) + ":"
+                    + calendar.get(Calendar.SECOND);
         }
 
         datePicker.init(calendar.get(Calendar.YEAR),
@@ -61,8 +60,7 @@ public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePi
     /**
      * 弹出日期时间选择框方法
      *
-     * @param inputDate
-     *            :为需要设置的日期时间文本编辑框
+     * @param inputDate :为需要设置的日期时间文本编辑框
      * @return
      */
     public AlertDialog dateTimePicKDialog(final TextView inputDate) {
@@ -104,7 +102,7 @@ public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePi
         calendar.set(datePicker.getYear(), datePicker.getMonth(),
                 datePicker.getDayOfMonth(), timePicker.getCurrentHour(),
                 timePicker.getCurrentMinute());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         dateTime = sdf.format(calendar.getTime());
         ad.setTitle(dateTime);
@@ -113,8 +111,7 @@ public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePi
     /**
      * 实现将初始日期时间2012年07月02日 16:45 拆分成年 月 日 时 分 秒,并赋值给calendar
      *
-     * @param initDateTime
-     *            初始日期时间值 字符串型
+     * @param initDateTime 初始日期时间值 字符串型
      * @return Calendar
      */
     private Calendar getCalendarByInintData(String initDateTime) {
@@ -132,25 +129,23 @@ public class DateTimePickUtil implements DatePicker.OnDateChangedListener,TimePi
 
         String hourStr = spliteString(time, ":", "index", "front"); // 时
         String minuteStr = spliteString(time, ":", "index", "back"); // 分
-
+        String secondStr = spliteString(time, ":", "index", "front");
         int currentYear = Integer.valueOf(yearStr.trim()).intValue();
         int currentMonth = Integer.valueOf(monthStr.trim()).intValue() - 1;
         int currentDay = Integer.valueOf(dayStr.trim()).intValue();
         int currentHour = Integer.valueOf(hourStr.trim()).intValue();
         int currentMinute = Integer.valueOf(minuteStr.trim()).intValue();
-
+        int currentSecond = Integer.valueOf(secondStr.trim()).intValue();
         calendar.set(currentYear, currentMonth, currentDay, currentHour,
-                currentMinute);
+                currentMinute, currentSecond);
         return calendar;
     }
 
     /**
      * 截取子串
      *
-     * @param srcStr
-     *            源串
-     * @param pattern
-     *            匹配模式
+     * @param srcStr      源串
+     * @param pattern     匹配模式
      * @param indexOrLast
      * @param frontOrBack
      * @return

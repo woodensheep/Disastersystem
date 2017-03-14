@@ -136,6 +136,7 @@ public class FillInfoActivity extends AppCompatActivity {
                                             upLoadConnectInfo();
                                         } else if ("400".equals(status)) {
                                             ToastUtils.showShortToast(msg);
+                                            uploadProgress.dismiss();
                                             startActivity(new Intent(FillInfoActivity.this, LoginActivity.class));
                                             finish();
                                         } else {
@@ -164,6 +165,12 @@ public class FillInfoActivity extends AppCompatActivity {
         collectInfoBean.setCollectInfoType(type+"");
         collectInfoBean.setCollectInfoDisOrDan(disOrDan+"");
         collectInfoBean.setCollectInfoIsResearch(isResearch+"");
+        if (collectInfoBean.getCollectInfoMeasure().equals("点击选择")){
+            collectInfoBean.setCollectInfoMeasure("");
+        }
+        if (collectInfoBean.getCollectInfoDisposition().equals("点击选择")){
+            collectInfoBean.setCollectInfoDisposition("");
+        }
         Gson gson=new Gson();
         String info=gson.toJson(collectInfoBean);
         Log.d(TAG,"采集信息json字符串："+info);
@@ -188,6 +195,7 @@ public class FillInfoActivity extends AppCompatActivity {
                             if ("200".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
+                                deleteDao();
                             }else if("400".equals(status)){
                                 ToastUtils.showShortToast(msg);
                                 startActivity(new Intent(FillInfoActivity.this, LoginActivity.class));
@@ -202,6 +210,11 @@ public class FillInfoActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void deleteDao() {
+        baseInfoBeanDao.delete(baseInfoBean);
+        collectInfoBeanDao.delete(collectInfoBean);
     }
 
     private String getLevel(String collectInfoDisasterLevel) {

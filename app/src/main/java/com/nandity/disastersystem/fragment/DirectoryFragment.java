@@ -91,7 +91,7 @@ public class DirectoryFragment extends Fragment {
         sessionId = sp.getString("sessionId", "");
         directoryProgress.setVisibility(View.VISIBLE);
         initData();
-        initAutoComplete("history", etSearchContent, searchClear);
+        initAutoComplete("history", etSearchContent);
         setListener();
         return view;
     }
@@ -258,6 +258,8 @@ public class DirectoryFragment extends Fragment {
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 context.startActivity(intent);
                                 getActivity().finish();
+                            } else {
+                                ToastUtils.showShortToast(msg);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -337,9 +339,8 @@ public class DirectoryFragment extends Fragment {
      *
      * @param field
      * @param auto
-     * @param searchClear
      */
-    private void initAutoComplete(String field, AutoCompleteTextView auto, final ImageView searchClear) {
+    private void initAutoComplete(String field, AutoCompleteTextView auto) {
         String longhistory = sp.getString("history", "nothing");
         String[] hisArrays = longhistory.split(",");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,

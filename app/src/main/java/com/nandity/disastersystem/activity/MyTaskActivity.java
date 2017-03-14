@@ -155,7 +155,7 @@ public class MyTaskActivity extends AppCompatActivity {
     private void initView() {
         mTab1=tabLayout.newTab().setText("未处理(0)");
         //mTab2=tabLayout.newTab().setText("已上传(0)");
-        mTab3=tabLayout.newTab().setText("未上传(0)");
+        mTab3=tabLayout.newTab().setText("未完成(0)");
         tabLayout.addTab(mTab1,true);
         //tabLayout.addTab(mTab2);
         tabLayout.addTab(mTab3);
@@ -206,9 +206,9 @@ public class MyTaskActivity extends AppCompatActivity {
                                         BaseInfoBean infoBean = MyApplication.getDaoSession().getBaseInfoBeanDao().queryBuilder().where(BaseInfoBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
                                         CollectInfoBean collectInfoBean = MyApplication.getDaoSession().getCollectInfoBeanDao().queryBuilder().where(CollectInfoBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
                                         AudioPathBean audioPathBean = MyApplication.getDaoSession().getAudioPathBeanDao().queryBuilder().where(AudioPathBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
-                                        PicturePathBean picturePathBean = MyApplication.getDaoSession().getPicturePathBeanDao().queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
+                                        List<PicturePathBean> picturePathBean = MyApplication.getDaoSession().getPicturePathBeanDao().queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(oj.getString("id"))).list();
                                         VideoPathBean videoPathBean = MyApplication.getDaoSession().getVideoPathBeanDao().queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
-                                        if (infoBean==null&&collectInfoBean==null&&audioPathBean==null&&picturePathBean==null&&videoPathBean==null){
+                                        if (infoBean==null&&collectInfoBean==null&&audioPathBean==null&&picturePathBean.size()==0&&videoPathBean==null){
                                             mListData.add(taskInfoBean);
                                         }else{
                                             mSaveDatas.add(taskInfoBean);

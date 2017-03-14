@@ -27,6 +27,9 @@ public class ConnectUrl {
     public String getLoginUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/androidLogin.do";
     }
+    public String getTaskNumUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getTaskNo.do";
+    }
 
     public String getDirectoryUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getAddressList.do";
@@ -75,6 +78,14 @@ public class ConnectUrl {
 
     public String getConnectInfoUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/saveTaskExtends.do";
+    }
+
+    public String getMediaUploadUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/uploadFile.do";
+    }
+
+    public String getCompleteTaskUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getAllEndTask.do";
     }
 
 }

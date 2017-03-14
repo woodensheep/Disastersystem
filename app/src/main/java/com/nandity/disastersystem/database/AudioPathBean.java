@@ -15,6 +15,8 @@ public class AudioPathBean {
     private String taskId;
     /*录音路径*/
     private String path;
+    /*文件路径*/
+    private String folderPath;
     public String getPath() {
         return this.path;
     }
@@ -33,11 +35,18 @@ public class AudioPathBean {
     public void setId(Long id) {
         this.id = id;
     }
-    @Generated(hash = 2085822792)
-    public AudioPathBean(Long id, String taskId, String path) {
+    public String getFolderPath() {
+        return this.folderPath;
+    }
+    public void setFolderPath(String folderPath) {
+        this.folderPath = folderPath;
+    }
+    @Generated(hash = 894773776)
+    public AudioPathBean(Long id, String taskId, String path, String folderPath) {
         this.id = id;
         this.taskId = taskId;
         this.path = path;
+        this.folderPath = folderPath;
     }
     @Generated(hash = 745923026)
     public AudioPathBean() {

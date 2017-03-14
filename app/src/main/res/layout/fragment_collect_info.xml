@@ -204,7 +204,7 @@
                     android:id="@+id/et_collectinfo_heavy_injured"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入轻伤人数(单位：人)"
+                    android:hint="请输入重伤人数(单位：人)"
                     android:inputType="number"
                     android:layout_margin="5dp"
                     android:textSize="@dimen/fill_Info_textSize" />
@@ -212,7 +212,7 @@
                     android:id="@+id/et_collectinfo_soft_injured"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入重伤人数(单位：人)"
+                    android:hint="请输入轻伤人数(单位：人)"
                     android:inputType="number"
                     android:layout_margin="5dp"
                     android:textSize="@dimen/fill_Info_textSize" />

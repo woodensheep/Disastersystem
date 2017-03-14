@@ -1,7 +1,9 @@
 package com.nandity.disastersystem.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -30,9 +32,11 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.FillInfoActivity;
+import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.adapter.PictureAdapter;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.TaskInfoBean;
+import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.AudioPathBean;
 import com.nandity.disastersystem.database.AudioPathBeanDao;
 import com.nandity.disastersystem.database.PicturePathBean;
@@ -41,6 +45,12 @@ import com.nandity.disastersystem.database.VideoPathBean;
 import com.nandity.disastersystem.database.VideoPathBeanDao;
 import com.nandity.disastersystem.utils.MyUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
+import com.nandity.disastersystem.utils.UriToPath;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +61,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 
 /**
  * Created by ChenPeng on 2017/3/6.
@@ -70,6 +81,7 @@ public class MediaInfoFragment extends Fragment {
     public static final int TAKE_PHOTO = 1;
     public static final int TAKE_VIDEO = 2;
     public static final int TAKE_AUDIO = 3;
+    public static final int TAKE_FOLDER = 4;
     @BindView(R.id.rv_mediainfo_photo)
     RecyclerView rvMediainfoPhoto;
     @BindView(R.id.btn_baseinfo_photo_upload)
@@ -86,6 +98,10 @@ public class MediaInfoFragment extends Fragment {
     Button btnBaseinfoVideoDelete;
     @BindView(R.id.btn_baseinfo_audio_delete)
     Button btnBaseinfoAudioDelete;
+    @BindView(R.id.btn_baseinfo_folder_upload)
+    Button btnBaseinfoFolderUpload;
+    @BindView(R.id.tv_mediainfo_folder)
+    TextView tvMediainfoFolder;
     private Context context;
     private TaskInfoBean taskInfoBean;
     private File pictureFile;
@@ -102,6 +118,11 @@ public class MediaInfoFragment extends Fragment {
     private VideoPathBean videoPathBean;
     private AudioPathBean audioPathBean;
     private MediaPlayer player;
+    private SharedPreferences sp;
+    private String sessionId;
+    private int number;
+    private ProgressDialog uploadProgress;
+    private String folderPath;
 
     @Nullable
     @Override
@@ -109,6 +130,8 @@ public class MediaInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_media_info, container, false);
         ButterKnife.bind(this, view);
         context = getActivity();
+        sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        sessionId = sp.getString("sessionId", "");
         taskInfoBean = ((FillInfoActivity) getActivity()).taskInfoBean;
         picturePathBeanDao = MyApplication.getDaoSession().getPicturePathBeanDao();
         videoPathBeanDao = MyApplication.getDaoSession().getVideoPathBeanDao();
@@ -125,6 +148,10 @@ public class MediaInfoFragment extends Fragment {
         audioPathBean = new AudioPathBean();
         videoPathBean = new VideoPathBean();
         bitmapList.clear();
+        uploadProgress = new ProgressDialog(context, ProgressDialog.STYLE_SPINNER);
+        uploadProgress.setMessage("正在上传");
+        uploadProgress.setCancelable(false);
+        uploadProgress.setCanceledOnTouchOutside(false);
         List<PicturePathBean> list = picturePathBeanDao.queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).list();
         if (list != null && list.size() > 0) {
             for (PicturePathBean pathBean : list) {
@@ -174,6 +201,12 @@ public class MediaInfoFragment extends Fragment {
                 takeAudio();
             }
         });
+        ivMediainfoFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeFolder();
+            }
+        });
         btnMediainfoSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,7 +248,7 @@ public class MediaInfoFragment extends Fragment {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     vvMediainfoVideo.setVisibility(View.GONE);
-                                    videoPathBeanDao.deleteAll();
+                                    videoPathBeanDao.delete(videoPathBean);
                                     File file = new File(videoPathBean.getPath());
                                     if (file.isFile() && file.exists()) {
                                         file.delete();
@@ -240,7 +273,7 @@ public class MediaInfoFragment extends Fragment {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     tvMediainfoAudio.setText("");
-                                    audioPathBeanDao.deleteAll();
+                                    audioPathBeanDao.delete(audioPathBean);
                                     File file = new File(audioPathBean.getPath());
                                     if (file.exists() && file.isFile()) {
                                         file.delete();
@@ -284,6 +317,222 @@ public class MediaInfoFragment extends Fragment {
 
             }
         });
+        btnBaseinfoPhotoUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final List<File> picFiles = new ArrayList<File>();
+                List<PicturePathBean> list = picturePathBeanDao.queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).list();
+                if (list != null && list.size() > 0) {
+                    for (PicturePathBean pathBean : list) {
+                        File file = new File(pathBean.getPath());
+                        if (file.isFile() && file.exists()) {
+                            picFiles.add(file);
+                        }
+                    }
+                    uploadPicture(picFiles);
+                } else {
+                    ToastUtils.showShortToast("请先保存后再上传！");
+                }
+            }
+        });
+        btnBaseinfoVideoUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VideoPathBean unique = videoPathBeanDao.queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+                if (unique != null) {
+                    File file = new File(unique.getPath());
+                    if (file.isFile() && file.exists()) {
+                        upload(file, "video.mp4", "2");
+                    } else {
+                        ToastUtils.showShortToast("视频文件不存在！");
+                    }
+                } else {
+                    ToastUtils.showShortToast("请先保存后再上传！");
+                }
+            }
+        });
+        btnBaseinfoAudioUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AudioPathBean unique = audioPathBeanDao.queryBuilder().where(AudioPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+                if (unique != null) {
+                    File file = new File(unique.getPath());
+                    if (file.isFile() && file.exists()) {
+                        upload(file, "audio.mp4", "3");
+                    } else {
+                        ToastUtils.showShortToast("音频文件不存在！");
+                    }
+                } else {
+                    ToastUtils.showShortToast("请先保存后再上传！");
+                }
+            }
+        });
+        btnBaseinfoFolderUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(folderPath)) {
+                    File file = new File(folderPath);
+                    if (file.isFile() && file.exists()) {
+                        upload(file, getFileName(folderPath), "4");
+                        Log.d(TAG, "上传的文件名：" + getFileName(folderPath));
+                    } else {
+                        ToastUtils.showShortToast("文件不存在！");
+                    }
+                } else {
+                    ToastUtils.showShortToast("请先选择文件！");
+                }
+            }
+        });
+    }
+
+    private String getFileName(String folderPath) {
+        int start = folderPath.lastIndexOf("/");
+        if (start != -1) {
+            return folderPath.substring(start + 1, folderPath.length());
+        } else {
+            return null;
+        }
+    }
+
+
+    private void upload(final File file, String name, final String type) {
+        uploadProgress.show();
+        OkHttpUtils.post().url(new ConnectUrl().getMediaUploadUrl())
+                .addParams("sessionId", sessionId)
+                .addParams("type", type)
+                .addParams("taskId", taskInfoBean.getmTaskId())
+                .addFile("files", name, file)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShortToast("连接服务器失败！");
+                        uploadProgress.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String status, msg;
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            msg = object.getString("message");
+                            if ("200".equals(status)) {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                                deleteFile(file,null);
+                                deleteDao(type);
+                            } else if ("400".equals(status)) {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                                startActivity(new Intent(context, LoginActivity.class));
+                                getActivity().finish();
+                            } else {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void deleteDao(String type) {
+        if ("1".equals(type)){
+            List<PicturePathBean> list = picturePathBeanDao.queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).list();
+            for (PicturePathBean pathBean : list) {
+                picturePathBeanDao.delete(pathBean);
+            }
+            bitmapList.clear();
+            picAdapter.notifyDataSetChanged();
+        }else if ("2".equals(type)){
+            VideoPathBean unique = videoPathBeanDao.queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+            videoPathBeanDao.delete(unique);
+            vvMediainfoVideo.setVisibility(View.GONE);
+        }else if ("3".equals(type)){
+            AudioPathBean unique = audioPathBeanDao.queryBuilder().where(AudioPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+            audioPathBeanDao.delete(unique);
+            tvMediainfoAudio.setText("");
+        }else {
+            tvMediainfoFolder.setText("");
+        }
+
+
+    }
+
+
+    private void deleteFile(final File file, final List<File> fileList) {
+        new MaterialDialog.Builder(context)
+                .title("删除文件")
+                .content("是否删除已上传文件?")
+                .positiveColor(Color.RED)
+                .positiveText("删除")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (file != null) {
+                            file.delete();
+                        }
+                        if (fileList!=null){
+                            for (File file1 : fileList) {
+                                file1.delete();
+                            }
+                        }
+
+                    }
+                }).show();
+
+    }
+
+    private void uploadPicture(final List<File> picFiles) {
+        uploadProgress.show();
+        OkHttpUtils.post().url(new ConnectUrl().getMediaUploadUrl())
+                .addParams("sessionId", sessionId)
+                .addParams("type", "1")
+                .addParams("taskId", taskInfoBean.getmTaskId())
+                .addFile("files", "第" + (number + 1) + "张" + ".jpg", picFiles.get(number))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShortToast("连接服务器失败！");
+                        uploadProgress.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String status, msg;
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            msg = object.getString("message");
+                            if ("200".equals(status)) {
+                                if (number == picFiles.size() - 1) {
+                                    uploadProgress.dismiss();
+                                    ToastUtils.showShortToast(msg);
+                                    deleteFile(null,picFiles);
+                                    deleteDao("1");
+                                } else if (number < picFiles.size() - 1) {
+                                    number++;
+                                    uploadPicture(picFiles);
+                                }
+
+                            } else if ("400".equals(status)) {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                                startActivity(new Intent(context, LoginActivity.class));
+                                getActivity().finish();
+                            } else {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private class MyOnClickListener implements View.OnClickListener {
@@ -373,6 +622,14 @@ public class MediaInfoFragment extends Fragment {
         startActivityForResult(intent, TAKE_AUDIO);
     }
 
+    private void takeFolder() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, TAKE_FOLDER);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -387,9 +644,20 @@ public class MediaInfoFragment extends Fragment {
                 case TAKE_AUDIO:
                     playAudio(data);
                     break;
+                case TAKE_FOLDER:
+                    showFolder(data);
+                    break;
             }
         }
     }
+
+    private void showFolder(Intent data) {
+        Uri uri = data.getData();
+        folderPath = UriToPath.getPath(context, uri);
+        Log.d(TAG, "选择文件的路径：" + folderPath);
+        tvMediainfoFolder.setText(folderPath);
+    }
+
 
     private void playAudio(Intent data) {
         Uri uri = data.getData();
