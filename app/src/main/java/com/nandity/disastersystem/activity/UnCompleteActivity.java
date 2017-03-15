@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +26,7 @@ import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.database.TaskBean;
 import com.nandity.disastersystem.database.TaskBeanDao;
 import com.nandity.disastersystem.utils.DateTimePickUtil;
+import com.nandity.disastersystem.utils.MyUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -58,6 +61,8 @@ public class UnCompleteActivity extends AppCompatActivity {
     private TextView tvHanppenTime;
     /*调查时间*/
     private TextView etNewtaskTime;
+    /*任务过期时间*/
+    private TextView tvNewtaskOverTime;
     /* 任务发起人*/
     private TextView tvName;
     /*灾害点*/
@@ -146,9 +151,9 @@ public class UnCompleteActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTaskBean();
                 Log.d(TAG,taskBean.toString());
                 if (isNotDataEmpty()) {
+                    getTaskBean();
                     setOkHttpCommit();
                 }else{
                     ToastUtils.showShortToast("请填写完整信息！");
@@ -183,12 +188,54 @@ public class UnCompleteActivity extends AppCompatActivity {
 
             }
         });
+
+
+        tvNewtaskOverTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickUtil dateTimePicKDialog = new DateTimePickUtil(
+                        UnCompleteActivity.this,new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
+                dateTimePicKDialog.dateTimePicKDialog(tvNewtaskOverTime);
+            }
+        });
+
+        tvNewtaskOverTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String date1 = MyUtils.getSystemTime();
+                String date2 = s.toString().trim();
+                int bl=MyUtils.TimeCompare(1, date1, date2);
+                Log.d(TAG, "----bl" + bl);
+                if (!("".equals(date2))){
+                    Log.d(TAG, "----date1" + date1);
+                    Log.d(TAG, "----date2" + date2);
+                    if (bl==1) {
+                        //taskBean.setMOverTime(s.toString());
+                    } else {
+                        tvNewtaskOverTime.setText("");
+                        ToastUtils.showShortToast("请选择今天以后的时间！");
+                    }
+                }
+            }
+        });
+
     }
 
 
     private boolean isNotDataEmpty() {
         if ("".equals(tvHanppenTime.getText().toString().trim())){return false;}
         if ("".equals(etNewtaskTime.getText().toString().trim())){return false;}
+        if ("".equals(tvNewtaskOverTime.getText().toString().trim())){return false;}
         if ("请选择灾害点".equals(tvDisaster.getText().toString().trim())){return false;}
         if ("".equals(etNewtaskDisaster.getText().toString().trim())){return false;}
         if ("-1".equals(CITownship.get(spTownship.getSelectedItemPosition()).GetID())){return false;}
@@ -204,6 +251,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                 .where(TaskBeanDao.Properties.Id.eq(mTaskBeanId)).build().list().get(0);
         tvHanppenTime.setText(taskBean.getMHappenTime());
         etNewtaskTime.setText(taskBean.getMTime());
+        tvNewtaskOverTime.setText(taskBean.getMOverTime());
         // 设置灾害点选中
         if(taskBean.getMDisaster()==null) {
             tvDisaster.setText("请选择灾害点");
@@ -241,7 +289,10 @@ public class UnCompleteActivity extends AppCompatActivity {
         }else{
             taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim()+":00");
         }
-
+        if("".equals(tvNewtaskOverTime.getText().toString().trim())){
+        }else{
+            taskBean.setMOverTime(tvNewtaskOverTime.getText().toString().trim());
+        }
         if("".equals(etNewtaskDisaster.getText().toString().trim())){
         }else{
             taskBean.setMAddress(etNewtaskDisaster.getText().toString().trim());
@@ -280,6 +331,7 @@ public class UnCompleteActivity extends AppCompatActivity {
         tvHanppenTime= (TextView)findViewById(R.id.tv_newtask_hanppen_time);
         tvName= (TextView) findViewById(R.id.tv_newtask_name);
         etNewtaskTime = (TextView)findViewById(R.id.et_newtask_time);
+        tvNewtaskOverTime= (TextView)findViewById(R.id.et_newtask_overtime);
         tvDisaster = (TextView)findViewById(R.id.tv_disaster);
         spTownship = (Spinner)findViewById(R.id.sp_township);
         //spDepartment = (Spinner) view.findViewById(R.id.sp_department);
@@ -327,6 +379,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                     .addParams("sessionId", sessionId)
                     .addParams("happen_time", taskBean.getMHappenTime())
                     .addParams("survey_time", taskBean.getMTime())
+                    .addParams("overTime",taskBean.getMOverTime())
                     .addParams("dis_id", taskBean.getMDisasterID())
                     .addParams("dis_name", taskBean.getMDisaster())
                     .addParams("survey_site", taskBean.getMAddress())
@@ -383,7 +436,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             progressDialog.dismiss();
-                           // finish();
+                            finish();
                             ToastUtils.showShortToast("网络故障，请检查网络！");
                         }
 
@@ -435,7 +488,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                         @Override
                         public void onError(Call call, Exception e, int id) {
                             progressDialog.dismiss();
-                           // finish();
+                            finish();
                             ToastUtils.showShortToast("网络故障，请检查网络！");
                         }
 

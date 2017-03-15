@@ -74,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         setListener();
     }
 
+
+    /**
+     * 绑定推送
+     */
     private void initPush(){
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.bindAccount(sp.getString("userName", ""), new CommonCallback() {

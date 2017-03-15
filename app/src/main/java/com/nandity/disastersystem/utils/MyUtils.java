@@ -12,6 +12,7 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -117,5 +118,33 @@ public class MyUtils {
         Uri uri = Uri.fromFile( new File("/sdcard/Download/app-release.apk")); //这里是APK路径
         intent.setDataAndType( uri , "application/vnd.android.package-archive" ) ;
         context.startActivity(intent);
+    }
+
+
+    /**
+     * 时间比大小,i相差天数
+     * 半天为单位
+     */
+    public static int TimeCompare(int i,String date1,String date2){
+        //格式化时间yyyy-MM-dd HH:mm:ss
+        SimpleDateFormat CurrentTime= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int bl=-1;
+        Date beginTime= null;
+        try {
+            beginTime = CurrentTime.parse(date1);
+            Date endTime=CurrentTime.parse(date2);
+            //判断是否大于两天
+            if(((endTime.getTime() - beginTime.getTime()))>=(i*(12*60*60*1000))) {
+                Log.d("hi", "大于i/2天");
+                bl=1;
+            }else{
+                Log.d("hi", "小于i/2天");
+                bl=0;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return bl;
     }
 }

@@ -25,6 +25,10 @@ public class TaskBean {
      **/
     private String mTime;
     /**
+     *    任务过期时间
+     **/
+    private String mOverTime;
+    /**
      * 灾害点id
      **/
     private String mDisasterID;
@@ -140,12 +144,19 @@ public class TaskBean {
     public void setMHappenTime(String mHappenTime) {
         this.mHappenTime = mHappenTime;
     }
-    @Generated(hash = 1356342499)
-    public TaskBean(Long id, String mHappenTime, String mTime, String mDisasterID, String mDisaster, String mAddress,
-            String mTownshipID, String mTownship, String mDepartment, String mWorkersID, String mWorkers) {
+    public String getMOverTime() {
+        return this.mOverTime;
+    }
+    public void setMOverTime(String mOverTime) {
+        this.mOverTime = mOverTime;
+    }
+    @Generated(hash = 1516151516)
+    public TaskBean(Long id, String mHappenTime, String mTime, String mOverTime, String mDisasterID, String mDisaster,
+            String mAddress, String mTownshipID, String mTownship, String mDepartment, String mWorkersID, String mWorkers) {
         this.id = id;
         this.mHappenTime = mHappenTime;
         this.mTime = mTime;
+        this.mOverTime = mOverTime;
         this.mDisasterID = mDisasterID;
         this.mDisaster = mDisaster;
         this.mAddress = mAddress;

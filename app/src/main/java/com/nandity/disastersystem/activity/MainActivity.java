@@ -40,6 +40,9 @@ import org.json.JSONObject;
 
 import okhttp3.Call;
 
+/**
+ *
+ */
 public class MainActivity extends AppCompatActivity {
     private static String TAG = "MainActivity", status, msg;
     private TabLayout mTabLayout;
@@ -214,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         initPushOut();
                         finish();
                     }
@@ -228,7 +230,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * 注销推送绑定
+     */
     private void initPushOut() {
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.unbindAccount(new CommonCallback() {
