@@ -138,39 +138,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                //Toast.makeText(MainActivity.this,position+"",Toast.LENGTH_SHORT).show();
-                one.setIcon(R.mipmap.workbench);
-                two.setIcon(R.mipmap.directory);
-                three.setIcon(R.mipmap.setup);
-                switch (position) {
-                    case 0:
-                        tab.setIcon(R.mipmap.workbench1);
-                        mViewPager.setCurrentItem(0);
-                        break;
-                    case 1:
-                        tab.setIcon(R.mipmap.directory1);
-                        mViewPager.setCurrentItem(1);
-                        break;
-                    case 2:
-                        tab.setIcon(R.mipmap.setup1);
-                        mViewPager.setCurrentItem(2);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                int position = tab.getPosition();
+//                //Toast.makeText(MainActivity.this,position+"",Toast.LENGTH_SHORT).show();
+//                one.setIcon(R.mipmap.workbench);
+//                two.setIcon(R.mipmap.directory);
+//                three.setIcon(R.mipmap.setup);
+//                switch (position) {
+//                    case 0:
+//                        tab.setIcon(R.mipmap.workbench1);
+//                        mViewPager.setCurrentItem(0);
+//                        break;
+//                    case 1:
+//                        tab.setIcon(R.mipmap.directory1);
+//                        mViewPager.setCurrentItem(1);
+//                        break;
+//                    case 2:
+//                        tab.setIcon(R.mipmap.setup1);
+//                        mViewPager.setCurrentItem(2);
+//                }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
 
     }

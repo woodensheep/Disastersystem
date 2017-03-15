@@ -96,6 +96,15 @@ public class MyTaskActivity extends AppCompatActivity {
         setListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(tabLayout.getTabAt(0).isSelected()){
+            initDatas();
+        }else{
+            setTab(0);
+        }
+    }
 
     private void initDatas() {
         progressDialog.show();
@@ -121,9 +130,11 @@ public class MyTaskActivity extends AppCompatActivity {
                 switch (tab.getPosition()){
                     case 0:
                         initDatas();
+                        Log.d(TAG,"--------------------------------1");
                         break;
                     case 1:
                         initDatas2();
+                        Log.d(TAG,"--------------------------------2");
                         break;
                 }
             }
@@ -208,8 +219,13 @@ public class MyTaskActivity extends AppCompatActivity {
                                         AudioPathBean audioPathBean = MyApplication.getDaoSession().getAudioPathBeanDao().queryBuilder().where(AudioPathBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
                                         List<PicturePathBean> picturePathBean = MyApplication.getDaoSession().getPicturePathBeanDao().queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(oj.getString("id"))).list();
                                         VideoPathBean videoPathBean = MyApplication.getDaoSession().getVideoPathBeanDao().queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
+                                        String type=3+"";
                                         if (infoBean==null&&collectInfoBean==null&&audioPathBean==null&&picturePathBean.size()==0&&videoPathBean==null){
-                                            mListData.add(taskInfoBean);
+                                            if(oj.getString("task_state")==type){
+                                                mSaveDatas.add(taskInfoBean);
+                                            }else{
+                                                mListData.add(taskInfoBean);
+                                            }
                                         }else{
                                             mSaveDatas.add(taskInfoBean);
                                         }
