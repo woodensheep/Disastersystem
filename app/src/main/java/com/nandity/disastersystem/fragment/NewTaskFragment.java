@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +50,7 @@ import okhttp3.Call;
 
 import static android.app.Activity.RESULT_OK;
 import static com.nandity.disastersystem.app.MyApplication.getContext;
+import static com.nandity.disastersystem.utils.MyUtils.TimeCompare;
 
 /**
  * Created by lemon on 2017/2/22.
@@ -75,6 +79,8 @@ public class NewTaskFragment extends Fragment {
     private TextView tvHanppenTime;
     /*调查时间*/
     private TextView etNewtaskTime;
+    /*任务过期时间*/
+    private TextView tvNewtaskOverTime;
     /* 任务发起人*/
     private TextView tvName;
     /*灾害点*/
@@ -87,6 +93,7 @@ public class NewTaskFragment extends Fragment {
     //private Spinner spDepartment;
     /*人员*/
     private Spinner spWorkers;
+
 
     private Button btnSave;
     private Button btnSubmit;
@@ -161,9 +168,9 @@ public class NewTaskFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTaskBean();
                 Log.d(TAG,taskBean.toString());
                 if (isNotDataEmpty()) {
+                    getTaskBean();
                     setOkHttpCommit();
                 }else{
                     ToastUtils.showShortToast("请填写完整信息！");
@@ -197,7 +204,48 @@ public class NewTaskFragment extends Fragment {
 
             }
         });
+
+        tvNewtaskOverTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickUtil dateTimePicKDialog = new DateTimePickUtil(
+                        getActivity(),new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
+                dateTimePicKDialog.dateTimePicKDialog(tvNewtaskOverTime);
+            }
+        });
+
+        tvNewtaskOverTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String date1 = MyUtils.getSystemTime();
+                String date2 = s.toString().trim();
+                int bl=MyUtils.TimeCompare(1, date1, date2);
+                Log.d(TAG, "----bl" + bl);
+                if (!("".equals(date2))){
+                    Log.d(TAG, "----date1" + date1);
+                    Log.d(TAG, "----date2" + date2);
+                    if (bl==1) {
+                        //taskBean.setMOverTime(s.toString());
+                    } else {
+                        tvNewtaskOverTime.setText("");
+                        ToastUtils.showShortToast("请选择今天以后的时间！");
+                    }
+                }
+            }
+        });
     }
+
+
 
     private String initStartDateTime = "2013年9月3日 14:44:00"; // 初始化开始时间
 
@@ -214,6 +262,10 @@ public class NewTaskFragment extends Fragment {
         if("".equals(etNewtaskDisaster.getText().toString().trim())){
         }else{
             taskBean.setMAddress(etNewtaskDisaster.getText().toString().trim());
+        }
+        if("".equals(tvNewtaskOverTime.getText().toString().trim())){
+        }else{
+            taskBean.setMOverTime(tvNewtaskOverTime.getText().toString().trim());
         }
 
         Log.d(TAG,spTownship.getSelectedItemPosition()+"-"+CITownship.get(spTownship.getSelectedItemPosition()).GetID());
@@ -236,6 +288,7 @@ public class NewTaskFragment extends Fragment {
     private boolean isNotDataEmpty() {
         if ("".equals(tvHanppenTime.getText().toString().trim())){return false;}
         if ("".equals(etNewtaskTime.getText().toString().trim())){return false;}
+        if ("".equals(tvNewtaskOverTime.getText().toString().trim())){return false;}
         if ("请选择灾害点".equals(tvDisaster.getText().toString().trim())){return false;}
         if ("".equals(etNewtaskDisaster.getText().toString().trim())){return false;}
         if ("-1".equals(CITownship.get(spTownship.getSelectedItemPosition()).GetID())){return false;}
@@ -248,6 +301,7 @@ public class NewTaskFragment extends Fragment {
         tvDisaster.setText("请选择灾害点");
         tvHanppenTime.setText("");
         etNewtaskTime.setText("");
+        tvNewtaskOverTime.setText("");
         etNewtaskDisaster.setText("");
         spTownship.setSelection(0,true);
         //spDepartment.setSelection(0,true);
@@ -258,6 +312,7 @@ public class NewTaskFragment extends Fragment {
         tvHanppenTime= (TextView) view.findViewById(R.id.tv_newtask_hanppen_time);
         tvName= (TextView) view.findViewById(R.id.tv_newtask_name);
         etNewtaskTime = (TextView) view.findViewById(R.id.et_newtask_time);
+        tvNewtaskOverTime= (TextView) view.findViewById(R.id.et_newtask_overtime);
         tvDisaster = (TextView) view.findViewById(R.id.tv_disaster);
         spTownship = (Spinner) view.findViewById(R.id.sp_township);
         //spDepartment = (Spinner) view.findViewById(R.id.sp_department);
@@ -303,6 +358,7 @@ public class NewTaskFragment extends Fragment {
                     .addParams("sessionId", sessionId)
                     .addParams("happen_time", taskBean.getMHappenTime())
                     .addParams("survey_time", taskBean.getMTime())
+                    .addParams("overTime",taskBean.getMOverTime())
                     .addParams("dis_id", taskBean.getMDisasterID())
                     .addParams("dis_name", taskBean.getMDisaster())
                     .addParams("survey_site", taskBean.getMAddress())

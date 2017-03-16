@@ -28,7 +28,8 @@ public class SetupFragment extends Fragment {
 
     @BindView(R.id.ll_signout)
     LinearLayout signOut;
-    private String[] stringsname = new String[]{"视频采集", "群组对讲", "录像地址",
+    private String[] stringsname = new String[]{
+            "视频采集", "群组对讲", "录像地址",
             "存储路径", "摄像头", "帧数",
             "码流", "分辨率", "系统信息"
     };
