@@ -12,8 +12,10 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
         <RelativeLayout
+            android:background="@color/c1olorblue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="45dp"
+            >
 
             <TextView
                 android:id="@+id/textView"
@@ -28,7 +30,12 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_back_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/c1olorwhite"
+            app:tabIndicatorColor="@color/tabIndicatorColor"
+            app:tabSelectedTextColor="@color/tabSelectedTextColor"
+            app:tabTextColor="@color/tabTextColor"
+            >
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
