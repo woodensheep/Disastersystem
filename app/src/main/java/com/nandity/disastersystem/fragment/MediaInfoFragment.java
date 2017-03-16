@@ -603,7 +603,10 @@ public class MediaInfoFragment extends Fragment {
     private void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File dir = new File(getSdPath("picture"));
-        if (!dir.exists()) dir.mkdir();
+        if (!dir.exists()) {
+            boolean mkdir = dir.mkdirs();
+            Log.d(TAG, "文件夹是否创建成功：" + mkdir);
+        }
         pictureFile = new File(dir, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(pictureFile));
         Log.d(TAG, "图片保存路径：" + pictureFile.getAbsolutePath());
@@ -613,7 +616,10 @@ public class MediaInfoFragment extends Fragment {
     private void takeVideo() {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         File dir = new File(getSdPath("video"));
-        if (!dir.exists()) dir.mkdir();
+        if (!dir.exists()) {
+            boolean mkdir = dir.mkdirs();
+            Log.d(TAG, "文件夹是否创建成功：" + mkdir);
+        }
         videoFile = new File(dir, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".MP4");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videoFile));
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
