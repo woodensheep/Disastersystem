@@ -417,6 +417,7 @@ public class MediaInfoFragment extends Fragment {
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 startActivity(new Intent(context, LoginActivity.class));
                                 getActivity().finish();
                             } else {
@@ -514,6 +515,7 @@ public class MediaInfoFragment extends Fragment {
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 startActivity(new Intent(context, LoginActivity.class));
                                 getActivity().finish();
                             } else {

@@ -235,6 +235,7 @@ public class MyTaskActivity extends AppCompatActivity {
                                     mAdapter.notifyDataSetChanged();
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
                                     startActivity(intent);
                                     finish();

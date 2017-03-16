@@ -103,6 +103,7 @@ public class WorkbenchFragment extends Fragment implements View.OnClickListener{
                                 tvCompleteTaskNum.setText(allTask);
                             }else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 startActivity(new Intent(getActivity(), LoginActivity.class));
                                 getActivity().finish();
                             }

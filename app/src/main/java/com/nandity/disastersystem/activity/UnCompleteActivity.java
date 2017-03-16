@@ -409,6 +409,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                                     ToastUtils.showShortToast(msg);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     Intent intent = new Intent(UnCompleteActivity.this, LoginActivity.class);
                                     UnCompleteActivity.this.startActivity(intent);
                                     finish();
@@ -465,6 +466,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                                     Log.d(TAG,taskBean.toString());
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     Intent intent = new Intent(UnCompleteActivity.this, LoginActivity.class);
                                     UnCompleteActivity.this.startActivity(intent);
                                     finish();
@@ -517,6 +519,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                                     Log.d(TAG,2+taskBean.toString());
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     Intent intent = new Intent(UnCompleteActivity.this, LoginActivity.class);
                                     UnCompleteActivity.this.startActivity(intent);
                                     finish();

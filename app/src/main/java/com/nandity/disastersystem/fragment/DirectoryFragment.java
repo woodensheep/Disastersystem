@@ -139,6 +139,7 @@ public class DirectoryFragment extends Fragment {
                                         itemClickListener(searchAdapter, searchList, searchRecyclerview);
                                     } else if ("400".equals(status)) {
                                         ToastUtils.showShortToast(msg);
+                                        sp.edit().putBoolean("isLogin",false).apply();
                                         Intent intent = new Intent(context, LoginActivity.class);
                                         context.startActivity(intent);
                                         getActivity().finish();
@@ -255,6 +256,7 @@ public class DirectoryFragment extends Fragment {
                                 itemClickListener(normalAdapter, list, mRecyclerView);
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 context.startActivity(intent);
                                 getActivity().finish();
@@ -319,6 +321,7 @@ public class DirectoryFragment extends Fragment {
                                 directoryList.setPullLoadMoreCompleted();
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 directoryList.setPullLoadMoreCompleted();
                                 Intent intent = new Intent(context, LoginActivity.class);
                                 context.startActivity(intent);
