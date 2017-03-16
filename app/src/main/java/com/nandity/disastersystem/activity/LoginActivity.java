@@ -179,14 +179,15 @@ public class LoginActivity extends AppCompatActivity {
                                 status = object.getString("status");
                                 msg = object.getString("message");
                                 if ("200".equals(status)) {
+                                    isLogin = true;
                                     sp.edit().putString("userName", name).apply();
                                     sp.edit().putString("passWord", pwd).apply();
                                     sp.edit().putString("sessionId", sessiongId).apply();
+                                    sp.edit().putBoolean("isLogin",isLogin).apply();
                                     initPush();
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(context, MainActivity.class);
                                     startActivity(intent);
-                                    isLogin = true;
                                     finish();
                                 } else {
                                     ToastUtils.showShortToast(msg);

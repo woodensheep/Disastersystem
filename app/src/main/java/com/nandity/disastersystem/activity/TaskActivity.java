@@ -166,6 +166,7 @@ public class TaskActivity extends AppCompatActivity {
                                     ToastUtils.showShortToast(msg);
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
                                     startActivity(intent);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     finish();
                                 }
                             } catch (JSONException e) {

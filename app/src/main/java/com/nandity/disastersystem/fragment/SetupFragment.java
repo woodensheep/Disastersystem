@@ -1,5 +1,7 @@
 package com.nandity.disastersystem.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +27,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  */
 
 public class SetupFragment extends Fragment {
-
+    private SharedPreferences sp;
     @BindView(R.id.ll_signout)
     LinearLayout signOut;
     private String[] stringsname = new String[]{
@@ -51,6 +53,7 @@ public class SetupFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_setup, container, false);
 
         ButterKnife.bind(this, view);
+        sp=getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false) {
 
@@ -89,6 +92,7 @@ public class SetupFragment extends Fragment {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sp.edit().putBoolean("isLogin",false).apply();
                 ((MainActivity)getActivity()).signOut();
             }
         });

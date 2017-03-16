@@ -222,6 +222,7 @@ public class CompleteCollectInfoFragment extends Fragment {
                                 tvCollectInfoGoTime.setText("null".equals(oj.getString("departure_time"))?"":oj.getString("departure_time"));
                             }else if ("400".equals(status)){
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 startActivity(new Intent(getActivity(), LoginActivity.class));
                                 getActivity().finish();
                             }else {

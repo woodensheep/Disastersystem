@@ -147,6 +147,7 @@ public class FillInfoActivity extends AppCompatActivity {
                                         } else if ("400".equals(status)) {
                                             ToastUtils.showShortToast(msg);
                                             uploadProgress.dismiss();
+                                            sp.edit().putBoolean("isLogin",false).apply();
                                             startActivity(new Intent(FillInfoActivity.this, LoginActivity.class));
                                             finish();
                                         } else {
@@ -208,6 +209,7 @@ public class FillInfoActivity extends AppCompatActivity {
                                 deleteDao();
                             }else if("400".equals(status)){
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 startActivity(new Intent(FillInfoActivity.this, LoginActivity.class));
                                 finish();
                             }else {

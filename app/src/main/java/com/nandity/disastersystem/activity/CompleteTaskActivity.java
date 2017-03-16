@@ -135,6 +135,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
                                 rvCompleteTask.setPullLoadMoreCompleted();
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 Intent intent = new Intent(getContext(), LoginActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -204,6 +205,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
                                         searchProgress.setVisibility(View.GONE);
                                     }else if("400".equals(status)){
                                         searchProgress.setVisibility(View.GONE);
+                                        sp.edit().putBoolean("isLogin",false).apply();
                                         ToastUtils.showShortToast(msg);
                                         Intent intent = new Intent(getContext(), LoginActivity.class);
                                         startActivity(intent);
@@ -299,6 +301,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
                             } else if ("400".equals(status)) {
                                 searchProgress.setVisibility(View.GONE);
                                 ToastUtils.showShortToast(msg);
+                                sp.edit().putBoolean("isLogin",false).apply();
                                 Intent intent = new Intent(getContext(), LoginActivity.class);
                                 startActivity(intent);
                                 finish();

@@ -387,6 +387,7 @@ public class NewTaskFragment extends Fragment {
                                     ToastUtils.showShortToast(msg);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                                     getActivity().startActivity(intent);
                                     getActivity().finish();

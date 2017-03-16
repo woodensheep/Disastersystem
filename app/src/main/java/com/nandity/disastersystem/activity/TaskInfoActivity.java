@@ -166,6 +166,7 @@ public class TaskInfoActivity extends AppCompatActivity {
                                     tvTaskState.setText("任务状态：" + mStates[Integer.parseInt(taskInfoBean.getmTaskState()) - 1]);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);
+                                    sp.edit().putBoolean("isLogin",false).apply();
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
                                     startActivity(intent);
                                     finish();
