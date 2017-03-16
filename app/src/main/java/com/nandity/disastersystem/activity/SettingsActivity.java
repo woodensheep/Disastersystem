@@ -179,6 +179,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         tvTitle_bar = (TextView) findViewById(R.id.title_bar);
         button = (Button) findViewById(R.id.btn_settings_save);
+        button.setOnClickListener(this);
 
         llType1 = (LinearLayout) findViewById(R.id.ll_type1);
         tvAddress = (TextView) findViewById(tv_address);
@@ -208,6 +209,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 updateManager();
 
                 break;
+            case R.id.btn_settings_save:
+                finish();
             default:
         }
 
