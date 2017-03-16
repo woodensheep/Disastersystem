@@ -11,6 +11,7 @@ import com.nandity.disastersystem.app.MyApplication;
  * wzadmin
  * 192.168.1.137
  * 8080
+ * 183.230.169.136:8085
  */
 
 public class ConnectUrl {

@@ -2,8 +2,10 @@ package com.nandity.disastersystem.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -111,6 +113,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             default:
                 llType1.setVisibility(View.VISIBLE);
                 tvAddress.setText(intent.getStringExtra("settings") + "服务器地址：");
+                SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+                etAddress.setText(sp.getString("IP",""));
+                etPort.setText(sp.getString("PORT",""));
                 break;
         }
 
