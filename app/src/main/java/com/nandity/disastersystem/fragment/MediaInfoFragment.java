@@ -248,7 +248,10 @@ public class MediaInfoFragment extends Fragment {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     vvMediainfoVideo.setVisibility(View.GONE);
-                                    videoPathBeanDao.delete(videoPathBean);
+
+                                    if (videoPathBeanDao.queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique() != null) {
+                                        videoPathBeanDao.delete(videoPathBean);
+                                    }
                                     File file = new File(videoPathBean.getPath());
                                     if (file.isFile() && file.exists()) {
                                         file.delete();
@@ -273,7 +276,10 @@ public class MediaInfoFragment extends Fragment {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     tvMediainfoAudio.setText("");
-                                    audioPathBeanDao.delete(audioPathBean);
+                                    if (audioPathBeanDao.queryBuilder().where(AudioPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique() != null) {
+                                        audioPathBeanDao.delete(audioPathBean);
+
+                                    }
                                     File file = new File(audioPathBean.getPath());
                                     if (file.exists() && file.isFile()) {
                                         file.delete();
@@ -386,7 +392,6 @@ public class MediaInfoFragment extends Fragment {
     }
 
 
-
     private void upload(final File file, String name, final String type) {
         uploadProgress.show();
         OkHttpUtils.post().url(new ConnectUrl().getMediaUploadUrl())
@@ -417,7 +422,7 @@ public class MediaInfoFragment extends Fragment {
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
-                                sp.edit().putBoolean("isLogin",false).apply();
+                                sp.edit().putBoolean("isLogin", false).apply();
                                 startActivity(new Intent(context, LoginActivity.class));
                                 getActivity().finish();
                             } else {
@@ -515,7 +520,7 @@ public class MediaInfoFragment extends Fragment {
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
-                                sp.edit().putBoolean("isLogin",false).apply();
+                                sp.edit().putBoolean("isLogin", false).apply();
                                 startActivity(new Intent(context, LoginActivity.class));
                                 getActivity().finish();
                             } else {
