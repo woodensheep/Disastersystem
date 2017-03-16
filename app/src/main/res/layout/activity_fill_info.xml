@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
         <RelativeLayout
+            android:background="@color/c1olorblue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -25,20 +26,26 @@
                 android:textSize="20sp" />
             <Button
                 android:id="@+id/btn_upload"
-                android:text="上传"
-                android:textColor="@color/c1olorblack"
+                android:text=""
+                android:background="@drawable/save_selecter_updata"
+                android:textColor="@color/c1olorwhite"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/save_selecter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:layout_alignParentRight="true" />
+
 
         </RelativeLayout>
         <android.support.design.widget.TabLayout
             android:id="@+id/fillinfo_tablayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/c1olorwhite"
+            app:tabIndicatorColor="@color/tabIndicatorColor"
+            app:tabSelectedTextColor="@color/tabSelectedTextColor"
+            app:tabTextColor="@color/tabTextColor"
+            >
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

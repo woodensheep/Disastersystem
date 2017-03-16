@@ -25,7 +25,7 @@
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/c1olorblue"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-        app:tabTextColor="@color/c1olorgray" />
+        app:tabTextColor="@color/text_gray" />
     <!--//导航栏背景颜色-->
     <!--android:background="#ffff00"-->
     <!--//指示器颜色-->
