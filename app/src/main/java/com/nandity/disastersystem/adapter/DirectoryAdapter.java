@@ -30,8 +30,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
-        ViewHolder vh = new ViewHolder(view);
-        return vh;
+        return new ViewHolder(view);
     }
 
     //将数据与界面进行绑定的操作

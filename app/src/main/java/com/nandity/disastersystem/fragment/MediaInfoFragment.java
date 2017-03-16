@@ -342,7 +342,7 @@ public class MediaInfoFragment extends Fragment {
                 if (unique != null) {
                     File file = new File(unique.getPath());
                     if (file.isFile() && file.exists()) {
-                        upload(file, "video.mp4", "2");
+                        upload(file, getFileName() + ".mp4", "2");
                     } else {
                         ToastUtils.showShortToast("视频文件不存在！");
                     }
@@ -358,7 +358,7 @@ public class MediaInfoFragment extends Fragment {
                 if (unique != null) {
                     File file = new File(unique.getPath());
                     if (file.isFile() && file.exists()) {
-                        upload(file, "audio.mp4", "3");
+                        upload(file, getFileName() + ".mp3", "3");
                     } else {
                         ToastUtils.showShortToast("音频文件不存在！");
                     }
@@ -373,8 +373,8 @@ public class MediaInfoFragment extends Fragment {
                 if (!TextUtils.isEmpty(folderPath)) {
                     File file = new File(folderPath);
                     if (file.isFile() && file.exists()) {
-                        upload(file, getFileName(folderPath), "4");
-                        Log.d(TAG, "上传的文件名：" + getFileName(folderPath));
+                        upload(file, file.getName(), "4");
+                        Log.d(TAG, "上传的文件名：" + file.getName());
                     } else {
                         ToastUtils.showShortToast("文件不存在！");
                     }
@@ -385,14 +385,6 @@ public class MediaInfoFragment extends Fragment {
         });
     }
 
-    private String getFileName(String folderPath) {
-        int start = folderPath.lastIndexOf("/");
-        if (start != -1) {
-            return folderPath.substring(start + 1, folderPath.length());
-        } else {
-            return null;
-        }
-    }
 
 
     private void upload(final File file, String name, final String type) {
@@ -420,7 +412,7 @@ public class MediaInfoFragment extends Fragment {
                             if ("200".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
-                                deleteFile(file,null);
+                                deleteFile(file, null);
                                 deleteDao(type);
                             } else if ("400".equals(status)) {
                                 ToastUtils.showShortToast(msg);
@@ -439,22 +431,22 @@ public class MediaInfoFragment extends Fragment {
     }
 
     private void deleteDao(String type) {
-        if ("1".equals(type)){
+        if ("1".equals(type)) {
             List<PicturePathBean> list = picturePathBeanDao.queryBuilder().where(PicturePathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).list();
             for (PicturePathBean pathBean : list) {
                 picturePathBeanDao.delete(pathBean);
             }
             bitmapList.clear();
             picAdapter.notifyDataSetChanged();
-        }else if ("2".equals(type)){
+        } else if ("2".equals(type)) {
             VideoPathBean unique = videoPathBeanDao.queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
             videoPathBeanDao.delete(unique);
             vvMediainfoVideo.setVisibility(View.GONE);
-        }else if ("3".equals(type)){
+        } else if ("3".equals(type)) {
             AudioPathBean unique = audioPathBeanDao.queryBuilder().where(AudioPathBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
             audioPathBeanDao.delete(unique);
             tvMediainfoAudio.setText("");
-        }else {
+        } else {
             tvMediainfoFolder.setText("");
         }
 
@@ -475,7 +467,7 @@ public class MediaInfoFragment extends Fragment {
                         if (file != null) {
                             file.delete();
                         }
-                        if (fileList!=null){
+                        if (fileList != null) {
                             for (File file1 : fileList) {
                                 file1.delete();
                             }
@@ -492,7 +484,7 @@ public class MediaInfoFragment extends Fragment {
                 .addParams("sessionId", sessionId)
                 .addParams("type", "1")
                 .addParams("taskId", taskInfoBean.getmTaskId())
-                .addFile("files", "第" + (number + 1) + "张" + ".jpg", picFiles.get(number))
+                .addFile("files", getFileName() + ".jpg", picFiles.get(number))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -512,7 +504,7 @@ public class MediaInfoFragment extends Fragment {
                                 if (number == picFiles.size() - 1) {
                                     uploadProgress.dismiss();
                                     ToastUtils.showShortToast(msg);
-                                    deleteFile(null,picFiles);
+                                    deleteFile(null, picFiles);
                                     deleteDao("1");
                                 } else if (number < picFiles.size() - 1) {
                                     number++;
@@ -533,6 +525,11 @@ public class MediaInfoFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private String getFileName() {
+
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
     }
 
     private class MyOnClickListener implements View.OnClickListener {

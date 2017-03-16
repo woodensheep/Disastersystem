@@ -24,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
@@ -71,7 +73,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_info);
         ButterKnife.bind(this);
         intent = getIntent();
-        mId = intent.getStringExtra("TaskID");
+        mId = intent.getStringExtra("TaskId");
         tvTaskId.setText(mId);
         sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId = sp.getString("sessionId", "");
@@ -84,10 +86,10 @@ public class TaskInfoActivity extends AppCompatActivity {
         btnTaskCom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(TaskInfoActivity.this, FillInfoActivity.class);
-//                intent.putExtra("taskBean", (Serializable) taskInfoBean);
-//                Log.e(TAG,"未提交任务页面任务ID:"+taskInfoBean.getmTaskId());
-//                startActivity(intent);
+                Intent intent = new Intent(TaskInfoActivity.this, CompleteInfoActivity.class);
+                intent.putExtra("TaskBean", (Serializable) taskInfoBean);
+                Log.e(TAG,"未提交任务页面任务ID:"+taskInfoBean.getmTaskId());
+                startActivity(intent);
             }
         });
     }
@@ -104,7 +106,7 @@ public class TaskInfoActivity extends AppCompatActivity {
 
 
     private void setOkHttp() {
-
+        Log.d("WorkbenchFragment","任务ID："+mId);
         try {
             OkHttpUtils.get().url(new ConnectUrl().getOneTaskUrl())
                     .addParams("id", mId)
@@ -132,6 +134,8 @@ public class TaskInfoActivity extends AppCompatActivity {
                                     JSONObject oj = message.getJSONObject(0);
                                     taskInfoBean = new TaskInfoBean();
                                     taskInfoBean.setmTaskId(mId);
+                                    taskInfoBean.setmDisasterLevel(oj.getString("dis_level"));
+                                    taskInfoBean.setmIsDisaster(oj.getString("dis_sf"));
                                     taskInfoBean.setmRowNumber(oj.getString("dis_id"));
                                     taskInfoBean.setmDisasterName(oj.getString("dis_name"));
                                     taskInfoBean.setmDisasterLng(oj.getString("dis_lon"));

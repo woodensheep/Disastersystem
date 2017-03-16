@@ -8,27 +8,23 @@ import com.nandity.disastersystem.fragment.BaseInfoFragment;
 import com.nandity.disastersystem.fragment.CollectInfoFragment;
 import com.nandity.disastersystem.fragment.MediaInfoFragment;
 
+import java.util.List;
+
 /**
  * Created by ChenPeng on 2017/3/6.
  */
 
 public class FillInfoPagerAdapter extends FragmentPagerAdapter {
     private String[] titles={"基础信息","采集信息","媒体信息"};
-    public FillInfoPagerAdapter(FragmentManager fm) {
+    private List<Fragment> fragments;
+    public FillInfoPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
+        this.fragments=fragments;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return new BaseInfoFragment();
-            case 1:
-                return new CollectInfoFragment();
-            case 2:
-                return new MediaInfoFragment();
-        }
-        return null;
+        return fragments.get(position);
     }
 
     @Override

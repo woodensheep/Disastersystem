@@ -215,7 +215,7 @@ public class MyTaskActivity extends AppCompatActivity {
                                         }
                                     }
                                     mTab1.setText("未处理("+mListData.size()+")");
-                                    mTab3.setText("未上传("+mSaveDatas.size()+")");
+                                    mTab3.setText("未完成("+mSaveDatas.size()+")");
                                     mAdapter.notifyDataSetChanged();
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);

@@ -98,4 +98,13 @@ public class ConnectUrl {
         return "http://" + ip + ":" + port + "/cmdapp/getAllEndTask.do";
     }
 
+    public String getCompleteInfoUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getTaskExtendsToAndroid.do";
+    }
+    public String getMediaInfoUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getFileToAndroid.do";
+    }
+    public String getMediaInfoListUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getAllFile.do";
+    }
 }

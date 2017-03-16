@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,9 @@ import com.nandity.disastersystem.database.BaseInfoBean;
 import com.nandity.disastersystem.database.BaseInfoBeanDao;
 import com.nandity.disastersystem.database.CollectInfoBean;
 import com.nandity.disastersystem.database.CollectInfoBeanDao;
+import com.nandity.disastersystem.fragment.BaseInfoFragment;
+import com.nandity.disastersystem.fragment.CollectInfoFragment;
+import com.nandity.disastersystem.fragment.MediaInfoFragment;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -30,7 +34,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +78,11 @@ public class FillInfoActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        fillinfoViewpager.setAdapter(new FillInfoPagerAdapter(getSupportFragmentManager()));
+        List<Fragment> fragments=new ArrayList<>();
+        fragments.add(new BaseInfoFragment());
+        fragments.add(new CollectInfoFragment());
+        fragments.add(new MediaInfoFragment());
+        fillinfoViewpager.setAdapter(new FillInfoPagerAdapter(getSupportFragmentManager(),fragments));
         fillinfoTablayout.setupWithViewPager(fillinfoViewpager);
         progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(false);

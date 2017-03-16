@@ -166,6 +166,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(param)){
                     return;
                 }
+                searchProgress.setVisibility(View.VISIBLE);
                 String paramName=getParamName(param);
                 OkHttpUtils.get().url(new ConnectUrl().getCompleteTaskUrl())
                         .addParams(paramName,param)
@@ -175,6 +176,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                                 ToastUtils.showShortToast("连接服务器失败！");
+                                searchProgress.setVisibility(View.GONE);
                             }
 
                             @Override
@@ -199,13 +201,16 @@ public class CompleteTaskActivity extends AppCompatActivity {
                                             searchList.add(bean);
                                         }
                                         searchAdapter.notifyDataSetChanged();
+                                        searchProgress.setVisibility(View.GONE);
                                     }else if("400".equals(status)){
+                                        searchProgress.setVisibility(View.GONE);
                                         ToastUtils.showShortToast(msg);
                                         Intent intent = new Intent(getContext(), LoginActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }else if ("500".equals(status)){
                                         ToastUtils.showShortToast("搜索条件不匹配！");
+                                        searchProgress.setVisibility(View.GONE);
                                     }
 
                                 } catch (JSONException e) {
@@ -259,6 +264,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        searchProgress.setVisibility(View.VISIBLE);
         OkHttpUtils.get().url(new ConnectUrl().getCompleteTaskUrl())
                 .addParams("sessionId", sessionId)
                 .addParams("page", pageNum + "")
@@ -268,6 +274,7 @@ public class CompleteTaskActivity extends AppCompatActivity {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         ToastUtils.showShortToast("连接服务器失败！");
+                        searchProgress.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -288,13 +295,16 @@ public class CompleteTaskActivity extends AppCompatActivity {
                                     taskInfoList.add(bean);
                                 }
                                 adapter.notifyDataSetChanged();
+                                searchProgress.setVisibility(View.GONE);
                             } else if ("400".equals(status)) {
+                                searchProgress.setVisibility(View.GONE);
                                 ToastUtils.showShortToast(msg);
                                 Intent intent = new Intent(getContext(), LoginActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
                                 ToastUtils.showShortToast(msg);
+                                searchProgress.setVisibility(View.GONE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
