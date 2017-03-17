@@ -403,7 +403,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                                 JSONObject object = new JSONObject(response);
                                 status = object.getString("status");
                                 msg = object.getString("message");
-                                if ("200".equals(status)) {
+                                if ("     200".equals(status)) {
                                     MyApplication.getDaoSession().getTaskBeanDao().delete(taskBean);
                                     finish();
                                     ToastUtils.showShortToast(msg);

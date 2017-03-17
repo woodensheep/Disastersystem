@@ -221,10 +221,12 @@ public class MyTaskActivity extends AppCompatActivity {
                                         VideoPathBean videoPathBean = MyApplication.getDaoSession().getVideoPathBeanDao().queryBuilder().where(VideoPathBeanDao.Properties.TaskId.eq(oj.getString("id"))).unique();
                                         String type=3+"";
                                         if (infoBean==null&&collectInfoBean==null&&audioPathBean==null&&picturePathBean.size()==0&&videoPathBean==null){
-                                            if(oj.getString("task_state")==type){
+                                            if(type.equals(oj.getString("task_state"))){
                                                 mSaveDatas.add(taskInfoBean);
+                                                Log.d(TAG,"--------mSaveDatas"+mSaveDatas.size()+"---"+oj.getString("task_state"));
                                             }else{
                                                 mListData.add(taskInfoBean);
+                                                Log.d(TAG,"--------mListData--"+mListData.size()+"---"+oj.getString("task_state"));
                                             }
                                         }else{
                                             mSaveDatas.add(taskInfoBean);
