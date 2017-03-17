@@ -1,6 +1,7 @@
 package com.nandity.disastersystem.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.nandity.disastersystem.R;
+import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.activity.MainActivity;
 import com.nandity.disastersystem.adapter.CategoryViewProvider;
 import com.nandity.disastersystem.bean.Category;
@@ -93,7 +95,8 @@ public class SetupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sp.edit().putBoolean("isLogin",false).apply();
-                ((MainActivity)getActivity()).signOut();
+                ((MainActivity)getActivity()).signOut2();
+
             }
         });
     }

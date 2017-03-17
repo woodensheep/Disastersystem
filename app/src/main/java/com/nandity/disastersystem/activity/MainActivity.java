@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        initPushOut();
+                        //initPushOut();
                         finish();
                     }
                 })
@@ -223,6 +223,29 @@ public class MainActivity extends AppCompatActivity {
                 }).show();
 
     }
+    public void signOut2() {
+        new AlertDialog.Builder(this)
+                .setTitle("退出程序")
+                .setMessage("确定退出程序吗？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        initPushOut();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+
+    }
+
+
 
     /**
      * 注销推送绑定
