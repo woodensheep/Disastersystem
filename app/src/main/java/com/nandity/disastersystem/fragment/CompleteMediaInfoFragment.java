@@ -321,6 +321,10 @@ public class CompleteMediaInfoFragment extends Fragment {
     }
 
     private void initData() {
+        pictureList.clear();
+        videoList.clear();
+        audioList.clear();
+        folderList.clear();
         OkHttpUtils.get().url(new ConnectUrl().getMediaInfoListUrl())
                 .addParams("sessionId", sessionId)
                 .addParams("taskId", taskId)
