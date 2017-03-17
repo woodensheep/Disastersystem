@@ -88,7 +88,7 @@ public class BaseInfoFragment extends Fragment {
 
     private void initData() {
         OkHttpUtils.get().url(new ConnectUrl().getDisasterPictureUrl())
-                .addParams("dis_id",taskInfoBean.getmTaskId())
+                .addParams("dis_id",taskInfoBean.getmRowNumber())
                 .build()
                 .execute(new BitmapCallback() {
                     @Override

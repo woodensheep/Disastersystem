@@ -82,7 +82,7 @@ public class CompleteBaseInfoFragment extends Fragment {
 
     private void initView() {
         OkHttpUtils.get().url(new ConnectUrl().getDisasterPictureUrl())
-                .addParams("dis_id",taskInfoBean.getmTaskId())
+                .addParams("dis_id",taskInfoBean.getmRowNumber())
                 .build()
                 .execute(new BitmapCallback() {
                     @Override

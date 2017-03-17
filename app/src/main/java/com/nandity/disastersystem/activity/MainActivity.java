@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             if ("200".equals(status)) {
                                 showNoticeDialog();
                             } else if ("300".equals(status)) {
-                                ToastUtils.showShortToast("暂时没有更新");
+//                                ToastUtils.showShortToast("暂时没有更新");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
