@@ -1,6 +1,7 @@
 package com.nandity.disastersystem.fragment;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,13 +9,16 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -33,6 +37,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.FillInfoActivity;
 import com.nandity.disastersystem.activity.LoginActivity;
+import com.nandity.disastersystem.activity.RecoderActivity;
 import com.nandity.disastersystem.adapter.PictureAdapter;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.TaskInfoBean;
@@ -46,6 +51,7 @@ import com.nandity.disastersystem.database.VideoPathBeanDao;
 import com.nandity.disastersystem.utils.MyUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.nandity.disastersystem.utils.UriToPath;
+import com.zhy.http.okhttp.BuildConfig;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -123,6 +129,12 @@ public class MediaInfoFragment extends Fragment {
     private int number;
     private ProgressDialog uploadProgress;
     private String folderPath;
+    private MediaRecorder recorder;
+    private MaterialDialog recorderDialog;
+    private TextView tv;
+    private String audioPath;
+    private Button btnStart;
+    private Button btnStop;
 
     @Nullable
     @Override
@@ -256,7 +268,6 @@ public class MediaInfoFragment extends Fragment {
                                     if (file.isFile() && file.exists()) {
                                         file.delete();
                                     }
-                                    videoPathBean = null;
                                 }
                             }).show();
                 }
@@ -284,7 +295,6 @@ public class MediaInfoFragment extends Fragment {
                                     if (file.exists() && file.isFile()) {
                                         file.delete();
                                     }
-                                    audioPathBean = null;
                                 }
                             }).show();
                 }
@@ -608,7 +618,13 @@ public class MediaInfoFragment extends Fragment {
             Log.d(TAG, "文件夹是否创建成功：" + mkdir);
         }
         pictureFile = new File(dir, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(pictureFile));
+        Uri imageUri;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {  //针对Android7.0，需要通过FileProvider封装过的路径，提供给外部调用
+            imageUri = FileProvider.getUriForFile(getActivity(), "com.nandity.disastersystem", pictureFile);//通过FileProvider创建一个content类型的Uri，进行封装
+        } else { //7.0以下，如果直接拿到相机返回的intent值，拿到的则是拍照的原图大小，很容易发生OOM，所以我们同样将返回的地址，保存到指定路径，返回到Activity时，去指定路径获取，压缩图片
+            imageUri = Uri.fromFile(pictureFile);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         Log.d(TAG, "图片保存路径：" + pictureFile.getAbsolutePath());
         startActivityForResult(intent, TAKE_PHOTO);
     }
@@ -621,15 +637,82 @@ public class MediaInfoFragment extends Fragment {
             Log.d(TAG, "文件夹是否创建成功：" + mkdir);
         }
         videoFile = new File(dir, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".MP4");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(videoFile));
+        Uri videoUri;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {  //针对Android7.0，需要通过FileProvider封装过的路径，提供给外部调用
+            videoUri = FileProvider.getUriForFile(getActivity(), "com.nandity.disastersystem", videoFile);//通过FileProvider创建一个content类型的Uri，进行封装
+        } else { //7.0以下，如果直接拿到相机返回的intent值，拿到的则是拍照的原图大小，很容易发生OOM，所以我们同样将返回的地址，保存到指定路径，返回到Activity时，去指定路径获取，压缩图片
+            videoUri = Uri.fromFile(videoFile);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
         startActivityForResult(intent, TAKE_VIDEO);
     }
 
     private void takeAudio() {
-        Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-        startActivityForResult(intent, TAKE_AUDIO);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_recoder, null);
+        btnStart = (Button) view.findViewById(R.id.btn_start_recode);
+        btnStop = (Button) view.findViewById(R.id.btn_stop_recode);
+        btnStop.setEnabled(false);
+        tv = (TextView) view.findViewById(R.id.tv_time);
+        RecorderOnclickListener listener = new RecorderOnclickListener();
+        btnStart.setOnClickListener(listener);
+        btnStop.setOnClickListener(listener);
+        recorderDialog = new MaterialDialog.Builder(getActivity())
+                .title("录音")
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
+                .customView(view, false)
+                .negativeText("取消")
+                .show();
+    }
+
+    private class RecorderOnclickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_start_recode:
+                    File file = new File(getSdPath("audio"));
+                    if (!file.exists()) file.mkdirs();
+                    audioPath = getSdPath("audio") + "/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".mp3";
+                    recorder = new MediaRecorder();
+                    recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    recorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_WB);
+                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
+                    recorder.setOutputFile(audioPath);
+                    //设置编码格式
+                    try {
+                        recorder.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        ToastUtils.showShortToast("录音机使用失败！");
+                    }
+                    recorder.start();
+                    tv.setVisibility(View.VISIBLE);
+                    btnStop.setEnabled(true);
+                    break;
+                case R.id.btn_stop_recode:
+                    File file2 = new File(audioPath);
+                    if (file2.isFile() && file2.exists()) {
+                        audioFilePath = audioPath;
+                    }
+                    recorder.stop();
+                    recorder.release();
+                    recorder = null;
+                    tvMediainfoAudio.setText(audioFilePath);
+                    audioPathBean.setTaskId(taskInfoBean.getmTaskId());
+                    audioPathBean.setPath(audioFilePath);
+                    recorderDialog.dismiss();
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        recorder=null;
     }
 
     private void takeFolder() {
@@ -651,9 +734,6 @@ public class MediaInfoFragment extends Fragment {
                 case TAKE_VIDEO:
                     showVideo();
                     break;
-                case TAKE_AUDIO:
-                    playAudio(data);
-                    break;
                 case TAKE_FOLDER:
                     showFolder(data);
                     break;
@@ -669,17 +749,6 @@ public class MediaInfoFragment extends Fragment {
     }
 
 
-    private void playAudio(Intent data) {
-        Uri uri = data.getData();
-        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int index = cursor.getColumnIndex(MediaStore.Audio.AudioColumns.DATA);
-        audioFilePath = cursor.getString(index);
-        tvMediainfoAudio.setText(audioFilePath);
-        Log.d(TAG, "录音保存路径:" + audioFilePath);
-        audioPathBean.setTaskId(taskInfoBean.getmTaskId());
-        audioPathBean.setPath(audioFilePath);
-    }
 
     private void showVideo() {
         videoPathBean.setTaskId(taskInfoBean.getmTaskId());
@@ -711,4 +780,5 @@ public class MediaInfoFragment extends Fragment {
         }
         return "";
     }
+
 }
