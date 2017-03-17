@@ -404,7 +404,7 @@ public class UnCompleteActivity extends AppCompatActivity {
                                 status = object.getString("status");
                                 msg = object.getString("message");
                                 if ("200".equals(status)) {
-                                    MyApplication.getDaoSession().getTaskBeanDao().update(taskBean);
+                                    MyApplication.getDaoSession().getTaskBeanDao().delete(taskBean);
                                     finish();
                                     ToastUtils.showShortToast(msg);
                                 } else if ("400".equals(status)) {
