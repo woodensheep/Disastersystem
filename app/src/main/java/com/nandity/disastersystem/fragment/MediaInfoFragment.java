@@ -1,11 +1,9 @@
 package com.nandity.disastersystem.fragment;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -37,7 +35,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.FillInfoActivity;
 import com.nandity.disastersystem.activity.LoginActivity;
-import com.nandity.disastersystem.activity.RecoderActivity;
 import com.nandity.disastersystem.adapter.PictureAdapter;
 import com.nandity.disastersystem.app.MyApplication;
 import com.nandity.disastersystem.bean.TaskInfoBean;
@@ -51,7 +48,6 @@ import com.nandity.disastersystem.database.VideoPathBeanDao;
 import com.nandity.disastersystem.utils.MyUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.nandity.disastersystem.utils.UriToPath;
-import com.zhy.http.okhttp.BuildConfig;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -664,6 +660,23 @@ public class MediaInfoFragment extends Fragment {
                 .canceledOnTouchOutside(false)
                 .customView(view, false)
                 .negativeText("取消")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (TextUtils.isEmpty(audioPath)){
+                            return;
+                        }
+                        File file2 = new File(audioPath);
+                        if (file2.isFile() && file2.exists()) {
+                            file2.delete();
+                        }
+                        if (recorder != null) {
+                            recorder.stop();
+                            recorder.release();
+                            recorder = null;
+                        }
+                    }
+                })
                 .show();
     }
 
@@ -691,15 +704,13 @@ public class MediaInfoFragment extends Fragment {
                     recorder.start();
                     tv.setVisibility(View.VISIBLE);
                     btnStop.setEnabled(true);
+                    btnStart.setEnabled(false);
                     break;
                 case R.id.btn_stop_recode:
-                    File file2 = new File(audioPath);
-                    if (file2.isFile() && file2.exists()) {
-                        audioFilePath = audioPath;
-                    }
                     recorder.stop();
                     recorder.release();
                     recorder = null;
+                    audioFilePath=audioPath;
                     tvMediainfoAudio.setText(audioFilePath);
                     audioPathBean.setTaskId(taskInfoBean.getmTaskId());
                     audioPathBean.setPath(audioFilePath);
@@ -712,7 +723,7 @@ public class MediaInfoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        recorder=null;
+        recorder = null;
     }
 
     private void takeFolder() {
@@ -747,7 +758,6 @@ public class MediaInfoFragment extends Fragment {
         Log.d(TAG, "选择文件的路径：" + folderPath);
         tvMediainfoFolder.setText(folderPath);
     }
-
 
 
     private void showVideo() {
