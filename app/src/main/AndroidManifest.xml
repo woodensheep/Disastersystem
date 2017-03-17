@@ -22,8 +22,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -31,11 +33,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.nandity.disastersystem"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
         <activity
             android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".activity.MySplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +74,8 @@
         <activity android:name=".activity.UnCompleteActivity" />
         <activity android:name=".activity.FillInfoActivity" />
         <activity android:name=".activity.TaskInfoActivity" />
-        <activity android:name=".activity.CompleteInfoActivity"/>
+        <activity android:name=".activity.CompleteInfoActivity" />
+        <activity android:name=".activity.RecoderActivity"/>
         <meta-data
             android:name="com.alibaba.app.appkey"
             android:value="23666592" /> <!-- 请填写你自己的- appKey -->
@@ -111,7 +122,9 @@
         <service
             android:name=".receiver.UpdataService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.RecoderActivity"></activity>
     </application>
 
 </manifest>
