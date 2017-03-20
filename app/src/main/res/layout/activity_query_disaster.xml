@@ -24,7 +24,7 @@
             android:layout_toLeftOf="@+id/btn_search"
             android:background="@drawable/round_white_btn_bg"
             android:gravity="start|center_vertical"
-            android:hint="@string/str_search_hint"
+            android:hint="请输入名称搜索"
             android:maxLength="10"
             android:paddingLeft="10dp"
             android:textSize="16sp" />

@@ -100,6 +100,7 @@ public class CompleteBaseInfoFragment extends Fragment {
                         ivBaseInfoImage.setImageBitmap(bmp);
                     }
                 });
+        tvBaseInfoName.setText("null".equals(taskInfoBean.getmDisasterName())?"":taskInfoBean.getmDisasterName());
         tvBaseInfoAddress.setText("null".equals(taskInfoBean.getmAddress()) ? "" : taskInfoBean.getmAddress());
         tvBaseInfoContact.setText("null".equals(taskInfoBean.getmDisasterContact()) ? "" : taskInfoBean.getmDisasterContact());
         tvBaseInfoIsDisaster.setText(getIsDisaster(taskInfoBean.getmIsDisaster()));

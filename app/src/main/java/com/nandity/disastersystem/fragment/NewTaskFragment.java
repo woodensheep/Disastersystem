@@ -252,11 +252,11 @@ public class NewTaskFragment extends Fragment {
     private void getTaskBean(){
         if("".equals(etNewtaskTime.getText().toString().trim())){
         }else{
-            taskBean.setMTime(etNewtaskTime.getText().toString().trim()+":00");
+            taskBean.setMTime(etNewtaskTime.getText().toString().trim());
         }
         if("".equals(tvHanppenTime.getText().toString().trim())){
         }else{
-            taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim()+":00");
+            taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim());
         }
 
         if("".equals(etNewtaskDisaster.getText().toString().trim())){

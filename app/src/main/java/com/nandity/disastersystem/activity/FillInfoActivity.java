@@ -171,6 +171,8 @@ public class FillInfoActivity extends AppCompatActivity {
         int type=Integer.valueOf(collectInfoBean.getCollectInfoType())+1;
         int disOrDan=Integer.valueOf(collectInfoBean.getCollectInfoDisOrDan())+1;
         int isResearch=Integer.valueOf(collectInfoBean.getCollectInfoIsResearch())+1;
+        collectInfoBean.setId(Long.valueOf(taskInfoBean.getTaskExtendsId()));
+        Log.d("TaskActivity",Long.valueOf(taskInfoBean.getTaskExtendsId())+"");
         collectInfoBean.setCollectInfoDisasterReason(reason);
         collectInfoBean.setCollectInfoDisasterLevel(level);
         collectInfoBean.setCollectInfoType(type+"");

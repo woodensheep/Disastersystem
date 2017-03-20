@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 
 public class TaskInfoBean implements Serializable{
+    private String taskExtendsId;
+
     /*是否为灾害点*/
     private String mIsDisaster;
     /*灾害点等级*/
@@ -43,6 +45,14 @@ public class TaskInfoBean implements Serializable{
     private String mAreaName;
     /*发起人 */
     private String mSendName;
+
+    public String getTaskExtendsId() {
+        return taskExtendsId;
+    }
+
+    public void setTaskExtendsId(String taskExtendsId) {
+        this.taskExtendsId = taskExtendsId;
+    }
 
     public String getmIsDisaster() {
         return mIsDisaster;

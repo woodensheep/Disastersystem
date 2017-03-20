@@ -370,7 +370,7 @@ public class MediaInfoFragment extends Fragment {
                 if (unique != null) {
                     File file = new File(unique.getPath());
                     if (file.isFile() && file.exists()) {
-                        upload(file, getFileName() + ".mp3", "3");
+                        upload(file, getFileName() + ".wav", "3");
                     } else {
                         ToastUtils.showShortToast("音频文件不存在！");
                     }
@@ -688,11 +688,11 @@ public class MediaInfoFragment extends Fragment {
                 case R.id.btn_start_recode:
                     File file = new File(getSdPath("audio"));
                     if (!file.exists()) file.mkdirs();
-                    audioPath = getSdPath("audio") + "/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".mp3";
+                    audioPath = getSdPath("audio") + "/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".wav";
                     recorder = new MediaRecorder();
                     recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    recorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_WB);
-                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
+                    recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                     recorder.setOutputFile(audioPath);
                     //设置编码格式
                     try {

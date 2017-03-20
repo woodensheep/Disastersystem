@@ -342,6 +342,9 @@ public class CompleteCollectInfoFragment extends Fragment {
             case 6:
                 result="地裂缝";
                 break;
+            case 7:
+                result="蹋岸";
+                break;
         }
         return result;
     }

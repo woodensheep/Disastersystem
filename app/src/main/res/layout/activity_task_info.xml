@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="未提交任务"
+            android:text="已完成任务"
             android:textColor="@color/c1olorwhite"
             android:textSize="18sp" />
     </android.support.v7.widget.Toolbar>

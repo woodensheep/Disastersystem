@@ -283,11 +283,11 @@ public class UnCompleteActivity extends AppCompatActivity {
     private void getTaskBean(){
         if("".equals(etNewtaskTime.getText().toString().trim())){
         }else{
-            taskBean.setMTime(etNewtaskTime.getText().toString().trim()+":00");
+            taskBean.setMTime(etNewtaskTime.getText().toString().trim());
         }
         if("".equals(tvHanppenTime.getText().toString().trim())){
         }else{
-            taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim()+":00");
+            taskBean.setMHappenTime(tvHanppenTime.getText().toString().trim());
         }
         if("".equals(tvNewtaskOverTime.getText().toString().trim())){
         }else{
