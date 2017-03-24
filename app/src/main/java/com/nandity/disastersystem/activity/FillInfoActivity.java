@@ -209,6 +209,7 @@ public class FillInfoActivity extends AppCompatActivity {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
                                 deleteDao();
+                                finish();
                             }else if("400".equals(status)){
                                 ToastUtils.showShortToast(msg);
                                 sp.edit().putBoolean("isLogin",false).apply();

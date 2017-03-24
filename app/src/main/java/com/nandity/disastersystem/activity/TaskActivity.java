@@ -90,6 +90,7 @@ public class TaskActivity extends AppCompatActivity {
                 intent.putExtra("taskBean", (Serializable) taskInfoBean);
                 Log.e(TAG,"未提交任务页面任务ID:"+taskInfoBean.getmTaskId());
                 startActivity(intent);
+                finish();
             }
         });
     }
