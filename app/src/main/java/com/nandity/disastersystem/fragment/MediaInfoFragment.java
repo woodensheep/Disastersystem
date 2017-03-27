@@ -341,7 +341,7 @@ public class MediaInfoFragment extends Fragment {
                             picFiles.add(file);
                         }
                     }
-                    uploadPicture(picFiles);
+                    uploadPhoto(picFiles);
                 } else {
                     ToastUtils.showShortToast("请先保存后再上传！");
                 }
@@ -354,7 +354,8 @@ public class MediaInfoFragment extends Fragment {
                 if (unique != null) {
                     File file = new File(unique.getPath());
                     if (file.isFile() && file.exists()) {
-                        upload(file, getFileName() + ".mp4", "2");
+
+                        uploadData(file, "2");
                     } else {
                         ToastUtils.showShortToast("视频文件不存在！");
                     }
@@ -370,7 +371,7 @@ public class MediaInfoFragment extends Fragment {
                 if (unique != null) {
                     File file = new File(unique.getPath());
                     if (file.isFile() && file.exists()) {
-                        upload(file, getFileName() + ".wav", "3");
+                        uploadData(file, "3");
                     } else {
                         ToastUtils.showShortToast("音频文件不存在！");
                     }
@@ -385,8 +386,7 @@ public class MediaInfoFragment extends Fragment {
                 if (!TextUtils.isEmpty(folderPath)) {
                     File file = new File(folderPath);
                     if (file.isFile() && file.exists()) {
-                        upload(file, file.getName(), "4");
-                        Log.d(TAG, "上传的文件名：" + file.getName());
+                        uploadData(file, "4");
                     } else {
                         ToastUtils.showShortToast("文件不存在！");
                     }
@@ -397,6 +397,70 @@ public class MediaInfoFragment extends Fragment {
         });
     }
 
+    private void uploadPhoto(final List<File> files) {
+        OkHttpUtils.get().url(new ConnectUrl().getTaskStatusUrl())
+                .addParams("taskId", taskInfoBean.getmTaskId())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShortToast("连接服务器失败！");
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String status;
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            if ("300".equals(status)) {
+                                uploadPicture(files);
+                            } else if ("200".equals(status)) {
+                                ToastUtils.showShortToast("该任务已完成无需上传信息！");
+                                getActivity().finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    private void uploadData(final File file, final String type) {
+        OkHttpUtils.get().url(new ConnectUrl().getTaskStatusUrl())
+                .addParams("taskId", taskInfoBean.getmTaskId())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShortToast("连接服务器失败！");
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String status;
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            if ("300".equals(status)) {
+                                if ("2".equals(type)) {
+                                    upload(file, getFileName() + ".mp4", "2");
+                                } else if ("3".equals(type)) {
+                                    upload(file, getFileName() + ".wav", "3");
+                                } else {
+                                    upload(file, file.getName(), "4");
+                                }
+
+                            } else if ("200".equals(status)) {
+                                ToastUtils.showShortToast("该任务已完成无需上传信息！");
+                                getActivity().finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     private void upload(final File file, String name, final String type) {
         uploadProgress.show();
@@ -663,7 +727,7 @@ public class MediaInfoFragment extends Fragment {
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if (TextUtils.isEmpty(audioPath)){
+                        if (TextUtils.isEmpty(audioPath)) {
                             return;
                         }
                         File file2 = new File(audioPath);
@@ -710,7 +774,7 @@ public class MediaInfoFragment extends Fragment {
                     recorder.stop();
                     recorder.release();
                     recorder = null;
-                    audioFilePath=audioPath;
+                    audioFilePath = audioPath;
                     tvMediainfoAudio.setText(audioFilePath);
                     audioPathBean.setTaskId(taskInfoBean.getmTaskId());
                     audioPathBean.setPath(audioFilePath);
