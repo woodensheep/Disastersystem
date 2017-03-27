@@ -108,4 +108,8 @@ public class ConnectUrl {
     public String getMediaInfoListUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getAllFile.do";
     }
+
+    public String getTaskStatusUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/firstSubmit.do";
+    }
 }

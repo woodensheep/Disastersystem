@@ -101,68 +101,96 @@ public class FillInfoActivity extends AppCompatActivity {
                 if (baseInfoBean == null || collectInfoBean == null) {
                     ToastUtils.showShortToast("请先填写信息并保存后再上传！");
                 } else {
-                    uploadProgress = new ProgressDialog(FillInfoActivity.this, ProgressDialog.STYLE_SPINNER);
-                    uploadProgress.setCanceledOnTouchOutside(false);
-                    uploadProgress.setCancelable(false);
-                    uploadProgress.setMessage("正在上传...");
-                    uploadProgress.show();
-                    String name = baseInfoBean.getBaseInfoName();
-                    String lng = baseInfoBean.getBaseInfoLng();
-                    String lat = baseInfoBean.getBaseInfoLat();
-                    String address = baseInfoBean.getBaseInfoAddress();
-                    String contact = baseInfoBean.getBaseInfoContact();
-                    String mobile = baseInfoBean.getBaseInfoMobile();
-                    int level = Integer.valueOf(baseInfoBean.getBaseInfoLevel()) + 1;
-                    int isDis = Integer.valueOf(baseInfoBean.getBaseInfoIsDisaster()) + 1;
-                    String id = taskInfoBean.getmRowNumber();
-                    Log.d(TAG, "灾害点ID:" + id);
-                    OkHttpUtils.post().url(new ConnectUrl().getBaseInfoUrl())
-                            .addParams("sessionId", sessionId)
-                            .addParams("dis_name", name)
-                            .addParams("dis_location", address)
-                            .addParams("dis_lon", lng)
-                            .addParams("dis_lat", lat)
-                            .addParams("dis_person", contact)
-                            .addParams("dis_person_phone", mobile)
-                            .addParams("dis_sf", isDis + "")
-                            .addParams("dis_level", level + "")
-                            .addParams("id", id)
+                    OkHttpUtils.get().url(new ConnectUrl().getTaskStatusUrl())
+                            .addParams("taskId",taskInfoBean.getmTaskId())
                             .build()
                             .execute(new StringCallback() {
                                 @Override
                                 public void onError(Call call, Exception e, int id) {
                                     ToastUtils.showShortToast("连接服务器失败！");
-                                    uploadProgress.dismiss();
                                 }
 
                                 @Override
                                 public void onResponse(String response, int id) {
-                                    String status, msg;
+                                    String status;
                                     try {
-                                        JSONObject object = new JSONObject(response);
-                                        status = object.getString("status");
-                                        msg = object.getString("message");
-                                        if ("200".equals(status)) {
-                                            upLoadConnectInfo();
-                                        } else if ("400".equals(status)) {
-                                            ToastUtils.showShortToast(msg);
-                                            uploadProgress.dismiss();
-                                            sp.edit().putBoolean("isLogin",false).apply();
-                                            startActivity(new Intent(FillInfoActivity.this, LoginActivity.class));
+                                        JSONObject object=new JSONObject(response);
+                                        status=object.getString("status");
+                                        if("300".equals(status)){
+                                            uploadData();
+                                        }else if ("200".equals(status)){
+                                            ToastUtils.showShortToast("该任务已完成无需上传信息！");
                                             finish();
-                                        } else {
-                                            ToastUtils.showShortToast(msg);
-                                            uploadProgress.dismiss();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
                             });
-
                 }
             }
         });
+    }
+
+    private void uploadData() {
+        uploadProgress = new ProgressDialog(FillInfoActivity.this, ProgressDialog.STYLE_SPINNER);
+        uploadProgress.setCanceledOnTouchOutside(false);
+        uploadProgress.setCancelable(false);
+        uploadProgress.setMessage("正在上传...");
+        uploadProgress.show();
+        String name = baseInfoBean.getBaseInfoName();
+        String lng = baseInfoBean.getBaseInfoLng();
+        String lat = baseInfoBean.getBaseInfoLat();
+        String address = baseInfoBean.getBaseInfoAddress();
+        String contact = baseInfoBean.getBaseInfoContact();
+        String mobile = baseInfoBean.getBaseInfoMobile();
+        int level = Integer.valueOf(baseInfoBean.getBaseInfoLevel()) + 1;
+        int isDis = Integer.valueOf(baseInfoBean.getBaseInfoIsDisaster()) + 1;
+        String id = taskInfoBean.getmRowNumber();
+        Log.d(TAG, "灾害点ID:" + id);
+        OkHttpUtils.post().url(new ConnectUrl().getBaseInfoUrl())
+                .addParams("sessionId", sessionId)
+                .addParams("dis_name", name)
+                .addParams("dis_location", address)
+                .addParams("dis_lon", lng)
+                .addParams("dis_lat", lat)
+                .addParams("dis_person", contact)
+                .addParams("dis_person_phone", mobile)
+                .addParams("dis_sf", isDis + "")
+                .addParams("dis_level", level + "")
+                .addParams("id", id)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        ToastUtils.showShortToast("连接服务器失败！");
+                        uploadProgress.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String status, msg;
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            status = object.getString("status");
+                            msg = object.getString("message");
+                            if ("200".equals(status)) {
+                                upLoadConnectInfo();
+                            } else if ("400".equals(status)) {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                                sp.edit().putBoolean("isLogin",false).apply();
+                                startActivity(new Intent(FillInfoActivity.this, LoginActivity.class));
+                                finish();
+                            } else {
+                                ToastUtils.showShortToast(msg);
+                                uploadProgress.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private void upLoadConnectInfo() {
