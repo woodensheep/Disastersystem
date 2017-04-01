@@ -7,7 +7,7 @@ android {
         config {
             keyAlias 'disaster'
             keyPassword '53770880'
-            storeFile file('C:/Users/63484/Desktop/disasterKeystore.jks')
+            storeFile file('assets/disasterKeystore.jks')
             storePassword '53770880'
         }
     }
