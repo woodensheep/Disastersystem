@@ -112,4 +112,8 @@ public class ConnectUrl {
     public String getTaskStatusUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/firstSubmit.do";
     }
+
+    public String getPlanUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/contingencyPlan.do";
+    }
 }
