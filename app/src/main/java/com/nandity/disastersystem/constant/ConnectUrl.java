@@ -116,4 +116,12 @@ public class ConnectUrl {
     public String getPlanUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/contingencyPlan.do";
     }
+
+    public String getPersonUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/rescuer.do";
+    }
+
+    public String getSelectUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getSelect.do";
+    }
 }

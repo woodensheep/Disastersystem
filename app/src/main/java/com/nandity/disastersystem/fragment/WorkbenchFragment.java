@@ -52,10 +52,6 @@ import okhttp3.Call;
  */
 
 public class WorkbenchFragment extends Fragment {
-    @BindView(R.id.title_bar)
-    TextView titleBar;
-    @BindView(R.id.my_toolbar)
-    Toolbar myToolbar;
     @BindView(R.id.el_workbench_list_view)
     ExpandableListView elWorkbenchListView;
     Unbinder unbinder;
@@ -81,8 +77,6 @@ public class WorkbenchFragment extends Fragment {
         initData();
         setAdapter();
         setListener();
-        ((AppCompatActivity) activity).setSupportActionBar(myToolbar);
-        myToolbar.setTitle("");
         return view;
     }
 
