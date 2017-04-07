@@ -3,6 +3,8 @@ package com.nandity.disastersystem.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.nandity.disastersystem.R;
+
 public class DisTypeActivity extends AppCompatActivity {
 
     @Override
