@@ -12,7 +12,6 @@ import com.nandity.disastersystem.app.MyApplication;
  * 192.168.1.137
  * 8080
  * 183.230.169.136:8085
- * http://183.230.169.136:8085/cmdapp/index.jsp;jsessionid=5D34CB704FAA469C4AF959752B636C8F
  */
 
 public class ConnectUrl {
@@ -117,20 +116,4 @@ public class ConnectUrl {
     public String getPlanUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/contingencyPlan.do";
     }
-
-    /* 任务台账*/
-    public String getParameterUrl() {
-        return "http://" + ip + ":" + port + "/cmdapp/getParameter.do";
-    }
-
-    /*  灾险情诱发因素统计*/
-    public String getDisReasonUrl() {
-        return "http://" + ip + ":" + port + "/cmdapp/getDisReason.do";
-    }
-
-    /*  灾险情类型统计*/
-    public String getDisTypeUrl() {
-        return "http://" + ip + ":" + port + "/cmdapp/getDisType.do";
-    }
-
 }

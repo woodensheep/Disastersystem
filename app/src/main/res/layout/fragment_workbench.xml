@@ -4,24 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/my_toolbar_height"
-        android:background="@color/c1olorblue">
 
         <TextView
             android:id="@+id/title_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:text="@string/workbench"
+            android:background="@color/c1olorblue"
             android:textColor="@color/c1olorwhite"
+            android:gravity="center"
             android:textSize="18sp" />
-    </android.support.v7.widget.Toolbar>
     <ExpandableListView
         android:id="@+id/el_workbench_list_view"
-        android:layout_below="@+id/my_toolbar"
+        android:layout_below="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

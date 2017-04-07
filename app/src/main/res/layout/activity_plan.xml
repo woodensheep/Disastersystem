@@ -17,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_weak_blue"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -45,24 +47,25 @@
                 android:id="@+id/et_plan_year"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_margin="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text="预案类别:" />
 
             <Spinner
                 android:id="@+id/sp_plan_type"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1">
             </Spinner>
             <ImageView
@@ -70,6 +73,12 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/search1"/>
+            <TextView
+                android:id="@+id/tv_plan_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="取消"/>
         </LinearLayout>
     </LinearLayout>
     <FrameLayout
