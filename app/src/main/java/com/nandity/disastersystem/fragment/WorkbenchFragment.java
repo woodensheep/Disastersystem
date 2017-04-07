@@ -27,6 +27,7 @@ import com.nandity.disastersystem.activity.MaterialActivity;
 import com.nandity.disastersystem.activity.MyTaskActivity;
 import com.nandity.disastersystem.activity.PersonActivity;
 import com.nandity.disastersystem.activity.PlanActivity;
+import com.nandity.disastersystem.activity.TaskAccountActivity;
 import com.nandity.disastersystem.bean.NameBean;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.utils.ToastUtils;
@@ -111,7 +112,7 @@ public class WorkbenchFragment extends Fragment {
         list2.add("应急物资管理");
         map.put(parent.get(1).getName(),list2);
         List<String> list3=new ArrayList<>();
-        list3.add("任务台帐");
+        list3.add("任务台账");
         list3.add("任务灾害点统计");
         list3.add("灾险情规模统计");
         list3.add("灾险情类型统计");
@@ -150,9 +151,10 @@ public class WorkbenchFragment extends Fragment {
                     }else {
                         intent=new Intent(activity, MaterialActivity.class);//应急物资管理
                     }
-                }else {
+                }else if(groupPosition==2){
                     if (childPosition==0){
-                        //任务台帐
+                        //任务台账
+                        intent=new Intent(activity, TaskAccountActivity.class);
                     }else if (childPosition==1){
                         //任务灾害点统计
                     }else if (childPosition==2){

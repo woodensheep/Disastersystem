@@ -75,10 +75,11 @@
         <activity android:name=".activity.FillInfoActivity" />
         <activity android:name=".activity.TaskInfoActivity" />
         <activity android:name=".activity.CompleteInfoActivity" />
-        <activity android:name=".activity.PlanActivity"/>
-        <activity android:name=".activity.PersonActivity"/>
-        <activity android:name=".activity.EquipmentActivity"/>
-        <activity android:name=".activity.MaterialActivity"/>
+        <activity android:name=".activity.PlanActivity" />
+        <activity android:name=".activity.PersonActivity" />
+        <activity android:name=".activity.EquipmentActivity" />
+        <activity android:name=".activity.MaterialActivity" />
+
         <meta-data
             android:name="com.alibaba.app.appkey"
             android:value="23666592" /> <!-- 请填写你自己的- appKey -->
@@ -131,7 +132,9 @@
         <activity android:name=".activity.PlanActivity" />
         <activity android:name=".activity.PersonActivity" />
         <activity android:name=".activity.EquipmentActivity" />
-        <activity android:name=".activity.MaterialActivity"></activity>
+        <activity android:name=".activity.MaterialActivity" />
+        <activity android:name=".activity.TaskAccountActivity" />
+        <activity android:name=".activity.DisTypeActivity"></activity>
     </application>
 
 </manifest>

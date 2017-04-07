@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nandity.disastersystem.activity.TaskAccountActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_task_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_toolbar_height"
+        android:background="@color/c1olorblue">
+
+        <TextView
+            android:id="@+id/title_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="任务台账"
+            android:textColor="@color/c1olorwhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_account_statistics"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="统计"
+            android:textColor="@color/c1olorwhite"
+            android:textSize="18sp" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:text="时间：" />
+
+        <TextView
+            android:id="@+id/tv_time_start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/table_tv"
+            android:gravity="center"
+            android:padding="6dp"
+            android:hint="开始时间"
+            android:textColor="@color/c1olorblack"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="——" />
+
+        <TextView
+            android:id="@+id/tv_time_end"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/table_tv"
+            android:gravity="center"
+            android:padding="6dp"
+            android:hint="结束时间"
+            android:textColor="@color/c1olorblack" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableLayout
+                    android:id="@+id/table1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_span="4"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="" />
+
+                        <TextView
+                            android:layout_span="6"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="险情情况" />
+
+                        <TextView
+                            android:layout_span="5"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="灾害诱发因素" />
+                    </TableRow>
+
+                </TableLayout>
+            </HorizontalScrollView>
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
+                <TableLayout
+                    android:id="@+id/table2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="6dp">
+
+                    <TableRow>
+
+                        <TextView
+                            android:layout_span="4"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="" />
+
+                        <TextView
+                            android:layout_span="6"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="灾情情况" />
+
+                        <TextView
+                            android:layout_span="5"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="灾害诱发因素" />
+                    </TableRow>
+
+                </TableLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
