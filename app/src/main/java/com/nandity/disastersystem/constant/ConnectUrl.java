@@ -120,6 +120,13 @@ public class ConnectUrl {
     public String getPersonUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/rescuer.do";
     }
+    public String getEquipmentUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/emergencyEquipment.do";
+    }
+
+    public String getMaterialUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/emergencyMaterials.do";
+    }
 
     public String getSelectUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getSelect.do";
