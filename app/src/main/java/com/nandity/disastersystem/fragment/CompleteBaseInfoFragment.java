@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 /**
+ * 查看反馈信息---基本信息页面
  * Created by ChenPeng on 2017/3/14.
  */
-
 public class CompleteBaseInfoFragment extends Fragment {
     @BindView(R.id.tv_base_info_name)
     TextView tvBaseInfoName;
@@ -57,7 +57,7 @@ public class CompleteBaseInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_complete_base_info, null);
+        View view = inflater.inflate(R.layout.fragment_complete_baseinfo, null);
         ButterKnife.bind(this, view);
         taskInfoBean = ((CompleteInfoActivity) getActivity()).taskInfoBean;
         initView();

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#bfc2c5" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <!--图标-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/color_weak_yellow"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/iv_mediainfo_photo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/info_camera1" />
+
+            <ImageView
+                android:id="@+id/iv_mediainfo_video"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/info_video1" />
+
+            <ImageView
+                android:id="@+id/iv_mediainfo_audio"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/info_voice1" />
+
+            <ImageView
+                android:id="@+id/iv_mediainfo_folder"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/info_folder1" />
+        </LinearLayout>
+
+        <!--图片列表-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/textview_bg">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:text="图片列表"
+                    android:textSize="16sp"
+                    android:textColor="@color/textview_color"/>
+
+                <Button
+                    android:id="@+id/btn_baseinfo_photo_upload"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/upload" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_mediainfo_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+
+        <!--视频列表-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/textview_bg">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:text="视频列表"
+                    android:textSize="16sp"
+                    android:textColor="@color/textview_color"/>
+
+                <Button
+                    android:id="@+id/btn_baseinfo_video_delete"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toLeftOf="@id/btn_baseinfo_video_upload"
+                    android:layout_margin="10dp"
+                    android:background="@mipmap/dustbin" />
+
+                <Button
+                    android:id="@+id/btn_baseinfo_video_upload"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:background="@mipmap/upload" />
+
+            </RelativeLayout>
+
+            <VideoView
+                android:id="@+id/vv_mediainfo_video"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:visibility="gone">
+            </VideoView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:layout_marginBottom="6dp"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
+            <!--<Button-->
+            <!--android:id="@+id/btn_baseinfo_video_upload"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/loginbtn_selector"-->
+            <!--android:text="上传视频" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/btn_baseinfo_video_delete"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:background="@drawable/loginbtn_selector"-->
+            <!--android:text="删除视频" />-->
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+        <!--录音列表-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/textview_bg">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:text="录音列表"
+                    android:textSize="16sp"
+                    android:textColor="@color/textview_color"/>
+
+                <Button
+                    android:id="@+id/btn_baseinfo_audio_delete"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:layout_toLeftOf="@id/btn_baseinfo_audio_upload"
+                    android:background="@mipmap/dustbin" />
+
+                <Button
+                    android:id="@+id/btn_baseinfo_audio_upload"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/upload" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_mediainfo_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <!--文件列表-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/textview_bg">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:text="文件列表"
+                    android:textSize="16sp"
+                    android:textColor="@color/textview_color"/>
+
+                <Button
+                    android:id="@+id/btn_baseinfo_folder_upload"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/upload" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_mediainfo_folder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_mediainfo_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/save_selecter"
+            android:text="保存"
+            android:textColor="@color/c1olorwhite"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+</ScrollView>

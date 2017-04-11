@@ -308,7 +308,7 @@
         android:textColor="@color/c1olorwhite"
         android:gravity="center"
         android:layout_margin="5dp"
-        android:textSize="32sp" />
+        android:textSize="26sp" />
 
 
 </LinearLayout>

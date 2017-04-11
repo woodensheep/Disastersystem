@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#bfc2c5" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <!--图片列表-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/textview_bg"
+                android:padding="10dp"
+                android:text="图片列表"
+                android:textSize="16sp"
+                android:textColor="@color/textview_color"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_media_info_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <!--视频-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/textview_bg"
+                android:padding="10dp"
+                android:text="视频列表"
+                android:textSize="16sp"
+                android:textColor="@color/textview_color"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_media_info_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <!--录音-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/textview_bg"
+                android:padding="10dp"
+                android:text="录音列表"
+                android:textSize="16sp"
+                android:textColor="@color/textview_color"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_media_info_audio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <!--文件-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/c1olorwhite"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/textview_bg"
+                android:padding="10dp"
+                android:text="文件"
+                android:textSize="16sp"
+                android:textColor="@color/textview_color"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_media_info_folder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

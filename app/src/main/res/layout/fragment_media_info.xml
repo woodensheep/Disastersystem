@@ -34,21 +34,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/info_video" />
+                    android:background="@mipmap/info_video1" />
 
                 <ImageView
                     android:id="@+id/iv_mediainfo_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/info_voice" />
+                    android:background="@mipmap/info_voice1" />
 
                 <ImageView
                     android:id="@+id/iv_mediainfo_folder"
                     android:layout_width="wrap_content"
                     android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/info_folder" />
+                    android:background="@mipmap/info_folder1" />
             </LinearLayout>
 
             <LinearLayout

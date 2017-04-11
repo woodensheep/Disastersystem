@@ -31,11 +31,12 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 /**
+ * 查看反馈信息---采集信息页面
  * Created by ChenPeng on 2017/3/14.
  */
 
 public class CompleteCollectInfoFragment extends Fragment {
-    private static final String TAG = "CompleteCollectInfoFragment";
+    private static final String TAG = "CompleteCollectInfo";
     @BindView(R.id.tv_collect_info_place)
     TextView tvCollectInfoPlace;
     @BindView(R.id.tv_collect_info_type)
@@ -140,7 +141,7 @@ public class CompleteCollectInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_complete_collect_info, null);
+        View view = inflater.inflate(R.layout.fragment_complete_collectinfo, null);
         ButterKnife.bind(this, view);
         sp=getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId=sp.getString("sessionId","");

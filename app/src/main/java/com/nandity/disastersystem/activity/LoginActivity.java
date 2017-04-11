@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -130,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 etPort.setText(sp.getString("PORT", ""));
                 new AlertDialog.Builder(context)
                         .setView(view)
+                        .setIcon(R.mipmap.settings)
                         .setTitle("设置")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override

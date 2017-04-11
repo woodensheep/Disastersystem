@@ -57,6 +57,7 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 /**
+ * 查看反馈信息---媒体信息页面
  * Created by ChenPeng on 2017/3/14.
  */
 
@@ -88,7 +89,7 @@ public class CompleteMediaInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_complete_media_info, null);
+        View view = inflater.inflate(R.layout.fragment_complete_mediainfo, null);
         ButterKnife.bind(this, view);
         taskId = ((CompleteInfoActivity) getActivity()).taskInfoBean.getmTaskId();
         sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
