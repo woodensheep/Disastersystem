@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -79,6 +81,14 @@ public class WorkbenchFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         sp = getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId = sp.getString("sessionId", "");
+        /*隐藏选择的黄色高亮*/
+        ColorDrawable drawable_tranparent_ = new ColorDrawable(Color.TRANSPARENT);
+        elWorkbenchListView.setSelector(drawable_tranparent_);
+        /* 隐藏垂直滚动条 */
+        elWorkbenchListView.setVerticalScrollBarEnabled(false);
+        elWorkbenchListView.setCacheColorHint(Color.TRANSPARENT);
+        elWorkbenchListView.setDividerHeight(0);
+        elWorkbenchListView.setGroupIndicator(null);
         initData();
         setAdapter();
         setListener();

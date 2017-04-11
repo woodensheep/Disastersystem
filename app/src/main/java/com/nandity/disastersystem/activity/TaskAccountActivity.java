@@ -323,7 +323,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
 
                         @Override
                         public void onResponse(String response, int id) {
-                            //progressDialog.dismiss();
+                            progressDialog.dismiss();
                             String msg, status;
                             Log.d(TAG, "返回的数据：" + response);
                             try {
@@ -361,7 +361,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     }
                                     setOkHttp2();
                                 } else if ("400".equals(status)) {
-
+                                    progressDialog.dismiss();
                                     ToastUtils.showShortToast(msg);
                                     sp.edit().putBoolean("isLogin", false).apply();
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -374,8 +374,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                         }
                     });
         } catch (Exception e) {
-            e.printStackTrace();
             progressDialog.dismiss();
+            e.printStackTrace();
             ToastUtils.showShortToast("加载失败！");
         }
     }
@@ -440,6 +440,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     initDatas1();
                                     initDatas2();
                                 } else if ("400".equals(status)) {
+                                    progressDialog.dismiss();
                                     ToastUtils.showShortToast(msg);
                                     sp.edit().putBoolean("isLogin", false).apply();
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -447,6 +448,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     finish();
                                 }
                             } catch (JSONException e) {
+                                progressDialog.dismiss();
                                 e.printStackTrace();
                             }
                         }
@@ -476,7 +478,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
 
                         @Override
                         public void onResponse(String response, int id) {
-                            //progressDialog.dismiss();
+                            progressDialog.dismiss();
                             String msg, status;
                             Log.d(TAG, "返回的数据：" + response);
                             try {
@@ -514,7 +516,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     }
                                     setOkHttp4();
                                 } else if ("400".equals(status)) {
-
+                                    progressDialog.dismiss();
                                     ToastUtils.showShortToast(msg);
                                     sp.edit().putBoolean("isLogin", false).apply();
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -522,6 +524,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     finish();
                                 }
                             } catch (JSONException e) {
+                                progressDialog.dismiss();
                                 e.printStackTrace();
                             }
                         }
@@ -589,7 +592,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     initDatas1();
                                     initDatas2();
                                 } else if ("400".equals(status)) {
-
+                                    progressDialog.dismiss();
                                     ToastUtils.showShortToast(msg);
                                     sp.edit().putBoolean("isLogin", false).apply();
                                     Intent intent = new Intent(getContext(), LoginActivity.class);
@@ -597,6 +600,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                     finish();
                                 }
                             } catch (JSONException e) {
+                                progressDialog.dismiss();
                                 e.printStackTrace();
                             }
                         }
