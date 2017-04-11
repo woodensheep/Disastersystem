@@ -8,6 +8,7 @@
     >
 
         <ImageView
+            android:layout_marginLeft="10dp"
             android:id="@+id/iv_workbench_parent"
             android:layout_width="50dp"
             android:layout_gravity="center_vertical"
