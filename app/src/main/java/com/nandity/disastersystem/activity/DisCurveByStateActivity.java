@@ -7,21 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.bean.DisType;
@@ -45,23 +43,10 @@ import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.SubcolumnValue;
-import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import okhttp3.Call;
 
-import static android.R.attr.id;
-import static android.R.attr.lines;
-import static android.R.attr.logoDescription;
-import static android.R.attr.numColumns;
-import static android.R.id.message;
-import static anet.channel.d.f.t;
-import static anet.channel.statist.SessionStatistic.C;
 import static com.nandity.disastersystem.app.MyApplication.getContext;
-import static lecho.lib.hellocharts.util.ChartUtils.COLOR_BLUE;
-import static lecho.lib.hellocharts.util.ChartUtils.COLOR_GREEN;
-import static lecho.lib.hellocharts.util.ChartUtils.COLOR_ORANGE;
-import static lecho.lib.hellocharts.util.ChartUtils.COLOR_RED;
-import static lecho.lib.hellocharts.util.ChartUtils.COLOR_VIOLET;
 
 /**
  * timeType：1表示月份，2表示年，3,表示同比，4表示季度
@@ -69,28 +54,27 @@ import static lecho.lib.hellocharts.util.ChartUtils.COLOR_VIOLET;
  *
  * type    1表示灾情，2表示险情
  *
- * 灾险情类型统计
+ * 灾险情诱发因素统计
  */
-public class DisTypeActivity extends AppCompatActivity implements View.OnClickListener{
+public class DisCurveByStateActivity extends AppCompatActivity implements View.OnClickListener{
 
     //声明所需变量
     public final static String[] types = new String[]{
-            "滑坡", "泥石流", "危岩", "不稳定斜坡"
-            , "地面塌陷", "地裂缝", "塌岸"};
+            "旧灾害点", "新灾害点"};
     public final static String[] typeNames = new String[]{
-            "灾情类型分析","险情类型分析"};
+            "任务灾害点统计","任务灾害点统计"};
     public static final int[] COLORS = new int[]{
             Color.parseColor("#FFB90F"), Color.parseColor("#FF4500"), Color.parseColor("#8B8682"),
             Color.parseColor("#7FFFD4"),Color.parseColor("#CAFF70"),Color.parseColor("#AB82FF"),
             Color.parseColor("#E0FFFF"),Color.parseColor("#7171C6"),Color.parseColor("#00FF00"),
             Color.parseColor("#CD0000"),Color.parseColor("#F7F7F7"),Color.parseColor("#0000EE")
-    };
+            };
     private List<DisType> mDisTypes;
     ColumnChartView columnChart;
     ColumnChartData columnData;
     List<Column> lsColumn = new ArrayList<Column>();
     List<SubcolumnValue> lsValue;
-    private RadioButton rbType1;
+
     private Spinner spTimeType;
     private RadioGroup rgType;
     private TextView tvStartTime,tvEndTime,tvStatistics,tvDisTypeName,tvDistypeTitle;
@@ -99,15 +83,16 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
     private List<TaskAccountInfo> taskAccountInfo1,taskAccountInfo2;
     private SharedPreferences sp;
     private String sessionId;
-    private String TAG = "DisTypeActivity";
+    private String TAG = "DisCurveByStateActivity";
     private ProgressDialog progressDialog;
     private Context context;
     private String timeType,Type;
+    private RadioButton rbType1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dis_type);
-        context = DisTypeActivity.this;
+        context = DisCurveByStateActivity.this;
         sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         sessionId = sp.getString("sessionId", "");
         progressDialog = new ProgressDialog(this, ProgressDialog.STYLE_SPINNER);
@@ -196,7 +181,9 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initViews() {
+
         columnChart= (ColumnChartView) findViewById(R.id.chart);
+
         tvStartTime= (TextView) findViewById(R.id.tv_distype_time_start);
         tvEndTime= (TextView) findViewById(R.id.tv_distype_time_end);
         tvStatistics= (TextView) findViewById(R.id.tv_distype_statistics);
@@ -205,12 +192,15 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
         spTimeType= (Spinner) findViewById(R.id.sp_distype_timetype);
         rgType= (RadioGroup) findViewById(R.id.rg_distype_type);
         rbType1= (RadioButton) findViewById(R.id.rb_type_1);
+        //隐藏不需要的灾险情选择按钮
+        rgType.setVisibility(View.GONE);
+
         tvStartTime.setOnClickListener(this);
         tvEndTime.setOnClickListener(this);
         tvStatistics.setOnClickListener(this);
 
         tvDistypeTitle= (TextView) findViewById(R.id.tv_distype_title);
-        tvDistypeTitle.setText("灾险情类型统计");
+        tvDistypeTitle.setText("任务灾害点统计");
         spTimeType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -226,6 +216,7 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 Log.d(TAG,"checkedId::"+checkedId);
+                int id=checkedId;
                 if(checkedId==rbType1.getId()){
                     Type=2+"";
                 }else {
@@ -247,7 +238,6 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.tv_distype_statistics:
                 if("".equals(tvStartTime.getText().toString())
                         ||"".equals(tvEndTime.getText().toString())
-                        ||"".equals(Type)||null==Type
                         ||"".equals(timeType)||null==timeType){
                     ToastUtils.showShortToast("请输入完整");
                 }else{
@@ -299,7 +289,7 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
     //多少个月或年
     int numSubcolumns =1;
     //多少个类型，横轴条数
-    int numColumns = types.length;
+    int numColumns;
     //点击时显示的值
     List<AxisValue> axisValues = new ArrayList<AxisValue>();
     List<Column> columns = new ArrayList<Column>();
@@ -309,7 +299,6 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
 
     //初始化数据并显示在图表上
     private void dataInit() {
-
         numColumns = types.length;
         columns.clear();
         Log.d(TAG,mDisTypes.size()+"");
@@ -320,13 +309,8 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
             values = new ArrayList<SubcolumnValue>();
             for (int j = 0; j < numSubcolumns; ++j) {
                 switch (i){
-                    case 0: values.add(new SubcolumnValue((float)mDisTypes.get(j).getHp(), COLORS[j]));break;
-                    case 1: values.add(new SubcolumnValue((float)mDisTypes.get(j).getNsl(), COLORS[j]));break;
-                    case 2: values.add(new SubcolumnValue((float)mDisTypes.get(j).getWy(), COLORS[j]));break;
-                    case 3: values.add(new SubcolumnValue((float)mDisTypes.get(j).getBwdxp(), COLORS[j]));break;
-                    case 4: values.add(new SubcolumnValue((float)mDisTypes.get(j).getDmtx(), COLORS[j]));break;
-                    case 5: values.add(new SubcolumnValue((float)mDisTypes.get(j).getDlf(), COLORS[j]));break;
-                    case 6: values.add(new SubcolumnValue((float)mDisTypes.get(j).getTa(), COLORS[j]));break;
+                    case 0: values.add(new SubcolumnValue((float)mDisTypes.get(j).getJiu(), COLORS[j]));break;
+                    case 1: values.add(new SubcolumnValue((float)mDisTypes.get(j).getXin(), COLORS[j]));break;
                 }
 
             }
@@ -338,7 +322,7 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
         columnData = new ColumnChartData(columns);
 
         columnData.setAxisXBottom(new Axis(axisValues).setHasLines(true)
-                .setTextColor(Color.BLACK).setTextSize(10));
+                .setTextColor(Color.BLACK).setTextSize(10).setHasSeparationLine(true));
         columnData.setAxisYLeft(new Axis().setHasLines(true)
                 .setTextColor(Color.BLACK).setTextSize(10).setMaxLabelChars(4));
 
@@ -379,12 +363,11 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
     private void setOkHttp1() {
         progressDialog.show();
         try {
-            OkHttpUtils.get().url(new ConnectUrl().getDisTypeUrl())
+            OkHttpUtils.get().url(new ConnectUrl().getTaskDisCurveByStateUrl())
                     .addParams("sessionId", sessionId)
                     .addParams("startTime", tvStartTime.getText().toString().trim())
                     .addParams("endTime", tvEndTime.getText().toString().trim())
-                    .addParams("type", Type)
-                    .addParams("timeType", timeType)
+                    .addParams("state", timeType)
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -406,17 +389,12 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
                                 if ("200".equals(status)) {
                                     mDisTypes=new ArrayList<DisType>();
                                     JSONObject message=object.getJSONObject("message");
-                                    JSONArray dmtx=message.getJSONArray("dmtx");
+                                    JSONArray dmtx=message.getJSONArray("happen_time");
                                     for(int i=0;i<dmtx.length();i++){
                                         DisType disType=new DisType();
                                         disType.setHappen_time(message.getJSONArray("happen_time").getString(i));
-                                        disType.setNsl(message.getJSONArray("nsl").getInt(i));
-                                        disType.setWy(message.getJSONArray("wy").getInt(i));
-                                        disType.setBwdxp(message.getJSONArray("bwdxp").getInt(i));
-                                        disType.setDmtx(message.getJSONArray("dmtx").getInt(i));
-                                        disType.setDlf(message.getJSONArray("dlf").getInt(i));
-                                        disType.setTa(message.getJSONArray("ta").getInt(i));
-
+                                        disType.setXin(message.getJSONArray("xin").getInt(i));
+                                        disType.setJiu(message.getJSONArray("jiu").getInt(i));
                                         Log.d(TAG, "disType.toString()：" + disType.toString());
                                         mDisTypes.add(disType);
                                     }
@@ -424,7 +402,7 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
                                     ll.setVisibility(View.VISIBLE);
                                     dataInit();
                                     setBiaoZhu();
-                                 tvDisTypeName.setText(typeNames[Integer.parseInt(Type)-1]);
+                                 tvDisTypeName.setText(typeNames[0]);
                                 } else if ("400".equals(status)) {
 
                                     ToastUtils.showShortToast(msg);

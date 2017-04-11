@@ -28,6 +28,7 @@ public class ConnectUrl {
     public String getLoginUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/androidLogin.do";
     }
+
     public String getTaskNumUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getTaskNo.do";
     }
@@ -102,9 +103,11 @@ public class ConnectUrl {
     public String getCompleteInfoUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getTaskExtendsToAndroid.do";
     }
+
     public String getMediaInfoUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getFileToAndroid.do";
     }
+
     public String getMediaInfoListUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/getAllFile.do";
     }
@@ -115,5 +118,45 @@ public class ConnectUrl {
 
     public String getPlanUrl() {
         return "http://" + ip + ":" + port + "/cmdapp/contingencyPlan.do";
+    }
+
+    public String getEquipmentUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/emergencyEquipment.do";
+    }
+
+    public String getPersonUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/rescuer.do";
+    }
+    public String getMaterialUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/emergencyMaterials.do";
+    }
+    public String getSelectUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getSelect.do";
+    }
+
+    /**任务台账*/
+    public String getParameterUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getParameter.do";
+    }
+
+    /**灾险情诱发因素统计*/
+    public String getDisReasonUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getDisReason.do";
+    }
+
+
+    /** 灾险情类型统计*/
+    public String getDisTypeUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getDisType.do";
+    }
+
+    /** 灾险情规模统计*/
+    public String getTaskDisCurveByScaleUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getTaskDisCurveByScale.do";
+    }
+
+    /** 任务灾害点统计*/
+    public String getTaskDisCurveByStateUrl() {
+        return "http://" + ip + ":" + port + "/cmdapp/getTaskDisCurveByState.do";
     }
 }

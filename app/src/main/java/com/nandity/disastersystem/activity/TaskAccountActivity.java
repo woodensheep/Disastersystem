@@ -304,6 +304,9 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
     }
 
 
+    /**
+     * 1代表灾情
+     */
     private void setOkHttp1() {
         progressDialog.show();
         try {
@@ -354,7 +357,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
                                         Log.d(TAG, "---"+info.toString());
-                                        taskAccountInfo1.add(info);
+                                        taskAccountInfo2.add(info);
                                     }
                                     setOkHttp2();
                                 } else if ("400".equals(status)) {
@@ -377,6 +380,11 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
         }
     }
 
+
+    /**
+     *  .addParams("type", 2+"")
+     * 2代表险情
+     */
     private void setOkHttp2() {
 
         try {
@@ -427,7 +435,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
                                         Log.d(TAG, "---"+info.toString());
-                                        taskAccountInfo2.add(info);
+                                        taskAccountInfo1.add(info);
                                     }
                                     initDatas1();
                                     initDatas2();
@@ -502,7 +510,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
                                         Log.d(TAG, "---"+info.toString());
-                                        taskAccountInfo1.add(info);
+                                        taskAccountInfo2.add(info);
                                     }
                                     setOkHttp4();
                                 } else if ("400".equals(status)) {
@@ -576,7 +584,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
                                         Log.d(TAG, "---"+info.toString());
-                                        taskAccountInfo2.add(info);
+                                        taskAccountInfo1.add(info);
                                     }
                                     initDatas1();
                                     initDatas2();

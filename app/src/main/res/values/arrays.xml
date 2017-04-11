@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_type">
+        <item>月份</item>
+        <item>年度</item>
+        <item>同比</item>
+        <item>季度比</item>
+    </string-array>
+</resources>

@@ -128,13 +128,11 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.RecoderActivity" />
-        <activity android:name=".activity.PlanActivity" />
-        <activity android:name=".activity.PersonActivity" />
-        <activity android:name=".activity.EquipmentActivity" />
-        <activity android:name=".activity.MaterialActivity" />
         <activity android:name=".activity.TaskAccountActivity" />
         <activity android:name=".activity.DisTypeActivity"></activity>
+        <activity android:name=".activity.DisReasonActivity"></activity>
+        <activity android:name=".activity.DisCurveByScaleActivity"></activity>
+        <activity android:name=".activity.DisCurveByStateActivity"></activity>
     </application>
 
 </manifest>

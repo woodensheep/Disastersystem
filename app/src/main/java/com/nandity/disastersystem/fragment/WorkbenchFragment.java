@@ -21,6 +21,10 @@ import android.widget.TextView;
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.CompleteTaskActivity;
 import com.nandity.disastersystem.activity.CreateTaskActivity;
+import com.nandity.disastersystem.activity.DisCurveByScaleActivity;
+import com.nandity.disastersystem.activity.DisCurveByStateActivity;
+import com.nandity.disastersystem.activity.DisReasonActivity;
+import com.nandity.disastersystem.activity.DisTypeActivity;
 import com.nandity.disastersystem.activity.EquipmentActivity;
 import com.nandity.disastersystem.activity.LoginActivity;
 import com.nandity.disastersystem.activity.MaterialActivity;
@@ -151,12 +155,16 @@ public class WorkbenchFragment extends Fragment {
                         intent=new Intent(activity, TaskAccountActivity.class);
                     }else if (childPosition==1){
                         //任务灾害点统计
+                        intent=new Intent(activity, DisCurveByStateActivity.class);
                     }else if (childPosition==2){
                         //灾险情规模统计
+                        intent=new Intent(activity, DisCurveByScaleActivity.class);
                     }else if (childPosition==3){
                         //灾险情类型统计
+                        intent=new Intent(activity, DisTypeActivity.class);
                     }else {
                         //灾险情诱发因素统计
+                        intent=new Intent(activity, DisReasonActivity.class);
                     }
                 }
                 startActivity(intent);
