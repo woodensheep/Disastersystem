@@ -66,9 +66,9 @@ import butterknife.ButterKnife;
 import okhttp3.Call;
 
 /**
+ * 反馈信息填报---媒体信息页面
  * Created by ChenPeng on 2017/3/6.
  */
-
 public class MediaInfoFragment extends Fragment {
     @BindView(R.id.iv_mediainfo_photo)
     ImageView ivMediainfoPhoto;
@@ -135,7 +135,7 @@ public class MediaInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_media_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_mediainfo, container, false);
         ButterKnife.bind(this, view);
         context = getActivity();
         sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);

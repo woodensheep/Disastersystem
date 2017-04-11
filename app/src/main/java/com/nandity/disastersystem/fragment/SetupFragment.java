@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.activity.LoginActivity;
@@ -31,7 +32,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class SetupFragment extends Fragment {
     private SharedPreferences sp;
     @BindView(R.id.ll_signout)
-    LinearLayout signOut;
+    RelativeLayout signOut;
     private String[] stringsname = new String[]{
             "视频采集", "群组对讲", "录像地址",
             "存储路径", "摄像头", "帧数",

@@ -158,12 +158,12 @@ public class TaskActivity extends AppCompatActivity {
                                     Log.d(TAG, "message：id-" + taskInfoBean.getmAddress());
                                     tvTaskId.setText("调查任务-" + taskInfoBean.getmDisaster());
                                     tvWorkersTime.setText("发起人：" + taskInfoBean.getmSendName() + " 时间：" + taskInfoBean.getmStartTime());
-                                    tvTaskDisaster.setText("灾害点：" + taskInfoBean.getmDisaster());
+                                    tvTaskDisaster.setText("灾  害  点：" + taskInfoBean.getmDisaster());
                                     tvTaskAddress.setText("调查地点：" + taskInfoBean.getmAddress());
                                     tvTaskSurveyTime.setText("调查时间：" + taskInfoBean.getmSurveyTime());
                                     tvTaskTownship.setText("所属乡镇：" + taskInfoBean.getmAreaName());
                                     tvTaskKind.setText("发生时间：" + taskInfoBean.getmHappenTime());
-                                    tvTaskReporter.setText("调查人：" + taskInfoBean.getmName());
+                                    tvTaskReporter.setText("调  查  人：" + taskInfoBean.getmName());
                                     tvTaskState.setText("任务状态：" + mStates[Integer.parseInt(taskInfoBean.getmTaskState()) -1]);
                                 } else if ("400".equals(status)) {
                                     ToastUtils.showShortToast(msg);

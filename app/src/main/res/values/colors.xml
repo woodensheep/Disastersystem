@@ -27,4 +27,7 @@
     <color name="light_black_color">#3B3B3B</color>
     <color name="color_weak_blue">#22b4ff</color>
     <color name="color_weak_yellow">#c0d9d9</color>
+
+    <color name="textview_bg">#e3e5e8</color>
+    <color name="textview_color">#75787a</color>
 </resources>
