@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入死亡人数 (单位:人)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入失踪人数 (单位:人)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入重伤人数 (单位:人)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
@@ -241,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入轻伤人数 (单位:人)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
             </LinearLayout>
 
@@ -343,7 +343,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入威胁户数 (单位:户)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
@@ -352,7 +352,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入威胁人数 (单位:人)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
@@ -361,7 +361,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入威胁在家户数 (单位:户)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
@@ -370,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入威胁在家人数 (单位:人)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
             </LinearLayout>
 
@@ -399,7 +399,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:hint="请输入威胁房屋间数 (单位:间)"
-                    android:inputType="number|numberDecimal"
+                    android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
 
                 <EditText
