@@ -410,6 +410,7 @@ public class DisTypeActivity extends AppCompatActivity implements View.OnClickLi
                                     for(int i=0;i<dmtx.length();i++){
                                         DisType disType=new DisType();
                                         disType.setHappen_time(message.getJSONArray("happen_time").getString(i));
+                                        disType.setHp(message.getJSONArray("hp").getInt(i));
                                         disType.setNsl(message.getJSONArray("nsl").getInt(i));
                                         disType.setWy(message.getJSONArray("wy").getInt(i));
                                         disType.setBwdxp(message.getJSONArray("bwdxp").getInt(i));
