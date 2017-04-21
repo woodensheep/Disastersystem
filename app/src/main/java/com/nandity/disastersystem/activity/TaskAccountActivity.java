@@ -467,7 +467,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                     .addParams("sessionId", sessionId)
                     .addParams("type", 1+"")
                     .addParams("startTime", tvStartTime.getText().toString().trim())
-                    .addParams("endtime",  tvEndTime.getText().toString().trim())
+                    .addParams("endTime",  tvEndTime.getText().toString().trim())
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -542,7 +542,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                     .addParams("sessionId", sessionId)
                     .addParams("type", 2+"")
                     .addParams("startTime", tvStartTime.getText().toString().trim())
-                    .addParams("endtime",  tvEndTime.getText().toString().trim())
+                    .addParams("endTime",  tvEndTime.getText().toString().trim())
                     .build()
                     .execute(new StringCallback() {
                         @Override
