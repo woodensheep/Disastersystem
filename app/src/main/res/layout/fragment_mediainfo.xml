@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#bfc2c5" >
+    android:background="#bfc2c5"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -274,16 +280,17 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_mediainfo_save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/save_selecter"
-            android:text="保存"
-            android:textColor="@color/c1olorwhite"
-            android:textSize="25sp" />
+
 
     </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_mediainfo_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/save_selecter"
+        android:text="保存"
+        android:textColor="@color/c1olorwhite"
+        android:textSize="25sp" />
+</LinearLayout>

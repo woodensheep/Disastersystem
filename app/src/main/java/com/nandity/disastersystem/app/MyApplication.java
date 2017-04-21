@@ -22,9 +22,10 @@ import okhttp3.OkHttpClient;
  */
 
 public class MyApplication extends Application {
-    private static String TAG="MyApplication";
+    private static String TAG = "MyApplication";
     private static Context context;
     private static DaoSession daoSession;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -60,16 +61,17 @@ public class MyApplication extends Application {
         super.onLowMemory();
     }
 
-    public static DaoSession getDaoSession(){
+    public static DaoSession getDaoSession() {
         return daoSession;
     }
 
     /**
      * 初始化云推送通道
+     *
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {
-        Log.d(TAG,"---------------------");
+        Log.d(TAG, "---------------------");
         PushServiceFactory.init(applicationContext);
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.register(applicationContext, new CommonCallback() {
@@ -77,6 +79,7 @@ public class MyApplication extends Application {
             public void onSuccess(String response) {
                 Log.d(TAG, "init cloudchannel success--------------------------------------------");
             }
+
             @Override
             public void onFailed(String errorCode, String errorMessage) {
                 Log.d(TAG, "---------------------------------------------init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
