@@ -236,7 +236,7 @@ public class FillInfoActivity extends AppCompatActivity {
                             if ("200".equals(status)) {
                                 ToastUtils.showShortToast(msg);
                                 uploadProgress.dismiss();
-                                deleteDao();
+//                                deleteDao();
                                 finish();
                             }else if("400".equals(status)){
                                 ToastUtils.showShortToast(msg);
