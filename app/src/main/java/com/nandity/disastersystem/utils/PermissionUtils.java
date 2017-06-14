@@ -284,7 +284,7 @@ public class PermissionUtils {
             try {
                 checkSelfPermission = ActivityCompat.checkSelfPermission(activity, requestPermission);
             } catch (RuntimeException e) {
-                Toast.makeText(activity, "please open those permission", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, "请打开所需要的权限！", Toast.LENGTH_SHORT)
                         .show();
                 Log.e(TAG, "RuntimeException:" + e.getMessage());
                 return null;
