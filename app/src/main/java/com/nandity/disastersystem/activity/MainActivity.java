@@ -9,13 +9,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
@@ -25,6 +28,7 @@ import com.nandity.disastersystem.adapter.MyFragmentPagerAdapter;
 import com.nandity.disastersystem.constant.ConnectUrl;
 import com.nandity.disastersystem.receiver.UpdataService;
 import com.nandity.disastersystem.utils.MyUtils;
+import com.nandity.disastersystem.utils.PermissionUtils;
 import com.nandity.disastersystem.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -37,7 +41,7 @@ import okhttp3.Call;
 /**
  *
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
     private static String TAG = "MainActivity", status, msg;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -62,18 +66,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBuild() {
         if (Build.VERSION.SDK_INT >= 23) {
-            int REQUEST_CODE_CONTACT = 101;
-            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS};
-            //验证是否许可权限
-            for (String str : permissions) {
-                if (this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                    //申请权限
-                    this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
-                    return;
-                }
+            PermissionUtils.requestMultiPermissions(MainActivity.this,mPermissionGrant);
+        }
+    }
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            switch (requestCode){
+                case PermissionUtils.CODE_CAMERA:
+                    break;
+                case PermissionUtils.CODE_RECORD_AUDIO:
+                    break;
+                case PermissionUtils.CODE_READ_EXTERNAL_STORAGE:
+                    break;
             }
         }
+    };
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
     }
 
     private void updateManager() {

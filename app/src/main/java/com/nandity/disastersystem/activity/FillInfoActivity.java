@@ -194,26 +194,74 @@ public class FillInfoActivity extends AppCompatActivity {
     }
 
     private void upLoadConnectInfo() {
+        CollectInfoBean collectInfo=new CollectInfoBean();
+        collectInfo.setTaskId(collectInfoBean.getTaskId());
+        collectInfo.setCollectInfoPlace(collectInfoBean.getCollectInfoPlace());
+        collectInfo.setCollectInfoType(collectInfoBean.getCollectInfoType());
+        collectInfo.setCollectInfoDead(collectInfoBean.getCollectInfoDead());
+        collectInfo.setCollectInfoMiss(collectInfoBean.getCollectInfoMiss());
+        collectInfo.setCollectInfoHeavyInjured(collectInfoBean.getCollectInfoHeavyInjured());
+        collectInfo.setCollectInfoSoftInjured(collectInfoBean.getCollectInfoSoftInjured());
+        collectInfo.setCollectInfoEconomicLoss(collectInfoBean.getCollectInfoEconomicLoss());
+        collectInfo.setCollectInfoHouseCollapseNum(collectInfoBean.getCollectInfoHouseCollapseNum());
+        collectInfo.setCollectInfoHouseCollapseArea(collectInfoBean.getCollectInfoHouseCollapseArea());
+        collectInfo.setCollectInfoHouseDamageNum(collectInfoBean.getCollectInfoHouseDamageNum());
+        collectInfo.setCollectInfoHouseDamageArea(collectInfoBean.getCollectInfoHouseDamageArea());
+        collectInfo.setCollectInfoAnotherDamage(collectInfoBean.getCollectInfoAnotherDamage());
+        collectInfo.setCollectInfoFamily(collectInfoBean.getCollectInfoFamily());
+        collectInfo.setCollectInfoPeople(collectInfoBean.getCollectInfoPeople());
+        collectInfo.setCollectInfoAtHomeFamily(collectInfoBean.getCollectInfoAtHomeFamily());
+        collectInfo.setCollectInfoAtHomePeople(collectInfoBean.getCollectInfoAtHomePeople());
+        collectInfo.setCollectInfoHouse(collectInfoBean.getCollectInfoHouse());
+        collectInfo.setCollectInfoHouseArea(collectInfoBean.getCollectInfoHouseArea());
+        collectInfo.setCollectInfoAnotherDisaster(collectInfoBean.getCollectInfoAnotherDisaster());
+        collectInfo.setCollectInfoLandslideWidth(collectInfoBean.getCollectInfoLandslideWidth());
+        collectInfo.setCollectInfoLandslideLength(collectInfoBean.getCollectInfoLandslideLength());
+        collectInfo.setCollectInfoLandslideArea(collectInfoBean.getCollectInfoLandslideArea());
+        collectInfo.setCollectInfoLandslideVolume(collectInfoBean.getCollectInfoLandslideVolume());
+        collectInfo.setCollectInfoDistortionWidth(collectInfoBean.getCollectInfoDistortionWidth());
+        collectInfo.setCollectInfoDistortionLength(collectInfoBean.getCollectInfoDistortionLength());
+        collectInfo.setCollectInfoDistortionArea(collectInfoBean.getCollectInfoDistortionArea());
+        collectInfo.setCollectInfoDistortionVolume(collectInfoBean.getCollectInfoDistortionVolume());
+        collectInfo.setCollectInfoSlideDistance(collectInfoBean.getCollectInfoSlideDistance());
+        collectInfo.setCollectInfoCrackNumber(collectInfoBean.getCollectInfoCrackNumber());
+        collectInfo.setCollectInfoCrackMinWidth(collectInfoBean.getCollectInfoCrackMinWidth());
+        collectInfo.setCollectInfoCrackMaxWidth(collectInfoBean.getCollectInfoCrackMaxWidth());
+        collectInfo.setCollectInfoCrackMinLength(collectInfoBean.getCollectInfoCrackMinLength());
+        collectInfo.setCollectInfoCrackMaxLength(collectInfoBean.getCollectInfoCrackMaxLength());
+        collectInfo.setCollectInfoMaxDislocation(collectInfoBean.getCollectInfoMaxDislocation());
+        collectInfo.setCollectInfoRockWidth(collectInfoBean.getCollectInfoRockWidth());
+        collectInfo.setCollectInfoRockLength(collectInfoBean.getCollectInfoRockLength());
+        collectInfo.setCollectInfoRockVolume(collectInfoBean.getCollectInfoRockVolume());
+        collectInfo.setCollectInfoCollapseVolume(collectInfoBean.getCollectInfoCollapseVolume());
+        collectInfo.setCollectInfoResidualVolume(collectInfoBean.getCollectInfoResidualVolume());
+        collectInfo.setCollectInfoAnotherThings(collectInfoBean.getCollectInfoAnotherThings());
+        collectInfo.setCollectInfoMeasure(collectInfoBean.getCollectInfoMeasure());
+        collectInfo.setCollectInfoMeasureRemark(collectInfoBean.getCollectInfoMeasureRemark());
+        collectInfo.setCollectInfoDisposition(collectInfoBean.getCollectInfoDisposition());
+        collectInfo.setCollectInfoDispositionRemark(collectInfoBean.getCollectInfoDispositionRemark());
+        collectInfo.setCollectInfoGoTime(collectInfoBean.getCollectInfoGoTime());
+//        collectInfo.setUploadTime(collectInfoBean.getUploadTime());
         String reason = getReason(collectInfoBean.getCollectInfoDisasterReason());
         String level=getLevel(collectInfoBean.getCollectInfoDisasterLevel());
         int type=Integer.valueOf(collectInfoBean.getCollectInfoType())+1;
         int disOrDan=Integer.valueOf(collectInfoBean.getCollectInfoDisOrDan())+1;
         int isResearch=Integer.valueOf(collectInfoBean.getCollectInfoIsResearch())+1;
-        collectInfoBean.setId(Long.valueOf(taskInfoBean.getTaskExtendsId()));
+        collectInfo.setId(Long.valueOf(taskInfoBean.getTaskExtendsId()));
         Log.d("TaskActivity",Long.valueOf(taskInfoBean.getTaskExtendsId())+"");
-        collectInfoBean.setCollectInfoDisasterReason(reason);
-        collectInfoBean.setCollectInfoDisasterLevel(level);
-        collectInfoBean.setCollectInfoType(type+"");
-        collectInfoBean.setCollectInfoDisOrDan(disOrDan+"");
-        collectInfoBean.setCollectInfoIsResearch(isResearch+"");
+        collectInfo.setCollectInfoDisasterReason(reason);
+        collectInfo.setCollectInfoDisasterLevel(level);
+        collectInfo.setCollectInfoType(type+"");
+        collectInfo.setCollectInfoDisOrDan(disOrDan+"");
+        collectInfo.setCollectInfoIsResearch(isResearch+"");
         if (collectInfoBean.getCollectInfoMeasure().equals("点击选择")){
-            collectInfoBean.setCollectInfoMeasure("");
+            collectInfo.setCollectInfoMeasure("");
         }
         if (collectInfoBean.getCollectInfoDisposition().equals("点击选择")){
-            collectInfoBean.setCollectInfoDisposition("");
+            collectInfo.setCollectInfoDisposition("");
         }
         Gson gson=new Gson();
-        String info=gson.toJson(collectInfoBean);
+        String info=gson.toJson(collectInfo);
         Log.d(TAG,"采集信息json字符串："+info);
         OkHttpUtils.post().url(new ConnectUrl().getConnectInfoUrl())
                 .addParams("info", info)
