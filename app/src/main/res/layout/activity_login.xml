@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginBottom="36dp"
-            android:text="地质灾害应急指挥系统"
+            android:text="应急调查"
             android:textColor="#337ab7"
             android:textSize="25sp"/>
 
