@@ -260,6 +260,9 @@ public class FillInfoActivity extends AppCompatActivity {
         if (collectInfoBean.getCollectInfoDisposition().equals("点击选择")){
             collectInfo.setCollectInfoDisposition("");
         }
+        if (collectInfoBean.getCollectInfoGoTime().equals("点击选择")){
+            collectInfo.setCollectInfoGoTime("");
+        }
         Gson gson=new Gson();
         String info=gson.toJson(collectInfo);
         Log.d(TAG,"采集信息json字符串："+info);

@@ -155,6 +155,7 @@ public class TaskActivity extends AppCompatActivity {
                                     taskInfoBean.setmAreaName(oj.getString("area_name"));
                                     taskInfoBean.setmName(oj.getString("survey_name"));
                                     taskInfoBean.setmTaskState(oj.getString("task_state"));
+                                    taskInfoBean.setmDisasterLevel(oj.getString("dis_level"));
                                     Log.d(TAG, "message：id-" + taskInfoBean.getmAddress());
                                     tvTaskId.setText("调查任务-" + taskInfoBean.getmDisaster());
                                     tvWorkersTime.setText("发起人：" + taskInfoBean.getmSendName() + " 时间：" + taskInfoBean.getmStartTime());

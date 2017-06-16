@@ -261,6 +261,11 @@ public class BaseInfoFragment extends Fragment {
             etBaseinfoAddress.setText("null".equals(taskInfoBean.getmDisasterLocation())?"":taskInfoBean.getmDisasterLocation());
             etBaseinfoContact.setText("null".equals(taskInfoBean.getmDisasterContact())?"":taskInfoBean.getmDisasterContact());
             etBaseinfoMobile.setText("null".equals(taskInfoBean.getmDisasterMobile())?"":taskInfoBean.getmDisasterMobile());
+            if(taskInfoBean.getmDisasterLevel().isEmpty()){
+                spBaseinfoLevel.setSelection(0);
+            }else {
+                spBaseinfoLevel.setSelection(Integer.valueOf(taskInfoBean.getmDisasterLevel())-1);
+            }
         }
 
     }
