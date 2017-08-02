@@ -30,6 +30,24 @@ public class TaskAccountInfo {
     private String zj_money;
     private String house_kt_no;
     private String house_kt_mj;
+    private String emergency_hu_no;
+    private String emergency_person_no;
+
+    public String getEmergency_hu_no() {
+        return emergency_hu_no;
+    }
+
+    public void setEmergency_hu_no(String emergency_hu_no) {
+        this.emergency_hu_no = emergency_hu_no;
+    }
+
+    public String getEmergency_person_no() {
+        return emergency_person_no;
+    }
+
+    public void setEmergency_person_no(String emergency_person_no) {
+        this.emergency_person_no = emergency_person_no;
+    }
 
     @Override
     public String toString() {
@@ -54,6 +72,8 @@ public class TaskAccountInfo {
                 ", zj_money='" + zj_money + '\'' +
                 ", house_kt_no='" + house_kt_no + '\'' +
                 ", house_kt_mj='" + house_kt_mj + '\'' +
+                ", emergency_hu_no='" + emergency_hu_no + '\'' +
+                ", emergency_person_no='" + emergency_person_no + '\'' +
                 '}';
     }
 

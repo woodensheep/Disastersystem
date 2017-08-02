@@ -109,18 +109,25 @@
                             android:text="" />
 
                         <TextView
-                            android:layout_span="6"
+                            android:layout_span="5"
                             android:background="@drawable/table_tv"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="险情情况" />
 
                         <TextView
-                            android:layout_span="5"
+                            android:layout_span="6"
                             android:background="@drawable/table_tv"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="灾害诱发因素" />
+
+                        <TextView
+                            android:layout_span="2"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="紧急搬迁避让" />
                     </TableRow>
 
                 </TableLayout>
@@ -148,18 +155,26 @@
                             android:text="" />
 
                         <TextView
-                            android:layout_span="6"
+                            android:layout_span="5"
                             android:background="@drawable/table_tv"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="灾情情况" />
 
                         <TextView
-                            android:layout_span="5"
+                            android:layout_span="6"
                             android:background="@drawable/table_tv"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="灾害诱发因素" />
+
+                        <TextView
+                            android:layout_span="2"
+                            android:background="@drawable/table_tv"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="紧急搬迁避让" />
+
                     </TableRow>
 
                 </TableLayout>

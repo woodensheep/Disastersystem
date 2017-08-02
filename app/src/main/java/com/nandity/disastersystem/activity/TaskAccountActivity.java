@@ -7,18 +7,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.nandity.disastersystem.R;
 import com.nandity.disastersystem.bean.TaskAccountInfo;
@@ -30,7 +27,6 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +41,9 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
             , "地面塌陷", "地裂缝", "塌岸", "合计"};
 
     private String[] columns1 = new String[]{"新增", "原有", "险情", "户数(户)", "人数(人)"
-            , "在家人数(人)", "房屋间数(间)", "面积(米*米)", "降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚"};
+            , "在家人数(人)", "房屋间数(间)", "面积(米*米)", "降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚","户数(户)","人数(人)"};
     private String[] columns2 = new String[]{"新增", "原有", "灾情", "死亡(人)", "重伤(人)"
-            , "直接损失(万元)", "房屋坍塌(间)", "面积(米*米)", "降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚"};
+            , "直接损失(万元)", "房屋坍塌(间)", "面积(米*米)", "降雨", "风化", "库水位", "切坡", "加载", "冲刷坡脚","户数(户)","人数(人)"};
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int MP = ViewGroup.LayoutParams.MATCH_PARENT;
     private int row;
@@ -75,7 +71,7 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("正在加载...");
         row = 9;
-        column = 15;
+        column = 17;
         taskAccountInfo1=new ArrayList<TaskAccountInfo>();
         taskAccountInfo2=new ArrayList<TaskAccountInfo>();
         initViews();
@@ -143,6 +139,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         case 13:num=taskAccountInfo1.get(m).getQp();break;
                                         case 14:num=taskAccountInfo1.get(m).getJz();break;
                                         case 15:num=taskAccountInfo1.get(m).getCspj();break;
+                                        case 16:num=taskAccountInfo1.get(m).getEmergency_hu_no();break;
+                                        case 17:num=taskAccountInfo1.get(m).getEmergency_person_no();break;
                                     }
                                     tv.setText(num);
                                 }
@@ -214,6 +212,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         case 13:num=taskAccountInfo2.get(m).getQp();break;
                                         case 14:num=taskAccountInfo2.get(m).getJz();break;
                                         case 15:num=taskAccountInfo2.get(m).getCspj();break;
+                                        case 16:num=taskAccountInfo2.get(m).getEmergency_hu_no();break;
+                                        case 17:num=taskAccountInfo2.get(m).getEmergency_person_no();break;
                                     }
                                     tv.setText(num);
                                 }
@@ -356,6 +356,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setZj_money(ob.getString("zj_money"));
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
+                                        info.setEmergency_hu_no(ob.getString("emergency_hu_no"));
+                                        info.setEmergency_person_no(ob.getString("emergency_person_no"));
                                         Log.d(TAG, "---"+info.toString());
                                         taskAccountInfo2.add(info);
                                     }
@@ -434,6 +436,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setZj_money(ob.getString("zj_money"));
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
+                                        info.setEmergency_hu_no(ob.getString("emergency_hu_no"));
+                                        info.setEmergency_person_no(ob.getString("emergency_person_no"));
                                         Log.d(TAG, "---"+info.toString());
                                         taskAccountInfo1.add(info);
                                     }
@@ -511,6 +515,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setZj_money(ob.getString("zj_money"));
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
+                                        info.setEmergency_hu_no(ob.getString("emergency_hu_no"));
+                                        info.setEmergency_person_no(ob.getString("emergency_person_no"));
                                         Log.d(TAG, "---"+info.toString());
                                         taskAccountInfo2.add(info);
                                     }
@@ -586,6 +592,8 @@ public class TaskAccountActivity extends Activity implements View.OnClickListene
                                         info.setZj_money(ob.getString("zj_money"));
                                         info.setHouse_kt_no(ob.getString("house_kt_no"));
                                         info.setHouse_kt_mj(ob.getString("house_kt_mj"));
+                                        info.setEmergency_hu_no(ob.getString("emergency_hu_no"));
+                                        info.setEmergency_person_no(ob.getString("emergency_person_no"));
                                         Log.d(TAG, "---"+info.toString());
                                         taskAccountInfo1.add(info);
                                     }
