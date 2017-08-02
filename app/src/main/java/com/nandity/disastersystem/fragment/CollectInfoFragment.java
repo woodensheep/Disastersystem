@@ -150,6 +150,10 @@ public class CollectInfoFragment extends Fragment {
     EditText etCollectinfoHouseDamageArea;
     @BindView(R.id.et_collectinfo_another_damage)
     EditText etCollectinfoAnotherDamage;
+    @BindView(R.id.et_collectinfo_emergency_family)
+    EditText etCollectinfoEmergencyFamily;
+    @BindView(R.id.et_collectinfo_emergency_person)
+    EditText etCollectinfoEmergencyPerson;
     private static final String TAG = "CollectInfoFragment";
     private Context context;
     private SharedPreferences sp;
@@ -250,7 +254,7 @@ public class CollectInfoFragment extends Fragment {
                 });
     }
 
-    private MaterialDialog initDialog(String title,final List<String> list, final TextView textView) {
+    private MaterialDialog initDialog(String title, final List<String> list, final TextView textView) {
         return new MaterialDialog.Builder(getActivity())
                 .title(title)
                 .titleColor(Color.BLUE)
@@ -285,7 +289,7 @@ public class CollectInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (measureList != null && measureList.size() > 0) {
-                    initDialog("请选择采取措施",measureList, tvCollectinfoMeasure).show();
+                    initDialog("请选择采取措施", measureList, tvCollectinfoMeasure).show();
                 }
             }
         });
@@ -293,7 +297,7 @@ public class CollectInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (dispositionList != null && dispositionList.size() > 0) {
-                    initDialog("请选择处置意见",dispositionList, tvCollectinfoDisposition).show();
+                    initDialog("请选择处置意见", dispositionList, tvCollectinfoDisposition).show();
                 }
             }
         });
@@ -327,6 +331,8 @@ public class CollectInfoFragment extends Fragment {
         String people = etCollectinfoPeople.getText().toString().trim();
         String atHomeFamily = etCollectinfoAthomeFamily.getText().toString().trim();
         String atHomePeople = etCollectinfoAthomePeople.getText().toString().trim();
+        String emergencyFamily=etCollectinfoEmergencyFamily.getText().toString().trim();
+        String emergencyPerson=etCollectinfoEmergencyPerson.getText().toString().trim();
         String house = etCollectinfoHouse.getText().toString().trim();
         String houseArea = etCollectinfoArea.getText().toString().trim();
         String anotherDis = etCollectinfoAnotherDisaster.getText().toString().trim();
@@ -380,6 +386,8 @@ public class CollectInfoFragment extends Fragment {
             bean.setCollectInfoFamily(family);
             bean.setCollectInfoAtHomeFamily(atHomeFamily);
             bean.setCollectInfoAtHomePeople(atHomePeople);
+            bean.setEmergencyHuNo(emergencyFamily);
+            bean.setEmergencyPersonNo(emergencyPerson);
             bean.setCollectInfoHouse(house);
             bean.setCollectInfoHouseArea(houseArea);
             bean.setCollectInfoAnotherDisaster(anotherDis);
@@ -432,6 +440,8 @@ public class CollectInfoFragment extends Fragment {
             collectInfoBean.setCollectInfoFamily(family);
             collectInfoBean.setCollectInfoAtHomeFamily(atHomeFamily);
             collectInfoBean.setCollectInfoAtHomePeople(atHomePeople);
+            collectInfoBean.setEmergencyPersonNo(emergencyPerson);
+            collectInfoBean.setEmergencyHuNo(emergencyFamily);
             collectInfoBean.setCollectInfoHouse(house);
             collectInfoBean.setCollectInfoHouseArea(houseArea);
             collectInfoBean.setCollectInfoAnotherDisaster(anotherDis);
@@ -510,6 +520,8 @@ public class CollectInfoFragment extends Fragment {
             etCollectinfoPeople.setText(collectInfoBean.getCollectInfoPeople());
             etCollectinfoAthomeFamily.setText(collectInfoBean.getCollectInfoAtHomeFamily());
             etCollectinfoAthomePeople.setText(collectInfoBean.getCollectInfoAtHomePeople());
+            etCollectinfoEmergencyFamily.setText(collectInfoBean.getEmergencyHuNo());
+            etCollectinfoEmergencyPerson.setText(collectInfoBean.getEmergencyPersonNo());
             etCollectinfoHouse.setText(collectInfoBean.getCollectInfoHouse());
             etCollectinfoArea.setText(collectInfoBean.getCollectInfoHouseArea());
             etCollectinfoAnotherDisaster.setText(collectInfoBean.getCollectInfoAnotherDisaster());
@@ -540,5 +552,10 @@ public class CollectInfoFragment extends Fragment {
             etCollectinfoDispositionRemark.setText(collectInfoBean.getCollectInfoDispositionRemark());
             tvCollectinfoGoTime.setText(collectInfoBean.getCollectInfoGoTime());
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

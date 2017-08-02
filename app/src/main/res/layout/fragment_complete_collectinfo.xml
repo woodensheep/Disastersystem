@@ -534,6 +534,44 @@
                     android:paddingBottom="14dp"
                     android:textSize="@dimen/fill_Info_textSize" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="紧急搬迁人数："
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <TextView
+                    android:id="@+id/tv_collect_info_emergency_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="紧急搬迁户数："
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <TextView
+                    android:id="@+id/tv_collect_info_emergency_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textSize="@dimen/fill_Info_textSize" />
+            </LinearLayout>
         </LinearLayout>
 
         <!--威胁房屋-->

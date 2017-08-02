@@ -11,6 +11,8 @@ import org.greenrobot.greendao.annotation.Generated;
 public class CollectInfoBean {
     @Id(autoincrement = true)
     private Long id;
+    private String emergencyHuNo;
+    private String emergencyPersonNo;
     /*任务ID*/
     private String taskId;
     /*发生地点*/
@@ -113,33 +115,35 @@ public class CollectInfoBean {
     private String collectInfoGoTime;
     /*上传时间*/
     private String uploadTime;
-    @Generated(hash = 1878390586)
-    public CollectInfoBean(Long id, String taskId, String collectInfoPlace,
-            String collectInfoType, String collectInfoDisOrDan,
-            String collectInfoDisasterLevel, String collectInfoDisasterReason,
-            String collectInfoIsResearch, String collectInfoDead, String collectInfoMiss,
-            String collectInfoHeavyInjured, String collectInfoSoftInjured,
-            String collectInfoEconomicLoss, String collectInfoHouseCollapseNum,
-            String collectInfoHouseCollapseArea, String collectInfoHouseDamageNum,
-            String collectInfoHouseDamageArea, String collectInfoAnotherDamage,
-            String collectInfoFamily, String collectInfoPeople,
-            String collectInfoAtHomeFamily, String collectInfoAtHomePeople,
-            String collectInfoHouse, String collectInfoHouseArea,
-            String collectInfoAnotherDisaster, String collectInfoLandslideLength,
-            String collectInfoLandslideWidth, String collectInfoLandslideArea,
-            String collectInfoLandslideVolume, String collectInfoDistortionLength,
-            String collectInfoDistortionWidth, String collectInfoDistortionArea,
-            String collectInfoDistortionVolume, String collectInfoSlideDistance,
-            String collectInfoCrackNumber, String collectInfoCrackMinLength,
-            String collectInfoCrackMaxLength, String collectInfoCrackMinWidth,
-            String collectInfoCrackMaxWidth, String collectInfoMaxDislocation,
-            String collectInfoRockLength, String collectInfoRockWidth,
-            String collectInfoRockVolume, String collectInfoCollapseVolume,
-            String collectInfoResidualVolume, String collectInfoAnotherThings,
-            String collectInfoMeasure, String collectInfoMeasureRemark,
-            String collectInfoDisposition, String collectInfoDispositionRemark,
-            String collectInfoGoTime, String uploadTime) {
+    @Generated(hash = 1871841491)
+    public CollectInfoBean(Long id, String emergencyHuNo, String emergencyPersonNo,
+            String taskId, String collectInfoPlace, String collectInfoType,
+            String collectInfoDisOrDan, String collectInfoDisasterLevel,
+            String collectInfoDisasterReason, String collectInfoIsResearch,
+            String collectInfoDead, String collectInfoMiss, String collectInfoHeavyInjured,
+            String collectInfoSoftInjured, String collectInfoEconomicLoss,
+            String collectInfoHouseCollapseNum, String collectInfoHouseCollapseArea,
+            String collectInfoHouseDamageNum, String collectInfoHouseDamageArea,
+            String collectInfoAnotherDamage, String collectInfoFamily,
+            String collectInfoPeople, String collectInfoAtHomeFamily,
+            String collectInfoAtHomePeople, String collectInfoHouse,
+            String collectInfoHouseArea, String collectInfoAnotherDisaster,
+            String collectInfoLandslideLength, String collectInfoLandslideWidth,
+            String collectInfoLandslideArea, String collectInfoLandslideVolume,
+            String collectInfoDistortionLength, String collectInfoDistortionWidth,
+            String collectInfoDistortionArea, String collectInfoDistortionVolume,
+            String collectInfoSlideDistance, String collectInfoCrackNumber,
+            String collectInfoCrackMinLength, String collectInfoCrackMaxLength,
+            String collectInfoCrackMinWidth, String collectInfoCrackMaxWidth,
+            String collectInfoMaxDislocation, String collectInfoRockLength,
+            String collectInfoRockWidth, String collectInfoRockVolume,
+            String collectInfoCollapseVolume, String collectInfoResidualVolume,
+            String collectInfoAnotherThings, String collectInfoMeasure,
+            String collectInfoMeasureRemark, String collectInfoDisposition,
+            String collectInfoDispositionRemark, String collectInfoGoTime, String uploadTime) {
         this.id = id;
+        this.emergencyHuNo = emergencyHuNo;
+        this.emergencyPersonNo = emergencyPersonNo;
         this.taskId = taskId;
         this.collectInfoPlace = collectInfoPlace;
         this.collectInfoType = collectInfoType;
@@ -668,5 +672,21 @@ public class CollectInfoBean {
                 ", collectInfoDispositionRemark='" + collectInfoDispositionRemark + '\'' +
                 ", collectInfoGoTime='" + collectInfoGoTime + '\'' +
                 '}';
+    }
+
+    public String getEmergencyPersonNo() {
+        return this.emergencyPersonNo;
+    }
+
+    public void setEmergencyPersonNo(String emergencyPersonNo) {
+        this.emergencyPersonNo = emergencyPersonNo;
+    }
+
+    public String getEmergencyHuNo() {
+        return this.emergencyHuNo;
+    }
+
+    public void setEmergencyHuNo(String emergencyHuNo) {
+        this.emergencyHuNo = emergencyHuNo;
     }
 }

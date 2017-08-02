@@ -373,6 +373,22 @@
                     android:hint="请输入威胁在家人数 (单位:人)"
                     android:inputType="number"
                     android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_emergency_family"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:hint="请输入紧急搬迁避让户数 (单位:户)"
+                    android:inputType="number"
+                    android:textSize="@dimen/fill_Info_textSize" />
+                <EditText
+                    android:id="@+id/et_collectinfo_emergency_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:hint="请输入紧急搬迁避让人数 (单位:人)"
+                    android:inputType="number"
+                    android:textSize="@dimen/fill_Info_textSize" />
             </LinearLayout>
 
             <!--威胁房屋-->

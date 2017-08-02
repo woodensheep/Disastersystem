@@ -65,7 +65,7 @@ public class TaskActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private TaskInfoBean taskInfoBean;
     //task_state任务状态 1：未发送 2：已发送 3：已反馈 4：已完成 5：废弃
-    private String[] mStates = new String[]{"未发送", "已发送", "已反馈", "已完成", "废弃"};
+    private String[] mStates = new String[]{"未发送", "已发送", "已反馈", "已完成", "已废弃","已过期"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,6 @@ public class TaskActivity extends AppCompatActivity {
         progressDialog.setMessage("正在加载...");
         progressDialog.show();
         setOkHttp();
-
     }
 
 

@@ -98,35 +98,83 @@ public class FillInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 baseInfoBean = baseInfoBeanDao.queryBuilder().where(BaseInfoBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
                 collectInfoBean = collectInfoBeanDao.queryBuilder().where(CollectInfoBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
-                if (baseInfoBean == null || collectInfoBean == null) {
-                    ToastUtils.showShortToast("请先填写信息并保存后再上传！");
-                } else {
-                    OkHttpUtils.get().url(new ConnectUrl().getTaskStatusUrl())
-                            .addParams("taskId",taskInfoBean.getmTaskId())
-                            .build()
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onError(Call call, Exception e, int id) {
-                                    ToastUtils.showShortToast("连接服务器失败！");
-                                }
-
-                                @Override
-                                public void onResponse(String response, int id) {
-                                    String status;
-                                    try {
-                                        JSONObject object=new JSONObject(response);
-                                        status=object.getString("status");
-                                        if("300".equals(status)){
-                                            uploadData();
-                                        }else if ("200".equals(status)){
-                                            ToastUtils.showShortToast("该任务已完成无需上传信息！");
-                                            finish();
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                if (collectInfoBean!=null&&baseInfoBean!=null){
+                    boolean a1 = collectInfoBean.getCollectInfoPlace().isEmpty();
+                    boolean a2 = collectInfoBean.getCollectInfoDead().isEmpty();
+                    boolean a3 = collectInfoBean.getCollectInfoMiss().isEmpty();
+                    boolean a4 = collectInfoBean.getCollectInfoHeavyInjured().isEmpty();
+                    boolean a5 = collectInfoBean.getCollectInfoSoftInjured().isEmpty();
+                    boolean a6 = collectInfoBean.getCollectInfoEconomicLoss().isEmpty();
+                    boolean a7 = collectInfoBean.getCollectInfoHouseCollapseNum().isEmpty();
+                    boolean a8 = collectInfoBean.getCollectInfoHouseCollapseArea().isEmpty();
+                    boolean a9 = collectInfoBean.getCollectInfoHouseDamageNum().isEmpty();
+                    boolean a10 = collectInfoBean.getCollectInfoHouseDamageArea().isEmpty();
+                    boolean a11 = collectInfoBean.getCollectInfoAnotherDamage().isEmpty();
+                    boolean a12 = collectInfoBean.getCollectInfoFamily().isEmpty();
+                    boolean a13 = collectInfoBean.getCollectInfoPeople().isEmpty();
+                    boolean a14 = collectInfoBean.getCollectInfoAtHomeFamily().isEmpty();
+                    boolean a15 = collectInfoBean.getCollectInfoAtHomePeople().isEmpty();
+                    boolean a16 = collectInfoBean.getCollectInfoHouse().isEmpty();
+                    boolean a17 = collectInfoBean.getCollectInfoHouseArea().isEmpty();
+                    boolean a18 = collectInfoBean.getCollectInfoAnotherDisaster().isEmpty();
+                    boolean a19 = collectInfoBean.getCollectInfoLandslideLength().isEmpty();
+                    boolean a20 = collectInfoBean.getCollectInfoLandslideWidth().isEmpty();
+                    boolean a21 = collectInfoBean.getCollectInfoLandslideArea().isEmpty();
+                    boolean a22 = collectInfoBean.getCollectInfoLandslideVolume().isEmpty();
+                    boolean a23 = collectInfoBean.getCollectInfoDistortionLength().isEmpty();
+                    boolean a24 = collectInfoBean.getCollectInfoDistortionWidth().isEmpty();
+                    boolean a25 = collectInfoBean.getCollectInfoDistortionArea().isEmpty();
+                    boolean a26 = collectInfoBean.getCollectInfoDistortionVolume().isEmpty();
+                    boolean a27 = collectInfoBean.getCollectInfoSlideDistance().isEmpty();
+                    boolean a28 = collectInfoBean.getCollectInfoCrackNumber().isEmpty();
+                    boolean a29 = collectInfoBean.getCollectInfoCrackMaxLength().isEmpty();
+                    boolean a30 = collectInfoBean.getCollectInfoCrackMaxWidth().isEmpty();
+                    boolean a31 = collectInfoBean.getCollectInfoCrackMinLength().isEmpty();
+                    boolean a32 = collectInfoBean.getCollectInfoCrackMinWidth().isEmpty();
+                    boolean a33 = collectInfoBean.getCollectInfoMaxDislocation().isEmpty();
+                    boolean a34 = collectInfoBean.getCollectInfoRockLength().isEmpty();
+                    boolean a35 = collectInfoBean.getCollectInfoRockWidth().isEmpty();
+                    boolean a36 = collectInfoBean.getCollectInfoRockVolume().isEmpty();
+                    boolean a37 = collectInfoBean.getCollectInfoCollapseVolume().isEmpty();
+                    boolean a38 = collectInfoBean.getCollectInfoResidualVolume().isEmpty();
+                    boolean a39 = collectInfoBean.getCollectInfoAnotherThings().isEmpty();
+                    boolean a40 = collectInfoBean.getCollectInfoMeasure().equals("点击选择");
+                    boolean a41 = collectInfoBean.getCollectInfoDisposition().equals("点击选择");
+                    boolean a42 = collectInfoBean.getCollectInfoGoTime().equals("点击选择");
+                    boolean a43=collectInfoBean.getEmergencyHuNo().isEmpty();
+                    boolean a44=collectInfoBean.getEmergencyPersonNo().isEmpty();
+                    if (a1||a2||a3||a4||a5||a6||a7||a8||a9||a10||a11||a12||a13||a14||a14||a15||a16||a17||a18||a19||a20||a21||a22||a23||a24||a25||a26||a27||a28||a29||a30||a31||a32||a33||a34||a35||a36||a37||a38||a39||a40||a41||a42||a43||a44){
+                        ToastUtils.showShortToast("信息未填报完整！");
+                    }else {
+                        OkHttpUtils.get().url(new ConnectUrl().getTaskStatusUrl())
+                                .addParams("taskId",taskInfoBean.getmTaskId())
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        ToastUtils.showShortToast("连接服务器失败！");
                                     }
-                                }
-                            });
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        String status;
+                                        try {
+                                            JSONObject object=new JSONObject(response);
+                                            status=object.getString("status");
+                                            if("300".equals(status)){
+                                                uploadData();
+                                            }else if ("200".equals(status)){
+                                                ToastUtils.showShortToast("该任务已完成无需上传信息！");
+                                                finish();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                    }
+                }else {
+                    ToastUtils.showShortToast("请先填写信息并保存后再上传！");
                 }
             }
         });
@@ -212,6 +260,8 @@ public class FillInfoActivity extends AppCompatActivity {
         collectInfo.setCollectInfoPeople(collectInfoBean.getCollectInfoPeople());
         collectInfo.setCollectInfoAtHomeFamily(collectInfoBean.getCollectInfoAtHomeFamily());
         collectInfo.setCollectInfoAtHomePeople(collectInfoBean.getCollectInfoAtHomePeople());
+        collectInfo.setEmergencyHuNo(collectInfoBean.getEmergencyHuNo());
+        collectInfo.setEmergencyPersonNo(collectInfoBean.getEmergencyPersonNo());
         collectInfo.setCollectInfoHouse(collectInfoBean.getCollectInfoHouse());
         collectInfo.setCollectInfoHouseArea(collectInfoBean.getCollectInfoHouseArea());
         collectInfo.setCollectInfoAnotherDisaster(collectInfoBean.getCollectInfoAnotherDisaster());
