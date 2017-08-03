@@ -71,6 +71,7 @@ public class BaseInfoFragment extends Fragment {
     private TaskInfoBean taskInfoBean;
     private boolean isSave = false;
     private Bitmap baseInfoBitmap;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class BaseInfoFragment extends Fragment {
 
     private void initData() {
         OkHttpUtils.get().url(new ConnectUrl().getDisasterPictureUrl())
-                .addParams("dis_id",taskInfoBean.getmRowNumber())
+                .addParams("dis_id", taskInfoBean.getmRowNumber())
                 .build()
                 .execute(new BitmapCallback() {
                     @Override
@@ -98,10 +99,10 @@ public class BaseInfoFragment extends Fragment {
 
                     @Override
                     public void onResponse(Bitmap response, int id) {
-                        Log.e(TAG,"加载的图片："+response);
-                        baseInfoBitmap=response;
-                        Matrix matrix=new Matrix();
-                        matrix.setScale(0.5f,0.5f);
+                        Log.e(TAG, "加载的图片：" + response);
+                        baseInfoBitmap = response;
+                        Matrix matrix = new Matrix();
+                        matrix.setScale(0.5f, 0.5f);
                         Bitmap bmp = Bitmap.createBitmap(response, 0, 0, response.getWidth(), response.getHeight(), matrix, true);
                         ivBaseinfoImage.setImageBitmap(bmp);
                     }
@@ -118,12 +119,12 @@ public class BaseInfoFragment extends Fragment {
         ivBaseinfoImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View view=LayoutInflater.from(context).inflate(R.layout.dialog_show_photo,null);
-                ImageView imageView= (ImageView) view.findViewById(R.id.iv_dialog_picture);
+                View view = LayoutInflater.from(context).inflate(R.layout.dialog_show_photo, null);
+                ImageView imageView = (ImageView) view.findViewById(R.id.iv_dialog_picture);
                 imageView.setImageBitmap(baseInfoBitmap);
                 new MaterialDialog.Builder(getActivity())
                         .cancelable(true)
-                        .customView(view,false)
+                        .customView(view, false)
                         .show();
             }
         });
@@ -210,7 +211,7 @@ public class BaseInfoFragment extends Fragment {
     }
 
     private void initView() {
-        levels = new String[]{"一级", "二级", "三级", "四级","五级","六级"};
+        levels = new String[]{"一级", "二级", "三级", "四级", "五级", "六级"};
         neworold = new String[]{"新灾害点", "旧灾害点"};
         isdisasters = new String[]{"是", "否"};
         ArrayAdapter levelsAdapter = new ArrayAdapter<String>(context, R.layout.spinner_item, levels);
@@ -233,7 +234,7 @@ public class BaseInfoFragment extends Fragment {
             spBaseinfoIsdisaster.setSelection(0, true);
             spBaseinfoIsdisaster.setEnabled(false);
         }
-        BaseInfoBean bean= MyApplication.getDaoSession().getBaseInfoBeanDao().queryBuilder().where(BaseInfoBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
+        BaseInfoBean bean = MyApplication.getDaoSession().getBaseInfoBeanDao().queryBuilder().where(BaseInfoBeanDao.Properties.TaskId.eq(taskInfoBean.getmTaskId())).unique();
         Log.e(TAG, "保存的数据：" + bean);
         if (bean != null) {
             isSave = true;
@@ -256,16 +257,12 @@ public class BaseInfoFragment extends Fragment {
             spBaseinfoType.setSelection(Integer.valueOf(bean.getBaseInfoType()));
             spBaseinfoIsdisaster.setSelection(Integer.valueOf(bean.getBaseInfoIsDisaster()));
         } else {
-            etBaseinfoLng.setText("null".equals(taskInfoBean.getmDisasterLng())?"":taskInfoBean.getmDisasterLng());
-            etBaseinfoLat.setText("null".equals(taskInfoBean.getmDisasterLat())?"":taskInfoBean.getmDisasterLat());
-            etBaseinfoAddress.setText("null".equals(taskInfoBean.getmDisasterLocation())?"":taskInfoBean.getmDisasterLocation());
-            etBaseinfoContact.setText("null".equals(taskInfoBean.getmDisasterContact())?"":taskInfoBean.getmDisasterContact());
-            etBaseinfoMobile.setText("null".equals(taskInfoBean.getmDisasterMobile())?"":taskInfoBean.getmDisasterMobile());
-            if(taskInfoBean.getmDisasterLevel().isEmpty()){
-                spBaseinfoLevel.setSelection(0);
-            }else {
-                spBaseinfoLevel.setSelection(Integer.valueOf(taskInfoBean.getmDisasterLevel())-1);
-            }
+            etBaseinfoLng.setText("null".equals(taskInfoBean.getmDisasterLng()) ? "" : taskInfoBean.getmDisasterLng());
+            etBaseinfoLat.setText("null".equals(taskInfoBean.getmDisasterLat()) ? "" : taskInfoBean.getmDisasterLat());
+            etBaseinfoAddress.setText("null".equals(taskInfoBean.getmDisasterLocation()) ? "" : taskInfoBean.getmDisasterLocation());
+            etBaseinfoContact.setText("null".equals(taskInfoBean.getmDisasterContact()) ? "" : taskInfoBean.getmDisasterContact());
+            etBaseinfoMobile.setText("null".equals(taskInfoBean.getmDisasterMobile()) ? "" : taskInfoBean.getmDisasterMobile());
+            spBaseinfoLevel.setSelection("null".equals(taskInfoBean.getmDisasterLevel())?0:Integer.valueOf(taskInfoBean.getmDisasterLevel()) - 1);
         }
 
     }
